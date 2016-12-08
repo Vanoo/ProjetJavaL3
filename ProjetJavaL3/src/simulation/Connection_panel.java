@@ -77,10 +77,9 @@ public class Connection_panel extends JPanel
 			{
 				if( true )
 				{
-
 					
 				}
-				// JOptionPane.showMessageDialog(this,ip_textField.getValue());
+				//JOptionPane.showMessageDialog(,ip_textField.getValue());
 			}
 		});
 	}

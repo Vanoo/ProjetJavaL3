@@ -381,7 +381,8 @@ public class InfoCapteur_panel extends JPanel
 		this.gps_label = new JLabel("Coordonnées GPS :");
 		this.add(this.gps_label);
 		this.add(this.exterieur);
-		validate();
+		revalidate();
+		repaint();
 	}
 	
 	
@@ -408,7 +409,8 @@ public class InfoCapteur_panel extends JPanel
 		JComboBox batiment = new JComboBox();
 		interieur.add(batiment);
 		this.add(interieur);
-		validate();
+		revalidate();
+		repaint();
 		
 	}
 
