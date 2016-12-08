@@ -43,6 +43,8 @@ public class SimWindows extends JFrame
 	    this.infoCapteur_panel = new InfoCapteur_panel();
 	    this.donnee_panel = new Donnee_panel();
 	    
+	    mouahahah();
+	    
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    content_panel.setLayout(new BorderLayout(0,0));
@@ -52,6 +54,33 @@ public class SimWindows extends JFrame
 	    
 	    this.getContentPane().add(content_panel);
 	    pack();
+	}
+	
+	public void mouahahah()
+	{
+		this.connection_panel.getConnection_button().addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				getData();
+				// Vérifie info
+				// établit connection
+					// connection success ou fail
+				// Grise tous les saisie utilisateurs
+				// Affichage bouton déconnection a la place du bouton connection
+				// envoi donnée recu de donnee panel
+				//JOptionPane.showMessageDialog(,ip_textField.getValue());
+			}
+		});
+	}
+	
+	public void getData()
+	{	
+		//default title and icon
+		JOptionPane.showMessageDialog(this,
+		    "IP :"+this.connection_panel.getIp_textField().getValue()+"Port :"+this.connection_panel.getPort_textField().getValue()+"");
+		
+		
 	}
 
 }

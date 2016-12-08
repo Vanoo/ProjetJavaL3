@@ -71,19 +71,8 @@ public class Connection_panel extends JPanel
 		this.add(port_label);
 		this.add(connection_button);
 		
-		connection_button.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				if( true )
-				{
-					
-				}
-				//JOptionPane.showMessageDialog(,ip_textField.getValue());
-			}
-		});
+		
 	}
-	
 	
 	public JLabel getIp_label() {
 		return ip_label;
