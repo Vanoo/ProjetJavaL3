@@ -29,6 +29,210 @@ import javax.swing.JTextField;
  */
 public class InfoCapteur_panel extends JPanel
 {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	boolean exter;
+	boolean intern;
+	
+	JLabel id_label;
+	JLabel titre;
+	JLabel type_label;
+	JLabel interval_label;
+	JLabel min_label;
+	JLabel max_label;
+	JLabel loc_label;
+	JLabel gps_label;
+	
+	JTextField id_texField;
+	public JTextField min_texField;
+	JTextField max_texField;
+	JTextField loc_texField;
+	JTextField latitude;
+	JTextField longitude;
+	
+	JComboBox<Object> type_combo;
+	
+	JPanel min_panel;
+	JPanel max_panel;
+	JPanel exterieur;
+	JPanel interieur;
+	
+	JButton bExt;
+	JButton bInt;
+	
+	/**
+	 * @param args
+	 */
+	public InfoCapteur_panel()
+	{
+		new JPanel();
+		this.setBackground(Color.yellow);
+		this.setPreferredSize(new Dimension(150,550));
+		this.setLayout(new GridLayout(18,1));
+		 
+		this.titre = new JLabel("Information Capteur");
+		this.add(titre);
+		 
+		 this.id_label = new JLabel("===Identifiant====");
+		 this.id_texField = new JTextField();		 
+
+		 this.id_texField.setPreferredSize(new Dimension(20, 20));
+		 
+		 this.type_label = new JLabel("=====Type======");
+		 String[] type_string = { "Temperature", "Humidité","Consommation Electrique", "etc" };
+		 //Create the combo box, select item at index 4.
+		this.type_combo = new JComboBox<Object>(type_string);
+		 
+		 this.interval_label = new JLabel("====Intervalle====");
+		 
+		 this.min_panel = new JPanel();
+		 this.max_panel = new JPanel();
+		 
+		 this.min_panel.setLayout(new BorderLayout(0,0));
+		 this.max_panel.setLayout(new BorderLayout(0,0));
+		 
+		 this.min_texField = new JTextField();
+		 this.min_texField.setPreferredSize(new Dimension(60, 20));
+		 this.min_label = new JLabel("Min :");
+		 this.max_label = new JLabel("Max :");
+		 this.max_texField = new JTextField();
+		 this.max_texField.setPreferredSize(new Dimension(60, 20));
+
+		 this.min_panel.add(min_label,BorderLayout.WEST);
+		 this.min_panel.add(min_texField,BorderLayout.EAST);
+		 this.min_panel.setBackground( Color.red );
+		 
+		 
+		 this.max_panel.add(max_label,BorderLayout.WEST);
+		 this.max_panel.add(max_texField,BorderLayout.EAST);
+		 this.max_panel.setBackground( Color.MAGENTA );
+		 
+		 
+		 this.loc_label = new JLabel("===Localisation===");
+		// Choix intérieur/extérieur
+		// Bouton "extérieur"
+		this.bExt = new JButton("Extérieur");
+		this.bExt.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				exterieur();
+			}
+		});
+		
+		// Bouton intérieur
+		this.bInt = new JButton("Intérieur");
+		this.bInt.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				interieur();
+			}
+		});
+		this.exter = false;
+		this.intern = false;
+		
+		 this.loc_texField = new JTextField();
+		 
+		 this.add(id_label);
+		 this.add(id_texField);
+		 this.add(type_label);
+		 this.add(type_combo);
+		 this.add(interval_label);
+		 this.add(min_panel);
+		 this.add(max_panel);
+		 this.add(loc_label);
+		 this.add(bExt);
+		 this.add(bInt);
+	}
+	
+	
+	// Callback quand on clique sur "Extérieur"
+	private void exterieur() 
+	{
+		if( this.exter)
+		{
+			remove(this.gps_label);
+			remove(this.exterieur);
+			this.exter = false;
+		}
+		if( this.intern )
+		{
+			remove(this.interieur);
+			this.intern = false;
+		}
+		this.exter = true;
+		this.exterieur = new JPanel(); 		
+		
+		this.latitude = new JTextField(5);
+		this.longitude = new JTextField(5);
+		
+		this.exterieur.add(latitude);
+		this.exterieur.add(longitude);
+
+		this.gps_label = new JLabel("Coordonnées GPS :");
+		this.add(this.gps_label);
+		this.add(this.exterieur);
+		revalidate();
+		repaint();
+	}
+	
+	
+
+
+
+	// Callback quand on clique sur "Intérieur"
+	private void interieur() 
+	{
+		if( this.exter)
+		{
+			remove(this.gps_label);
+			remove(this.exterieur);
+			this.exter = false;
+		}
+		if( this.intern )
+		{
+			remove(this.interieur);
+			this.intern = false;
+		}
+		this.intern = true;
+		
+		
+		this.interieur = new JPanel();
+		interieur.setLayout(new FlowLayout(FlowLayout.LEFT));
+		interieur.add(new JLabel("Bâtiment : "));
+		JComboBox batiment = new JComboBox();
+		interieur.add(batiment);
+		this.add(interieur);
+		revalidate();
+		repaint();
+		
+	}
+	
+	public JTextField getLatitude() {
+		return latitude;
+	}
+
+
+	public void setLatitude(JTextField latitude) {
+		this.latitude = latitude;
+	}
+
+
+	public JTextField getLongitude() {
+		return longitude;
+	}
+
+
+	public void setLongitude(JTextField longitude) {
+		this.longitude = longitude;
+	}
+	
 	public boolean isExter() {
 		return exter;
 	}
@@ -238,180 +442,5 @@ public class InfoCapteur_panel extends JPanel
 		this.interieur = interieur;
 	}
 
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-
-	boolean exter;
-	boolean intern;
-	JLabel id_label;
-	JLabel titre;
-	JTextField id_texField;
-	JLabel type_label;
-	JComboBox<Object> type_combo;
-	JLabel interval_label;
-	JPanel min_panel;
-	JPanel max_panel;
-	JTextField min_texField;
-	JLabel min_label;
-	JLabel max_label;
-	JTextField max_texField;
-	JLabel loc_label;
-	JButton bExt;
-	JButton bInt;
-	JTextField loc_texField;
-	JLabel gps_label;
-	
-	JPanel exterieur;
-	JPanel interieur;
-	
-	/**
-	 * @param args
-	 */
-	public InfoCapteur_panel()
-	{
-		new JPanel();
-		this.setBackground(Color.yellow);
-		this.setPreferredSize(new Dimension(150,550));
-		this.setLayout(new GridLayout(18,1));
-		 
-		this.titre = new JLabel("Information Capteur");
-		this.add(titre);
-		 
-		 this.id_label = new JLabel("===Identifiant====");
-		 this.id_texField = new JTextField();		 
-
-		 this.id_texField.setPreferredSize(new Dimension(20, 20));
-		 
-		 this.type_label = new JLabel("=====Type======");
-		 String[] type_string = { "Temperature", "Humidité","Consommation Electrique", "etc" };
-		 //Create the combo box, select item at index 4.
-		this.type_combo = new JComboBox<Object>(type_string);
-		 
-		 this.interval_label = new JLabel("====Intervalle====");
-		 
-		 this.min_panel = new JPanel();
-		 this.max_panel = new JPanel();
-		 
-		 this.min_panel.setLayout(new BorderLayout(0,0));
-		 this.max_panel.setLayout(new BorderLayout(0,0));
-		 
-		 this.min_texField = new JTextField();
-		 this.min_texField.setPreferredSize(new Dimension(60, 20));
-		 this.min_label = new JLabel("Min :");
-		 this.max_label = new JLabel("Max :");
-		 this.max_texField = new JTextField();
-		 this.max_texField.setPreferredSize(new Dimension(60, 20));
-
-		 this.min_panel.add(min_label,BorderLayout.WEST);
-		 this.min_panel.add(min_texField,BorderLayout.EAST);
-		 this.min_panel.setBackground( Color.red );
-		 
-		 
-		 this.max_panel.add(max_label,BorderLayout.WEST);
-		 this.max_panel.add(max_texField,BorderLayout.EAST);
-		 this.max_panel.setBackground( Color.MAGENTA );
-		 
-		 
-		 this.loc_label = new JLabel("===Localisation===");
-		// Choix intérieur/extérieur
-		// Bouton "extérieur"
-		this.bExt = new JButton("Extérieur");
-		this.bExt.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				exterieur();
-			}
-		});
-		
-		// Bouton intérieur
-		this.bInt = new JButton("Intérieur");
-		this.bInt.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				interieur();
-			}
-		});
-		this.exter = false;
-		this.intern = false;
-		
-		 this.loc_texField = new JTextField();
-		 
-		 this.add(id_label);
-		 this.add(id_texField);
-		 this.add(type_label);
-		 this.add(type_combo);
-		 this.add(interval_label);
-		 this.add(min_panel);
-		 this.add(max_panel);
-		 this.add(loc_label);
-		 this.add(bExt);
-		 this.add(bInt);
-	}
-	
-	
-	// Callback quand on clique sur "Extérieur"
-	private void exterieur() 
-	{
-		if( this.exter)
-		{
-			remove(this.gps_label);
-			remove(this.exterieur);
-			this.exter = false;
-		}
-		if( this.intern )
-		{
-			remove(this.interieur);
-			this.intern = false;
-		}
-		this.exter = true;
-		this.exterieur = new JPanel(); 		
-		
-		JTextField latitude = new JTextField(5);
-		JTextField longitude = new JTextField(5);
-		
-		this.exterieur.add(latitude);
-		this.exterieur.add(longitude);
-
-		this.gps_label = new JLabel("Coordonnées GPS :");
-		this.add(this.gps_label);
-		this.add(this.exterieur);
-		revalidate();
-		repaint();
-	}
-	
-	
-	// Callback quand on clique sur "Intérieur"
-	private void interieur() 
-	{
-		if( this.exter)
-		{
-			remove(this.gps_label);
-			remove(this.exterieur);
-			this.exter = false;
-		}
-		if( this.intern )
-		{
-			remove(this.interieur);
-			this.intern = false;
-		}
-		this.intern = true;
-		
-		
-		this.interieur = new JPanel();
-		interieur.setLayout(new FlowLayout(FlowLayout.LEFT));
-		interieur.add(new JLabel("Bâtiment : "));
-		JComboBox batiment = new JComboBox();
-		interieur.add(batiment);
-		this.add(interieur);
-		revalidate();
-		repaint();
-		
-	}
 
 }

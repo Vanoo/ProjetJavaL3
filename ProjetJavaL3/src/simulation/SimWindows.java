@@ -21,9 +21,10 @@ public class SimWindows extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	
+	Reseaux res;
 	Connection_panel connection_panel;
-	JPanel infoCapteur_panel;
-	JPanel donnee_panel;
+	InfoCapteur_panel infoCapteur_panel;
+	Donnee_panel donnee_panel;
 	
 	public SimWindows() throws ParseException
 	{
@@ -43,8 +44,8 @@ public class SimWindows extends JFrame
 	    this.infoCapteur_panel = new InfoCapteur_panel();
 	    this.donnee_panel = new Donnee_panel();
 	    
+	    preminilary_gray(false);
 	    mouahahah();
-	    
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    content_panel.setLayout(new BorderLayout(0,0));
@@ -65,8 +66,11 @@ public class SimWindows extends JFrame
 				getData();
 				// Vérifie info
 				// établit connection
+				
 					// connection success ou fail
 				// Grise tous les saisie utilisateurs
+				fifty_shade_of_gray(false);
+				preminilary_gray(true);
 				// Affichage bouton déconnection a la place du bouton connection
 				// envoi donnée recu de donnee panel
 				//JOptionPane.showMessageDialog(,ip_textField.getValue());
@@ -79,8 +83,63 @@ public class SimWindows extends JFrame
 		//default title and icon
 		JOptionPane.showMessageDialog(this,
 		    "IP :"+this.connection_panel.getIp_textField().getValue()+"Port :"+this.connection_panel.getPort_textField().getValue()+"");
+		int port = 8888;
+		String ip = this.connection_panel.getIp_textField().getValue().toString();
+		this.res = new Reseaux(ip,port);
 		
-		
+	}
+	
+	public void preminilary_gray(boolean bool)
+	{
+		Component tab_component[];
+
+		tab_component=this.donnee_panel.getComponents();
+		for( int i=0;i<tab_component.length;i++ )
+		{
+			tab_component[i].setEnabled(bool);
+		}
+	}
+	
+	public void fifty_shade_of_gray(boolean bool)
+	{		
+		Component tab_component[];
+
+		tab_component=this.connection_panel.getComponents();
+		for( int i=0;i<tab_component.length;i++ )
+		{
+			tab_component[i].setEnabled(bool);
+		}
+		tab_component=this.infoCapteur_panel.getComponents();
+		for( int i=0;i<tab_component.length;i++ )
+		{
+			tab_component[i].setEnabled(bool);
+		}
+		tab_component=this.infoCapteur_panel.getMin_panel().getComponents();
+		for(int i=0;i<tab_component.length;i++)
+		{
+			tab_component[i].setEnabled(bool);
+		}
+		tab_component=this.infoCapteur_panel.getMax_panel().getComponents();
+		for(int i=0;i<tab_component.length;i++)
+		{
+			tab_component[i].setEnabled(bool);
+		}
+		if(this.infoCapteur_panel.isExter())
+		{
+			tab_component=this.infoCapteur_panel.getExterieur().getComponents();
+			for(int i=0;i<tab_component.length;i++)
+			{
+				tab_component[i].setEnabled(bool);
+			}
+		}
+		if(this.infoCapteur_panel.isIntern())
+		{
+			tab_component=this.infoCapteur_panel.getInterieur().getComponents();
+			for(int i=0;i<tab_component.length;i++)
+			{
+				tab_component[i].setEnabled(bool);
+			}
+		}
 	}
 
 }

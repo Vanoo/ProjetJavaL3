@@ -32,8 +32,9 @@ public class Connection_panel extends JPanel
 	private static final long serialVersionUID = 1L;
 	
 	JLabel ip_label;
-	JFormattedTextField ip_textField;
 	JLabel port_label;
+	
+	JFormattedTextField ip_textField;
 	JFormattedTextField port_textField;
 	JButton connection_button;
 	
