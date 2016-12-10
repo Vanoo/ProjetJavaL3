@@ -6,16 +6,15 @@ import java.awt.event.ActionListener;
 import java.awt.geom.FlatteningPathIterator;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.Clock;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 
-
 /* TODO 
  * Positionnement
  * Lecture Fichier
- * Gestion Event
  * Communication Serveur
  */
 public class SimWindows extends JFrame
@@ -27,7 +26,13 @@ public class SimWindows extends JFrame
 	InfoCapteur_panel infoCapteur_panel;
 	Donnee_panel donnee_panel;
 	
+	EnvoiData envoiData;
 	
+	public void lancementEnvoi()
+	{
+		this.envoiData = new EnvoiData(1,4.4,"envoi",res);
+		envoiData.start();
+	}
 	
 	public SimWindows() throws ParseException
 	{
@@ -47,7 +52,10 @@ public class SimWindows extends JFrame
 	    this.infoCapteur_panel = new InfoCapteur_panel();
 	    this.donnee_panel = new Donnee_panel();
 	    
+	    /*============= On grise les elements de la fenetre =============*/
 	    fifty_shade_of_gray(true);
+	    
+	    /*============= Ajout actionListener sur bouton =============*/
 	    boutonConnection();
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
@@ -81,6 +89,8 @@ public class SimWindows extends JFrame
 						// Grise tous les saisie utilisateurs
 						fifty_shade_of_gray(false);
 						
+						lancementEnvoi();
+						
 						// Affichage bouton déconnection a la place du bouton connection
 						// envoi donnée recu de donnee panel
 						//JOptionPane.showMessageDialog(,ip_textField.getValue());
@@ -89,12 +99,13 @@ public class SimWindows extends JFrame
 				else
 				{
 					// Deconnection
-					deconnection();
-					changementBouton(0);
-					fifty_shade_of_gray(true);
+					success = deconnection();
+					if( success )
+					{
+						changementBouton(0);
+						fifty_shade_of_gray(true);
+					}
 				}
-				
-
 			}
 		});
 	}
@@ -132,14 +143,22 @@ public class SimWindows extends JFrame
 		
 		this.res = new Reseaux("127.0.0.1", 7888);
 		
-		this.res.connection("ConnexionCapteur;plop;temperature;20;10");
+		Intervalle inter = this.infoCapteur_panel.getInfoIntervalle();
 		
-		// this.res = new Reseaux((String)this.connection_panel.getIp_textField().getValue(),Integer.parseInt((String)this.connection_panel.getPort_textField().getValue()));
-		// this.res.send("HOHOHOnoyeux JOEL\n");
+		Localisation loc = this.infoCapteur_panel.getInfoLocalisation();
 		
-		success = true;
+		String id = this.infoCapteur_panel.getInfoId();
+		String type = this.infoCapteur_panel.getInfoType();
 		
-		
+		if(  loc instanceof LocalisationInt )
+		{
+			success = this.res.connexionInt(id,type,
+					((LocalisationInt) loc).getBatiment(),((LocalisationInt) loc).getEtage(),((LocalisationInt) loc).getSalle(),((LocalisationInt) loc).getCommentaire());
+		}
+		else
+		{
+			success = this.res.connexionExt(id, type,((LocalisationExt) loc).getLatitude(), ((LocalisationExt) loc).getLongitude());
+		}
 		
 		return success;
 	}
@@ -148,16 +167,10 @@ public class SimWindows extends JFrame
 	{
 		boolean success = false;
 		
-		try 
-		{
-			this.res.deconnection();
-			this.res.socket.close();
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String id = "Temperature";
+
+		success = this.res.deconnexion(id);
+		
 		return success;
 	}
 	
@@ -176,18 +189,15 @@ public class SimWindows extends JFrame
 	{				
 		gray(this.connection_panel.getComponents(),bool);
 		gray(this.infoCapteur_panel.getComponents(),bool);
-		gray(this.infoCapteur_panel.getMin_panel().getComponents(),bool);
-		gray(this.infoCapteur_panel.getMax_panel().getComponents(),bool);
+		gray(this.infoCapteur_panel.getComponents(),bool);
+		gray(this.infoCapteur_panel.getComponents(),bool);
 		
-		if(this.infoCapteur_panel.isExter())
-		{
-			gray(this.infoCapteur_panel.getExterieur().getComponents(),bool);
-		}
-		if(this.infoCapteur_panel.isIntern())
-		{
-			gray(this.infoCapteur_panel.getInterieur().getComponents(),bool);
-		}
 		gray(this.donnee_panel.getComponents(),!bool);
+	}
+	
+	public void sendData()
+	{
+		this.res.sendData(14.14);
 	}
 
 }
