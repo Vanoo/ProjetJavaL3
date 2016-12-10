@@ -129,9 +129,18 @@ public class SimWindows extends JFrame
 	public boolean connection()
 	{
 		boolean success = false;
-		this.res = new Reseaux((String)this.connection_panel.getIp_textField().getValue(),Integer.parseInt((String)this.connection_panel.getPort_textField().getValue()));
-		this.res.send("HOHOHOnoyeux JOEL\n");
+		
+		this.res = new Reseaux("127.0.0.1", 7888);
+		
+		this.res.connection("ConnexionCapteur;plop;temperature;20;10");
+		
+		// this.res = new Reseaux((String)this.connection_panel.getIp_textField().getValue(),Integer.parseInt((String)this.connection_panel.getPort_textField().getValue()));
+		// this.res.send("HOHOHOnoyeux JOEL\n");
+		
 		success = true;
+		
+		
+		
 		return success;
 	}
 	
@@ -141,6 +150,7 @@ public class SimWindows extends JFrame
 		
 		try 
 		{
+			this.res.deconnection();
 			this.res.socket.close();
 		} 
 		catch (IOException e) 
