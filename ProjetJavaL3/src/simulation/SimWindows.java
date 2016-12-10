@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.FlatteningPathIterator;
+import java.io.IOException;
 import java.text.ParseException;
 
 import javax.swing.*;
@@ -26,6 +27,8 @@ public class SimWindows extends JFrame
 	InfoCapteur_panel infoCapteur_panel;
 	Donnee_panel donnee_panel;
 	
+	
+	
 	public SimWindows() throws ParseException
 	{
 		setResizable(false);
@@ -44,8 +47,8 @@ public class SimWindows extends JFrame
 	    this.infoCapteur_panel = new InfoCapteur_panel();
 	    this.donnee_panel = new Donnee_panel();
 	    
-	    preminilary_gray(false);
-	    mouahahah();
+	    fifty_shade_of_gray(true);
+	    boutonConnection();
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    content_panel.setLayout(new BorderLayout(0,0));
@@ -57,89 +60,124 @@ public class SimWindows extends JFrame
 	    pack();
 	}
 	
-	public void mouahahah()
+	public void boutonConnection()
 	{
 		this.connection_panel.getConnection_button().addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				getData();
-				// Vérifie info
-				// établit connection
+				boolean success;
+				int boutonConnection = typeBouton();
 				
-					// connection success ou fail
-				// Grise tous les saisie utilisateurs
-				fifty_shade_of_gray(false);
-				preminilary_gray(true);
-				// Affichage bouton déconnection a la place du bouton connection
-				// envoi donnée recu de donnee panel
-				//JOptionPane.showMessageDialog(,ip_textField.getValue());
+				if( boutonConnection == 1  )
+				{
+					// Vérifie info
+					// établit connection
+					success = connection();
+					if( success )
+					{
+						// connection success ou fail
+						changementBouton(1);
+						// Grise tous les saisie utilisateurs
+						fifty_shade_of_gray(false);
+						
+						// Affichage bouton déconnection a la place du bouton connection
+						// envoi donnée recu de donnee panel
+						//JOptionPane.showMessageDialog(,ip_textField.getValue());
+					}
+				}
+				else
+				{
+					// Deconnection
+					deconnection();
+					changementBouton(0);
+					fifty_shade_of_gray(true);
+				}
+				
+
 			}
 		});
 	}
 	
-	public void getData()
-	{	
-		//default title and icon
-		JOptionPane.showMessageDialog(this,
-		    "IP :"+this.connection_panel.getIp_textField().getValue()+"Port :"+this.connection_panel.getPort_textField().getValue()+"");
-		int port = 8888;
-		String ip = this.connection_panel.getIp_textField().getValue().toString();
-		this.res = new Reseaux(ip,port);
-		
+	public void changementBouton(int typeBouton)
+	{
+		if( typeBouton == 1 )
+		{
+			// CHangment en deco
+			this.connection_panel.connection_button.setText("Deconnection");
+		}
+		else
+		{
+			// Changement en connection
+			this.connection_panel.connection_button.setText("Connection");
+		}
 	}
 	
-	public void preminilary_gray(boolean bool)
+	public int typeBouton()
 	{
-		Component tab_component[];
-
-		tab_component=this.donnee_panel.getComponents();
-		for( int i=0;i<tab_component.length;i++ )
+		String label = this.connection_panel.connection_button.getText();
+		if( label.equals("Connection") )
 		{
-			tab_component[i].setEnabled(bool);
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public boolean connection()
+	{
+		boolean success = false;
+		this.res = new Reseaux((String)this.connection_panel.getIp_textField().getValue(),Integer.parseInt((String)this.connection_panel.getPort_textField().getValue()));
+		this.res.send("HOHOHOnoyeux JOEL\n");
+		success = true;
+		return success;
+	}
+	
+	public boolean deconnection()
+	{
+		boolean success = false;
+		
+		try 
+		{
+			this.res.socket.close();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return success;
+	}
+	
+	public void gray(Component tab_component[],boolean bool)
+	{
+		for(int i=0;i<tab_component.length;i++)
+		{
+			if( ! tab_component[i].equals(this.connection_panel.connection_button) )
+			{
+				tab_component[i].setEnabled(bool);
+			}
 		}
 	}
 	
 	public void fifty_shade_of_gray(boolean bool)
-	{		
-		Component tab_component[];
-
-		tab_component=this.connection_panel.getComponents();
-		for( int i=0;i<tab_component.length;i++ )
-		{
-			tab_component[i].setEnabled(bool);
-		}
-		tab_component=this.infoCapteur_panel.getComponents();
-		for( int i=0;i<tab_component.length;i++ )
-		{
-			tab_component[i].setEnabled(bool);
-		}
-		tab_component=this.infoCapteur_panel.getMin_panel().getComponents();
-		for(int i=0;i<tab_component.length;i++)
-		{
-			tab_component[i].setEnabled(bool);
-		}
-		tab_component=this.infoCapteur_panel.getMax_panel().getComponents();
-		for(int i=0;i<tab_component.length;i++)
-		{
-			tab_component[i].setEnabled(bool);
-		}
+	{				
+		gray(this.connection_panel.getComponents(),bool);
+		gray(this.infoCapteur_panel.getComponents(),bool);
+		gray(this.infoCapteur_panel.getMin_panel().getComponents(),bool);
+		gray(this.infoCapteur_panel.getMax_panel().getComponents(),bool);
+		
 		if(this.infoCapteur_panel.isExter())
 		{
-			tab_component=this.infoCapteur_panel.getExterieur().getComponents();
-			for(int i=0;i<tab_component.length;i++)
-			{
-				tab_component[i].setEnabled(bool);
-			}
+			gray(this.infoCapteur_panel.getExterieur().getComponents(),bool);
 		}
 		if(this.infoCapteur_panel.isIntern())
 		{
-			tab_component=this.infoCapteur_panel.getInterieur().getComponents();
-			for(int i=0;i<tab_component.length;i++)
-			{
-				tab_component[i].setEnabled(bool);
-			}
+			gray(this.infoCapteur_panel.getInterieur().getComponents(),bool);
 		}
+		gray(this.donnee_panel.getComponents(),!bool);
 	}
 
 }

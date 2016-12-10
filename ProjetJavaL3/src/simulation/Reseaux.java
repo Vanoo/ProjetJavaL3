@@ -26,6 +26,7 @@ public class Reseaux {
 			System.out.println("Tentative de connection � "+server_address);
 			out = new PrintWriter(socket.getOutputStream());
 			in = new BufferedReader (new InputStreamReader (socket.getInputStream()));
+			System.out.println("Tentative de connection � "+server_address);
 			//socket.close();
 		}
 		catch (UnknownHostException e)
@@ -38,9 +39,9 @@ public class Reseaux {
 		}
 	}
 	
-	
 	public int send(String message)
 	{
+		System.out.println("Envoi Message : "+message+"\n");
         out.println(message);
 		return 0;
 	}
