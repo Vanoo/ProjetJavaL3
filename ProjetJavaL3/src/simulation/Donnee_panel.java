@@ -3,7 +3,6 @@ package simulation;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -12,9 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.text.MaskFormatter;
 
 /* TODO
@@ -54,12 +50,13 @@ public class Donnee_panel extends JPanel
 		this.add(new JLabel("######### Envoi des données #########"));
 		
 		
-	    MaskFormatter frequence_formatter = new MaskFormatter("########");
+	    MaskFormatter frequence_formatter = new MaskFormatter("##m##s####ms");
 		frequence_formatter.setPlaceholderCharacter('0');
 		
 		// this.freq_slider = new JSlider(1,1000,1000);
 		this.freq_field = new JFormattedTextField(frequence_formatter);
-		this.freq_field.setText("00m01s0000ms");
+		this.freq_field.setText("00010000");
+		this.freq_field.setValue("00010000");
 		this.freq_button = new JButton("Change");
 		
 		/*this.freq_slider.setMajorTickSpacing(10);
@@ -109,33 +106,24 @@ public class Donnee_panel extends JPanel
 	public void changeLabelFrequence()
 	{
 		// Integer.parseInt(this.freq_field.getValue().toString());		
-		int pat = Integer.parseInt((this.freq_field.getValue().toString()));
-		System.out.println("frequence "+pat);
-		
-		System.out.println("Changement Frequence");
-        this.freq_lab.setText(pat + " micro Seconde                                     ");
+		System.out.println("Changement Frequence :"+this.freq_field.getValue().toString());
+        this.freq_lab.setText(1 + " micro Seconde                                     ");
 	}
 	
 	public void changeLabelValeur()
 	{
 		// Integer.parseInt(this.freq_field.getValue().toString());
-		System.out.println("freq_field"+this.val_field.getValue().toString());
-		
-		double pat = Double.parseDouble((this.val_field.getValue().toString()));
-		System.out.println("pat "+pat);
-		
-		System.out.println("Changement Valeur :"+pat);
-        this.val_lab.setText(pat + " Something                                              ");
+		System.out.println("Changement Valeur :"+this.val_field.getValue().toString());
+        this.val_lab.setText(1 + " Something                                              ");
 	}
 	
 	public int getDelay()
 	{
-		System.out.println("OUAHAHAHAHAHAHAH");
 		System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
 		// int pat = Integer.parseInt((this.freq_field.getValue().toString()));
 		// System.out.println("Recup delay : "+pat);
 		// int val = Integer.valueOf(this.val_field.getText());
-		return 1;
+		return 1000;
 	}
 	
 	public double getValeur()
