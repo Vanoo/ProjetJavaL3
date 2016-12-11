@@ -184,9 +184,14 @@ public class Reseaux {
 	
 	
 	// Envoi de la donnee d'un capteur
-	public void sendData (double data) {
-		 out.println("ValeurCapteur;"+data);
-		 System.out.println("Donnee envoyee : "+data);
+	public void sendData (/*double data*/) 
+	{
+		for(int i=0;i<3;i++)
+		{
+			out.println("ValeurCapteur;"+4.4);
+			System.out.println("Donnee envoyee : "+4.4);
+		}
+		 
 	}
 	
 

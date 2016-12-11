@@ -26,12 +26,13 @@ public class SimWindows extends JFrame
 	InfoCapteur_panel infoCapteur_panel;
 	Donnee_panel donnee_panel;
 	
-	EnvoiData envoiData;
+	// EnvoiData envoiData;
 	
 	public void lancementEnvoi()
 	{
-		this.envoiData = new EnvoiData(1,4.4,"envoi",res);
-		envoiData.start();
+		this.res.sendData();
+		//this.envoiData = new EnvoiData(1,4.4,"envoi",res);
+		//envoiData.start();
 	}
 	
 	public SimWindows() throws ParseException
@@ -81,16 +82,17 @@ public class SimWindows extends JFrame
 				{
 					// Vérifie info
 					// établit connection
+					System.out.printf("Connection");
 					success = connection();
+					System.out.printf("Fin COnnection");
 					if( success )
 					{
 						// connection success ou fail
 						changementBouton(1);
+						System.out.printf("CHANGEMENT BOUTON");
 						// Grise tous les saisie utilisateurs
 						fifty_shade_of_gray(false);
-						
 						lancementEnvoi();
-						
 						// Affichage bouton déconnection a la place du bouton connection
 						// envoi donnée recu de donnee panel
 						//JOptionPane.showMessageDialog(,ip_textField.getValue());
@@ -98,6 +100,7 @@ public class SimWindows extends JFrame
 				}
 				else
 				{
+					// envoiData.terminate();
 					// Deconnection
 					success = deconnection();
 					if( success )
@@ -143,23 +146,25 @@ public class SimWindows extends JFrame
 		
 		this.res = new Reseaux("127.0.0.1", 7888);
 		
-		Intervalle inter = this.infoCapteur_panel.getInfoIntervalle();
-		
+		System.out.printf("Plop 1\n");
+		System.out.printf("Plop 2\n");
 		Localisation loc = this.infoCapteur_panel.getInfoLocalisation();
-		
+		System.out.printf("Plop 3\n");
 		String id = this.infoCapteur_panel.getInfoId();
 		String type = this.infoCapteur_panel.getInfoType();
-		
+		System.out.printf("Plop 4\n");
 		if(  loc instanceof LocalisationInt )
 		{
+			System.out.printf("Plop 5\n");
 			success = this.res.connexionInt(id,type,
 					((LocalisationInt) loc).getBatiment(),((LocalisationInt) loc).getEtage(),((LocalisationInt) loc).getSalle(),((LocalisationInt) loc).getCommentaire());
 		}
 		else
 		{
+			System.out.printf("Plop 6\n");
 			success = this.res.connexionExt(id, type,((LocalisationExt) loc).getLatitude(), ((LocalisationExt) loc).getLongitude());
 		}
-		
+		System.out.printf("fin interne");
 		return success;
 	}
 	
@@ -186,18 +191,11 @@ public class SimWindows extends JFrame
 	}
 	
 	public void fifty_shade_of_gray(boolean bool)
-	{				
+	{	
 		gray(this.connection_panel.getComponents(),bool);
 		gray(this.infoCapteur_panel.getComponents(),bool);
 		gray(this.infoCapteur_panel.getComponents(),bool);
 		gray(this.infoCapteur_panel.getComponents(),bool);
-		
 		gray(this.donnee_panel.getComponents(),!bool);
 	}
-	
-	public void sendData()
-	{
-		this.res.sendData(14.14);
-	}
-
 }

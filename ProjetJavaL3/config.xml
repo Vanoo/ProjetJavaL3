@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<faculte>
+	<batiment id="U1">
+		<etage id="1">
+			<salle id="101">
+				<posRel id="En haut"> </posRel>
+				<posRel id="En bas"> </posRel>
+			</salle>
+			<salle id="102">
+				<posRel id="Contre le tableau"> </posRel>
+				<posRel id="Au plafond"> </posRel>
+			</salle>
+		</etage>
+		<etage id ="2">
+			<salle id="202">
+				<posRel id="Facade nord"></posRel>
+			</salle>
+		</etage>
+	</batiment>
+	<batiment id="U4">
+		<etage id="1">
+			<salle id="103">
+				<posRel id="Devant la porte"> </posRel>
+			</salle>
+		</etage>
+	</batiment>
+</faculte>
