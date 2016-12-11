@@ -64,8 +64,6 @@ public class Connection_panel extends JPanel
 		this.port_textField = new JFormattedTextField(port_formatter);
 		port_textField.setPreferredSize(new Dimension(55, 20));
 		
-		
-		
 		this.connection_button = new JButton("Connection"); 
 		
 		this.add(this.port_textField);

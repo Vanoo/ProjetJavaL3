@@ -7,13 +7,16 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.tree.TreePath;
 
 
 /* TODO 
@@ -40,6 +43,8 @@ public class InfoCapteur_panel extends JPanel
 	JPanel intervalle;
 	JPanel localisationBouton;
 	JPanel localisationChoix;
+	XmlJTree arbre;
+	TreePath arbreChoix;
 	
 	/**
 	 * @param args
@@ -197,32 +202,39 @@ public class InfoCapteur_panel extends JPanel
 		}
 
 		// Callback quand on clique sur "Intérieur"
+		
 		private void interieur() 
 		{
 			remove(this.localisationChoix);
-			
+			// String path ="../ProjetJavaL3/config.xml";
+			final XmlJTree arbre = new XmlJTree(null);
 			JPanel int_panel = new JPanel();
 			int_panel.setLayout(new GridLayout(8,1));
-			// int_panel.setPreferredSize(new Dimension(140,200));
-			
-			String[] batiment_list = { "U4", "U3","U2", "U1" };
-			String[] etage_list = { "0", "1","2", "3" };
-			String[] salle_list = { "201", "202","203", "204" };
-			
-			JComboBox<Object> batiment = new JComboBox<Object>(batiment_list);
-			batiment.setPreferredSize(new Dimension(50,20));
-			JComboBox<Object> etage = new JComboBox<Object>(etage_list);
-			JComboBox<Object> salle = new JComboBox<Object>(salle_list);
-			
+			int_panel.add(new JScrollPane(arbre));
+			arbre.setPath("../ProjetJavaL3/config.xml");
+
+			MouseAdapter ml = new MouseAdapter() 
+			{
+			     public void mousePressed(MouseEvent e) 
+			     {
+			         int selRow = arbre.getRowForLocation(e.getX(), e.getY());
+			         // TreePath selPath = arbre.getPathForLocation(e.getX(), e.getY());
+			         if(selRow != -1) 
+			         {
+			             if(e.getClickCount() == 1) 
+			             {
+			            	 setLocalisationIntern(arbre.getPathForLocation(e.getX(), e.getY()));
+			             }
+			         }
+			     }
+			 };
+			 arbre.addMouseListener(ml);
+
+
 			JTextField commentaire = new JTextField(5);
 			commentaire.setPreferredSize(new Dimension(20,20));
 
-			int_panel.add(new JLabel("Bâtiment : "));
-			int_panel.add(batiment);
-			int_panel.add(new JLabel("Etage : "));
-			int_panel.add(etage);
-			int_panel.add(new JLabel("Salle : "));
-			int_panel.add(salle);
+			
 			int_panel.add(new JLabel("Info complémentaire :"));
 			int_panel.add(commentaire);
 			
@@ -231,30 +243,6 @@ public class InfoCapteur_panel extends JPanel
 			
 			revalidate();
 			repaint();
-			/*
-			if( this.extern )
-			{
-				remove(this.gps_label);
-				remove(this.exterieur);
-				this.extern = false;
-			}
-			if( this.intern )
-			{
-				remove(this.Localisation.);
-				this.intern = false;
-			}
-			this.intern = true;
-			
-			
-			this.interieur = new JPanel();
-			interieur.setLayout(new FlowLayout(FlowLayout.LEFT));
-			interieur.add(new JLabel("Bâtiment : "));
-			JComboBox batiment = new JComboBox();
-			interieur.add(batiment);
-			this.add(interieur);
-			revalidate();
-			repaint();
-			*/
 		}
 		
 		public String getInfoId()
@@ -267,6 +255,11 @@ public class InfoCapteur_panel extends JPanel
 			return "Patate";
 		}
 		
+		public void setLocalisationIntern(TreePath arbre)
+		{
+			this.arbreChoix = arbre;
+		}
+		
 		public Localisation getInfoLocalisation()
 		{
 			this.localisationChoix.getComponents();
@@ -274,7 +267,9 @@ public class InfoCapteur_panel extends JPanel
 			Localisation loc;
 			if( true )
 			{
-				loc = new LocalisationInt("U4","203",2,"Les licornes sont roses");
+				int numEtage = this.arbreChoix[3].charAt(6);
+				this.arbreChoix.toString();
+				loc = new LocalisationInt(this.arbreChoix[1],this.arbreChoix[2],numEtage,"Les licornes sont roses");
 			}
 			else
 			{
@@ -286,88 +281,9 @@ public class InfoCapteur_panel extends JPanel
 		
 		public Intervalle getInfoIntervalle()
 		{
-			Intervalle inter = new Intervalle(-80,80);
+			this.get
 			
 			return inter;
 		}
-		/*
-		private void interieur() throws IOException, ClassNotFoundException, Exception
-		{
-			if( this.exter)
-			{
-				remove(this.gps_label);
-				remove(this.exterieur);
-				this.exter = false;
-			}
-			if( this.intern )
-			{
-				remove(this.interieur);
-				this.intern = false;
-			}
-			this.intern = true;
-			
-			
-			this.interieur = new JPanel();
-			interieur.setLayout(new FlowLayout(FlowLayout.LEFT));
-			interieur.add(new JLabel("Bâtiment : "));
-			
-			//	Gets XML
-			String filename = "../ProjetJavaL3/config.xml";
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = factory.newDocumentBuilder();
-			org.w3c.dom.Document documento = docBuilder.parse(filename);
-			// Search All text
-			documento.getDocumentElement().normalize();
 
-			// Get elements from xml 
-			Element raiz = documento.getDocumentElement();
-			NodeList listeBatiments = raiz.getElementsByTagName("batiment");
-			NodeList listeEtages = raiz.getElementsByTagName("etage");
-			NodeList listeSalles = raiz.getElementsByTagName("salle");
-			//String listePosRel = raiz.getElementsByTagName("posRel").item(0).getTextContent();
-			// Search everything
-			int bat = listeBatiments.getLength();
-			int eta = listeEtages.getLength();
-			int salleL = listeSalles.getLength();
-			//int posRelL = listePosRel.length();
-			String[] vecBatiments = new String[bat];
-			String[] vecEtages = new String[eta];
-			String[] vecSalles = new String[salleL];
-			//String[] vecPosRel = new String[posRelL];
-			for (int i = 0; i < bat; i++) {
-			    Element elem = (Element) listeBatiments.item(i);           
-			    vecBatiments[i] =  elem.getAttribute("id");
-			}
-			for (int i = 0; i < eta; i++) {
-			    Element elem = (Element) listeEtages.item(i);           
-			    vecEtages[i] =  elem.getAttribute("id");
-			}
-			for (int i = 0; i < salleL; i++) {
-			    Element elem = (Element) listeSalles.item(i);           
-			    vecSalles[i] =  elem.getAttribute("id");
-			}
-			for (int i = 0; i < posRelL; i++) {
-			    Element elem = (Element) listePosRel.item(i);           
-			    vecPosRel[i] =  elem.getElement;
-			}
-			JComboBox batiment = new JComboBox(vecBatiments);
-			JComboBox etage = new JComboBox(vecEtages);
-			JComboBox salle = new JComboBox(vecSalles);
-			//JComboBox posRel = new JComboBox(vecPosRel);
-			
-			interieur.add(batiment);
-			this.add(interieur);
-			this.add(new JLabel("Etage : "));
-			this.add(etage);
-			this.add(new JLabel("Salle : "));
-			this.add(salle);
-			
-			
-			revalidate();
-			repaint();
-		}
-		*/
-
-	
-	
 }
