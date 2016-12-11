@@ -260,7 +260,7 @@ public class InfoCapteur_panel extends JPanel
 			int_panel.add(new JScrollPane(arbre));
 			arbre.setPath("../ProjetJavaL3/config.xml");
 
-			MouseAdapter ml = new MouseAdapter() 
+			MouseAdapter ml = new MouseAdapter()
 			{
 			     public void mousePressed(MouseEvent e) 
 			     {
