@@ -8,7 +8,7 @@ public class LocalisationInt extends Localisation
 	int etage;
 	String commentaire;
 	
-	public LocalisationInt(String batiment,String salle,int etage,String commentaire)
+	public LocalisationInt(String batiment,int etage,String salle,String commentaire)
 	{
 		this.batiment = batiment;
 		this.salle = salle;

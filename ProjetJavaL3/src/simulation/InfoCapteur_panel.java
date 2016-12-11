@@ -58,6 +58,10 @@ public class InfoCapteur_panel extends JPanel
 	
 	boolean isInterieur;
 	
+	String batiment;
+	int etage;
+	String salle;
+	
 	/**
 	 * @param args
 	 */
@@ -264,9 +268,25 @@ public class InfoCapteur_panel extends JPanel
 			         // TreePath selPath = arbre.getPathForLocation(e.getX(), e.getY());
 			         if(selRow != -1) 
 			         {
-			             if(e.getClickCount() == 1) 
+			        	 if(e.getClickCount() == 1) 
 			             {
-			            	 setLocalisationIntern(arbre.getPathForLocation(e.getX(), e.getY()));
+			            	 TreePath temp = arbre.getPathForLocation(e.getX(), e.getY());
+		            		 setLocalisationIntern(temp);
+			            	 if(temp.getPathCount() == 4)
+			            	 { //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			            		 salle = temp.getLastPathComponent().toString();
+			            		 TreePath temp2 = temp.getParentPath();
+			            		 System.out.println(temp2.getLastPathComponent().toString());
+			            		 
+			            		 String stage = temp2.getLastPathComponent().toString().substring(5);
+                                 etage = Integer.parseInt(stage);
+                                 
+			            		 TreePath temp3 = temp2.getParentPath();
+			            		 batiment = temp3.getLastPathComponent().toString();
+			            		 System.out.println("Batiment : "+batiment);
+			            		 System.out.println("Etage : "+etage);
+			            		 System.out.println("Salle : "+salle);
+			            	 }
 			             }
 			         }
 			     }
@@ -302,7 +322,7 @@ public class InfoCapteur_panel extends JPanel
 			{
 				// int numEtage = this.arbreChoix[3].charAt(6);
 				// this.arbreChoix.toString();
-				loc = new LocalisationInt("Ah","AH",1,"Les licornes sont roses");
+				loc = new LocalisationInt(batiment,etage,salle,"Les licornes sont roses");
 			}
 			else
 			{			
