@@ -9,13 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 import javax.swing.tree.TreePath;
 
 
@@ -38,13 +41,22 @@ public class InfoCapteur_panel extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 
-	JPanel identifiant;
-	JPanel type;
-	JPanel intervalle;
+	JTextField identifiant;
+	JComboBox<Object> type;
+	
+	JFormattedTextField min;
+	JFormattedTextField max;
+	
+	JFormattedTextField latitude;
+	JFormattedTextField longitude;
+	
 	JPanel localisationBouton;
 	JPanel localisationChoix;
+	
 	XmlJTree arbre;
 	TreePath arbreChoix;
+	
+	boolean isInterieur;
 	
 	/**
 	 * @param args
@@ -73,6 +85,7 @@ public class InfoCapteur_panel extends JPanel
 		// Localisation
 		this.add(new JLabel("===Localisation==="));
 		Init_localisation_panel();
+		exterieur();
 	}
 	
 	public void Init_id_panel()
@@ -80,24 +93,25 @@ public class InfoCapteur_panel extends JPanel
 		JPanel id = new JPanel();
 		
 		JTextField id_text_field = new JTextField();
+		id_text_field.setText("Default");
 		id_text_field.setPreferredSize(new Dimension(130, 20));
 		
 		id.add(id_text_field);
 		this.add(id);
-		this.identifiant = id;
+		this.identifiant = id_text_field;
 	}
 	
 	public void Init_type_panel()
 	{
 		JPanel typ = new JPanel();
-		String[] type_string = { "Temperature", "Humidité","Consommation Electrique", "etc" };
+		String[] type_string = { "Temperature", "Humidité","ConsoElec", "Autre" };
 		 //Create the combo box, select item at index 4.
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
 		type_combo.setPreferredSize(new Dimension(130,20));
-		
+		type_combo.setSelectedItem(type_string[0]);
 		typ.add(type_combo);
 		this.add(typ);
-		this.type = typ;
+		this.type = type_combo;
 	}
 	
 	public void Init_intervalle_panel()
@@ -108,11 +122,22 @@ public class InfoCapteur_panel extends JPanel
 		JPanel min_panel = new JPanel();
 		JPanel max_panel = new JPanel();
 		
-		JTextField min_texField = new JTextField();
+		MaskFormatter int_formatter = null;
+		try {
+			int_formatter = new MaskFormatter("#####");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int_formatter.setPlaceholderCharacter('0');
+		
+		JFormattedTextField min_texField = new JFormattedTextField(int_formatter);;
+		min_texField.setValue("00000");
 		min_texField.setPreferredSize(new Dimension(60, 20));
 		
-		JTextField max_texField = new JTextField();
+		JFormattedTextField max_texField = new JFormattedTextField(int_formatter);;
 		max_texField.setPreferredSize(new Dimension(60, 20));
+		max_texField.setValue("00100");
 		
 		min_panel.add(new JLabel("Min :"),BorderLayout.WEST);
 		min_panel.add(min_texField,BorderLayout.EAST);
@@ -122,12 +147,14 @@ public class InfoCapteur_panel extends JPanel
 		max_panel.add(max_texField,BorderLayout.EAST);
 		max_panel.setBackground( Color.MAGENTA );
 		
+		this.min = min_texField;
+		this.max = max_texField;
 		
 		inter.add(min_panel);
 		inter.add(max_panel);
 		
 		this.add(inter);
-		this.intervalle = inter;
+		// this.intervalle = inter;
 	}
 	
 	public void Init_localisation_panel()
@@ -173,6 +200,7 @@ public class InfoCapteur_panel extends JPanel
 		private void exterieur() 
 		{
 			remove(this.localisationChoix);
+			this.isInterieur = false;
 			
 			JPanel ext_panel = new JPanel();
 			ext_panel.setLayout(new GridLayout(2,1));
@@ -182,10 +210,21 @@ public class InfoCapteur_panel extends JPanel
 			JPanel lat_long_panel = new JPanel();
 			lat_long_panel.setLayout(new FlowLayout());
 			
-			JTextField latitude = new JTextField(5);
+			MaskFormatter gps_formatter = null;
+			try {
+				gps_formatter = new MaskFormatter("###.######");
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			gps_formatter.setPlaceholderCharacter('0');
+			
+			JFormattedTextField latitude = new JFormattedTextField(gps_formatter);
+			latitude.setValue("000.000000");
 			latitude.setPreferredSize(new Dimension(20,20));
-			JTextField longitude = new JTextField(5);
+			JFormattedTextField longitude = new JFormattedTextField(gps_formatter);
 			longitude.setPreferredSize(new Dimension(20,20));
+			longitude.setValue("000.000000");
 			
 			ext_panel.add(gps_label);
 			
@@ -194,6 +233,9 @@ public class InfoCapteur_panel extends JPanel
 			
 			ext_panel.add(lat_long_panel);
 
+			this.latitude = latitude;
+			this.longitude = longitude;
+			
 			this.localisationChoix = ext_panel;
 			this.add(ext_panel);
 			
@@ -206,6 +248,7 @@ public class InfoCapteur_panel extends JPanel
 		private void interieur() 
 		{
 			remove(this.localisationChoix);
+			this.isInterieur = true;
 			// String path ="../ProjetJavaL3/config.xml";
 			final XmlJTree arbre = new XmlJTree(null);
 			JPanel int_panel = new JPanel();
@@ -245,16 +288,6 @@ public class InfoCapteur_panel extends JPanel
 			repaint();
 		}
 		
-		public String getInfoId()
-		{
-			return "Patate";
-		}
-		
-		public String getInfoType()
-		{
-			return "Patate";
-		}
-		
 		public void setLocalisationIntern(TreePath arbre)
 		{
 			this.arbreChoix = arbre;
@@ -265,28 +298,48 @@ public class InfoCapteur_panel extends JPanel
 			this.localisationChoix.getComponents();
 			
 			Localisation loc;
-			if( true )
+			if( isInterieur )
 			{
 				// int numEtage = this.arbreChoix[3].charAt(6);
 				// this.arbreChoix.toString();
 				loc = new LocalisationInt("Ah","AH",1,"Les licornes sont roses");
 			}
 			else
-			{
-				loc = new LocalisationExt(80,80);
+			{			
+				loc = new LocalisationExt(getLatitude(),getLongitude());
 			}
 
 			return loc;
 		}
 		
+		public double getLatitude()
+		{
+			return Double.parseDouble(this.latitude.getValue().toString());
+		}
+		
+		public double getLongitude()
+		{
+			return Double.parseDouble(this.longitude.getValue().toString());
+		}
+		
 		public int getInfoMax()
 		{
-			return 100;
+			return Integer.parseInt(this.max.getValue().toString());
 		}
 		
 		public int getInfoMin()
 		{
-			return 0;
+			return Integer.parseInt(this.min.getValue().toString());
+		}
+		
+		public String getInfoId()
+		{
+			return this.identifiant.getText();
+		}
+		
+		public String getInfoType()
+		{
+			return this.type.getSelectedItem().toString();
 		}
 
 }

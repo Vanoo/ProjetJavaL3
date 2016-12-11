@@ -3,21 +3,21 @@ package simulation;
 public class LocalisationExt extends Localisation
 {
 	
-		int latitude;
-		int longitude;
+		double latitude;
+		double longitude;
 		
-		public  LocalisationExt(int latitude,int longitude)
+		public  LocalisationExt(double latitude,double longitude)
 		{
 			this.latitude = latitude;
 			this.longitude = longitude;
 		}
 
-		public int getLatitude() 
+		public double getLatitude() 
 		{
 			return latitude;
 		}
 
-		public int getLongitude() 
+		public double getLongitude() 
 		{
 			return longitude;
 		}

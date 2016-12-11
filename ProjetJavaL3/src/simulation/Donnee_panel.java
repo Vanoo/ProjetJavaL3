@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,16 +39,23 @@ public class Donnee_panel extends JPanel
 	JButton val_button;
 	JFormattedTextField val_field;
 	/* JSlider val_slider; */
+	JCheckBox random;
+	double min;
+	double max;
 	
 	public Donnee_panel(double min,double max) throws ParseException
 	{
-		new JPanel();
+		super();
+		this.min = min;
+		this.max = max;
 		this.setBackground(Color.gray);
 		this.setLayout(new FlowLayout());
 		this.setPreferredSize(new Dimension(350,550));
 		this.setSize(new Dimension(350,550));
+		
+		this.random = new JCheckBox("Random", false);
 
-		this.add(new JLabel("######### Envoi des données #########"));
+		this.add(new JLabel("######### Envoi des donnees #########"));
 		
 	    MaskFormatter frequence_formatter = new MaskFormatter("#######");
 		frequence_formatter.setPlaceholderCharacter('0');
@@ -61,10 +69,11 @@ public class Donnee_panel extends JPanel
 		this.freq_slider.setMinorTickSpacing(1);*/
 		this.freq_lab = new JLabel();
 		
-		this.add(new JLabel("=============Fréquence============"));
+		this.add(new JLabel("=============Frequence============"));
 	    this.add(freq_field);
 	    // this.add(freq_button);
 	    this.add(freq_lab);
+		this.add(random);
 	    
 	    this.freq_button.addActionListener(new ActionListener()
 	    {
@@ -126,7 +135,14 @@ public class Donnee_panel extends JPanel
 	
 	public double getValeur()
 	{
-		double pat = Double.parseDouble((this.val_field.getValue().toString()));
+		double pat = 0;
+		if(this.random.isSelected()) {
+			pat = min + (Math.random() * (max - min));
+		}
+		else
+		{
+			pat = Double.parseDouble((this.val_field.getValue().toString()));
+		}
 		
 		System.out.println("Recup value");
 		// int val = Integer.valueOf(this.val_field.getText());
