@@ -1,15 +1,16 @@
 package simulation;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.FlatteningPathIterator;
-import java.io.IOException;
 import java.text.ParseException;
-import java.time.Clock;
 
-import javax.swing.*;
-import javax.swing.text.MaskFormatter;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 /* TODO 
@@ -21,18 +22,46 @@ public class SimWindows extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	
+	JPanel fenetre;
+	
 	Reseaux res;
 	Connection_panel connection_panel;
 	InfoCapteur_panel infoCapteur_panel;
 	Donnee_panel donnee_panel;
 	
+	Timer envoiData;
+	
 	// EnvoiData envoiData;
 	
+	public void sendData()
+	{	
+		this.res.sendData(this.donnee_panel.getValeur());
+	}
+	
+	public void changementDelay()
+	{
+		this.envoiData.setDelay(this.donnee_panel.getDelay());
+	}
+
 	public void lancementEnvoi()
 	{
-		this.res.sendData();
 		//this.envoiData = new EnvoiData(1,4.4,"envoi",res);
 		//envoiData.start();
+		int delay = this.donnee_panel.getDelay(); //milliseconds
+		ActionListener taskPerformer = new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent evt) 
+			{
+			    sendData();
+			}
+		};
+		this.envoiData = new Timer(delay, taskPerformer);
+		this.envoiData.start();
+	}
+	
+	public void arretEnvoi()
+	{
+		this.envoiData.stop();
 	}
 	
 	public SimWindows() throws ParseException
@@ -44,15 +73,14 @@ public class SimWindows extends JFrame
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);             
 	    this.setVisible(true);
-	    this.setSize(500, 600);
+	    this.setPreferredSize(new Dimension(500,600));
 	    
 	    /*============= Initialisation des JPanel =============*/
 	    JPanel content_panel = new JPanel();
 	    
 	    this.connection_panel = new Connection_panel();
 	    this.infoCapteur_panel = new InfoCapteur_panel();
-	    this.donnee_panel = new Donnee_panel();
-	    
+	    this.donnee_panel = null;
 	    /*============= On grise les elements de la fenetre =============*/
 	    fifty_shade_of_gray(true);
 	    
@@ -62,11 +90,30 @@ public class SimWindows extends JFrame
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    content_panel.setLayout(new BorderLayout(0,0));
 	    content_panel.add(this.connection_panel, BorderLayout.NORTH);
-	    content_panel.add(this.donnee_panel, BorderLayout.CENTER);
+	    // content_panel.add(this.donnee_panel, BorderLayout.CENTER);
 	    content_panel.add(this.infoCapteur_panel, BorderLayout.EAST);
 	    
+	    this.fenetre = content_panel;
 	    this.getContentPane().add(content_panel);
 	    pack();
+	}
+	
+	public void creationDonneePanel()
+	{
+		// recup intervalle min et max
+		Intervalle interv = this.infoCapteur_panel.getInfoIntervalle();
+		
+		this.donnee_panel = new Donnee_panel(interv.getMin(),interv.getMax());
+		this.fenetre.add(new JLabel("######### Envoi des données #########"));
+		this.fenetre.add(donnee_panel,BorderLayout.WEST);
+		revalidate();
+		repaint();
+		pack();
+	}
+	
+	public void suppresionDonneePanel()
+	{
+		
 	}
 	
 	public void boutonConnection()
@@ -84,9 +131,10 @@ public class SimWindows extends JFrame
 					// établit connection
 					System.out.printf("Connection");
 					success = connection();
-					System.out.printf("Fin COnnection");
+					System.out.printf("Fin Connection");
 					if( success )
 					{
+						creationDonneePanel();
 						// connection success ou fail
 						changementBouton(1);
 						System.out.printf("CHANGEMENT BOUTON");
@@ -100,11 +148,12 @@ public class SimWindows extends JFrame
 				}
 				else
 				{
-					// envoiData.terminate();
+					arretEnvoi();
 					// Deconnection
 					success = deconnection();
 					if( success )
 					{
+						suppresionDonneePanel();
 						changementBouton(0);
 						fifty_shade_of_gray(true);
 					}
@@ -171,11 +220,8 @@ public class SimWindows extends JFrame
 	public boolean deconnection()
 	{
 		boolean success = false;
-		
 		String id = "Temperature";
-
 		success = this.res.deconnexion(id);
-		
 		return success;
 	}
 	
@@ -192,10 +238,6 @@ public class SimWindows extends JFrame
 	
 	public void fifty_shade_of_gray(boolean bool)
 	{	
-		gray(this.connection_panel.getComponents(),bool);
-		gray(this.infoCapteur_panel.getComponents(),bool);
-		gray(this.infoCapteur_panel.getComponents(),bool);
-		gray(this.infoCapteur_panel.getComponents(),bool);
-		gray(this.donnee_panel.getComponents(),!bool);
+		
 	}
 }

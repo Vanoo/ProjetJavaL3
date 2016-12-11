@@ -184,7 +184,7 @@ public class Reseaux {
 	
 	
 	// Envoi de la donnee d'un capteur
-	public void sendData (/*double data*/) 
+	public void sendData (double data) 
 	{
 		for(int i=0;i<3;i++)
 		{

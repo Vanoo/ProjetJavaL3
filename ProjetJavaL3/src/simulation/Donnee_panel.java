@@ -29,15 +29,12 @@ public class Donnee_panel extends JPanel
 	JLabel val_lab;
 	JSlider val_slider;
 	
-	public Donnee_panel()
+	public Donnee_panel(double min,double max)
 	{
 		new JPanel();
 		this.setBackground(Color.gray);
-		this.setPreferredSize(new Dimension(350,550));
-		
-		this.titre = new JLabel("######### Envoi des données #########");
-		this.add(titre);
-		
+		this.setPreferredSize(new Dimension(300,550));
+
 		this.freq_lab = new JLabel("==========Fréquence==========");
 		this.add(freq_lab);
 		this.freq_slider = new JSlider();
@@ -46,53 +43,31 @@ public class Donnee_panel extends JPanel
 		this.freq_slider.setMajorTickSpacing(10);
 		this.freq_slider.setMinorTickSpacing(1);
 		this.freq_slider.setPaintTicks(true);
-		this.freq_slider.setPaintLabels(true);
 	    this.add(freq_slider);
 	    
 	    this.val_lab = new JLabel("===========Valeur===========");
 		this.add(val_lab);
 		this.val_slider = new JSlider();
 	    this.add(val_slider);
-	}
 
-	public JLabel getTitre() {
-		return titre;
+		this.val_slider.setMinimum((int)min-1);
+		this.val_slider.setMaximum((int)max+1);
+		this.val_slider.setMajorTickSpacing(10);
+		this.val_slider.setMinorTickSpacing(1);
+		this.val_slider.setPaintTicks(true);
+	    this.add(val_slider);
+	    
+	    
 	}
-
-	public void setTitre(JLabel titre) {
-		this.titre = titre;
+	
+	public int getDelay()
+	{
+		return this.freq_slider.getValue();
 	}
-
-	public JLabel getFreq_lab() {
-		return freq_lab;
-	}
-
-	public void setFreq_lab(JLabel freq_lab) {
-		this.freq_lab = freq_lab;
-	}
-
-	public JSlider getFreq_slider() {
-		return freq_slider;
-	}
-
-	public void setFreq_slider(JSlider freq_slider) {
-		this.freq_slider = freq_slider;
-	}
-
-	public JLabel getVal_lab() {
-		return val_lab;
-	}
-
-	public void setVal_lab(JLabel val_lab) {
-		this.val_lab = val_lab;
-	}
-
-	public JSlider getVal_slider() {
-		return val_slider;
-	}
-
-	public void setVal_slider(JSlider val_slider) {
-		this.val_slider = val_slider;
+	
+	public double getValeur()
+	{
+		return this.val_slider.getValue();
 	}
 
 }
