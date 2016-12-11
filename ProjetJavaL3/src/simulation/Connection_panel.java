@@ -50,8 +50,9 @@ public class Connection_panel extends JPanel
 		  
 		this.ip_textField = new JFormattedTextField(ip_formatter);
 		this.ip_textField.setPreferredSize(new Dimension(115, 20));
-		this.add(this.ip_textField);
 		this.add(this.ip_label);
+		this.add(this.ip_textField);
+		
 		
 		this.port_label = new JLabel("Port :");
 		
@@ -62,9 +63,9 @@ public class Connection_panel extends JPanel
 		port_textField.setPreferredSize(new Dimension(55, 20));
 		
 		this.connection_button = new JButton("Connection"); 
-		
-		this.add(this.port_textField);
 		this.add(port_label);
+		this.add(this.port_textField);
+		
 		this.add(connection_button);
 		
 		

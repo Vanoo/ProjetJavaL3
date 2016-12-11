@@ -49,14 +49,12 @@ public class Donnee_panel extends JPanel
 
 		this.add(new JLabel("######### Envoi des données #########"));
 		
-		
-	    MaskFormatter frequence_formatter = new MaskFormatter("##m##s####ms");
+	    MaskFormatter frequence_formatter = new MaskFormatter("#######");
 		frequence_formatter.setPlaceholderCharacter('0');
 		
 		// this.freq_slider = new JSlider(1,1000,1000);
 		this.freq_field = new JFormattedTextField(frequence_formatter);
-		this.freq_field.setText("00010000");
-		this.freq_field.setValue("00010000");
+		this.freq_field.setValue("00001000");
 		this.freq_button = new JButton("Change");
 		
 		/*this.freq_slider.setMajorTickSpacing(10);
@@ -65,7 +63,7 @@ public class Donnee_panel extends JPanel
 		
 		this.add(new JLabel("=============Fréquence============"));
 	    this.add(freq_field);
-	    this.add(freq_button);
+	    // this.add(freq_button);
 	    this.add(freq_lab);
 	    
 	    this.freq_button.addActionListener(new ActionListener()
@@ -99,7 +97,7 @@ public class Donnee_panel extends JPanel
 		
 		this.add(new JLabel("===============Valeur==============="));
 		this.add(val_field);
-		this.add(val_button);
+		// this.add(val_button);
 		this.add(val_lab);
 	}
 	
@@ -120,15 +118,16 @@ public class Donnee_panel extends JPanel
 	public int getDelay()
 	{
 		System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
-		// int pat = Integer.parseInt((this.freq_field.getValue().toString()));
+		int pat = Integer.parseInt((this.freq_field.getValue().toString()));
 		// System.out.println("Recup delay : "+pat);
 		// int val = Integer.valueOf(this.val_field.getText());
-		return 1000;
+		return pat;
 	}
 	
 	public double getValeur()
 	{
 		double pat = Double.parseDouble((this.val_field.getValue().toString()));
+		
 		System.out.println("Recup value");
 		// int val = Integer.valueOf(this.val_field.getText());
 		return pat;

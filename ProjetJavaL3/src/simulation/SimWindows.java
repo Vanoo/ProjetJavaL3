@@ -45,7 +45,7 @@ public class SimWindows extends JFrame
 	    
 	    this.connection_panel = new Connection_panel();
 	    this.infoCapteur_panel = new InfoCapteur_panel();
-	    // this.donnee_panel = null;
+	    this.donnee_panel = null;
 	    /*============= On grise les elements de la fenetre =============*/
 	    // fifty_shade_of_gray(true);
 	    
@@ -91,11 +91,16 @@ public class SimWindows extends JFrame
 		this.envoiData.stop();
 	}
 	
-	public void creationDonneePanel() throws ParseException
+	public void creationDonneePanel()
 	{
 		
-		this.donnee_panel = new Donnee_panel(this.infoCapteur_panel.getInfoMin(),
-				this.infoCapteur_panel.getInfoMax());
+		try {
+			this.donnee_panel = new Donnee_panel(this.infoCapteur_panel.getInfoMin(),
+					this.infoCapteur_panel.getInfoMax());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		this.fenetre.add(donnee_panel,BorderLayout.WEST);
 		
@@ -131,12 +136,7 @@ public class SimWindows extends JFrame
 					System.out.printf("Fin Connection");
 					if( success )
 					{
-						try {
-							creationDonneePanel();
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						creationDonneePanel();
 						// connection success ou fail
 						changementBouton(1);
 						System.out.printf("CHANGEMENT BOUTON");
