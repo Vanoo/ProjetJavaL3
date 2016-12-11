@@ -53,7 +53,6 @@ public class InfoCapteur_panel extends JPanel
 	JPanel localisationBouton;
 	JPanel localisationChoix;
 	
-	XmlJTree arbre;
 	TreePath arbreChoix;
 	
 	boolean isInterieur;
@@ -61,6 +60,7 @@ public class InfoCapteur_panel extends JPanel
 	String batiment;
 	int etage;
 	String salle;
+	JTextField commentaire;
 	
 	/**
 	 * @param args
@@ -271,9 +271,8 @@ public class InfoCapteur_panel extends JPanel
 			        	 if(e.getClickCount() == 1) 
 			             {
 			            	 TreePath temp = arbre.getPathForLocation(e.getX(), e.getY());
-		            		 setLocalisationIntern(temp);
 			            	 if(temp.getPathCount() == 4)
-			            	 { //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			            	 {
 			            		 salle = temp.getLastPathComponent().toString();
 			            		 TreePath temp2 = temp.getParentPath();
 			            		 System.out.println(temp2.getLastPathComponent().toString());
@@ -294,23 +293,18 @@ public class InfoCapteur_panel extends JPanel
 			 arbre.addMouseListener(ml);
 
 
-			JTextField commentaire = new JTextField(5);
+			JTextField commentaire = new JTextField(20);
+			commentaire.setText("noComment");
 			commentaire.setPreferredSize(new Dimension(20,20));
-
-			
 			int_panel.add(new JLabel("Info complémentaire :"));
 			int_panel.add(commentaire);
 			
+			this.commentaire = commentaire;
 			this.localisationChoix = int_panel;
 			this.add(int_panel);
 			
 			revalidate();
 			repaint();
-		}
-		
-		public void setLocalisationIntern(TreePath arbre)
-		{
-			this.arbreChoix = arbre;
 		}
 		
 		public Localisation getInfoLocalisation()
@@ -322,22 +316,21 @@ public class InfoCapteur_panel extends JPanel
 			{
 				// int numEtage = this.arbreChoix[3].charAt(6);
 				// this.arbreChoix.toString();
-				loc = new LocalisationInt(batiment,etage,salle,"Les licornes sont roses");
+				loc = new LocalisationInt(batiment,etage,salle,this.commentaire.getText());
 			}
 			else
 			{			
 				loc = new LocalisationExt(getLatitude(),getLongitude());
 			}
-
 			return loc;
 		}
 		
-		public double getLatitude()
+		private double getLatitude()
 		{
 			return Double.parseDouble(this.latitude.getValue().toString());
 		}
 		
-		public double getLongitude()
+		private double getLongitude()
 		{
 			return Double.parseDouble(this.longitude.getValue().toString());
 		}

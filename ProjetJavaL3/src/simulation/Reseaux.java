@@ -61,7 +61,7 @@ public class Reseaux {
 		{	
 			e.printStackTrace();
 		}
-		
+		// TODO CHANGER A METTRE DANS CONNEXION
 		// Creation des entrees/sorties
 		try
 		{
@@ -73,7 +73,6 @@ public class Reseaux {
 		{	
 			e.printStackTrace();
 		}
-		
 	}
 	
 	
@@ -136,7 +135,8 @@ public class Reseaux {
 	
 	
 	// Connexion d'un capteur d'exterieur
-	public boolean connexionExt(String id, String type, double latitutde, double longitude) {
+	public boolean connexionExt(String id, String type, double latitutde, double longitude) 
+	{		
 		String str = "plop";
 		
 		// Envoi de la demande

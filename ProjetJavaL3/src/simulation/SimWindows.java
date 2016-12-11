@@ -1,12 +1,14 @@
 package simulation;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -84,11 +86,14 @@ public class SimWindows extends JFrame
 		};
 		this.envoiData = new Timer(delay, taskPerformer);
 		this.envoiData.start();
+		
+		fifty_shade_of_gray(false,this.fenetre);
 	}
 	
 	public void arretEnvoi()
 	{
 		this.envoiData.stop();
+		fifty_shade_of_gray(true,this.fenetre);
 	}
 	
 	public void creationDonneePanel()
@@ -140,12 +145,17 @@ public class SimWindows extends JFrame
 						// connection success ou fail
 						changementBouton(1);
 						System.out.printf("CHANGEMENT BOUTON");
-						// Grise tous les saisie utilisateurs
-						// 
 						lancementEnvoi();
 						// Affichage bouton déconnection a la place du bouton connection
 						// envoi donnée recu de donnee panel
 						//JOptionPane.showMessageDialog(,ip_textField.getValue());
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(fenetre,
+							    "Erreur Connection.",
+							    "Serveur error",
+							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				else
@@ -157,7 +167,13 @@ public class SimWindows extends JFrame
 					{
 						suppresionDonneePanel();
 						changementBouton(0);
-						// fifty_shade_of_gray(true);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(fenetre,
+								"Erreur déconnection.",
+							    "Serveur error",
+							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -226,4 +242,22 @@ public class SimWindows extends JFrame
 		success = this.res.deconnexion(id);
 		return success;
 	}
+	
+	public void fifty_shade_of_gray(boolean bool,JPanel panel)
+	{
+		panel.setEnabled(bool);
+		Component tab_component[] = panel.getComponents();
+		
+		for(int i = 0; i < tab_component.length; i++) 
+	    {
+	        if(tab_component[i].getClass().getName() == "javax.swing.JPanel") 
+	        {
+	        	fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
+	        }
+
+	        tab_component[i].setEnabled(bool);
+	    }
+		
+		
+	}	
 }
