@@ -4,15 +4,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
 
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.JTextField;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.MaskFormatter;
 
 /* TODO
- * Gestion des events : - Tant que non connectée tout le pannel doit être grisé
+ * Gestion des events : - Tant que non connecte tout le pannel doit etre grise
  * 						- ChangeListener sur les deux Slider, avec affichage valeur actuel
  * 						- En fonction du type changer val_lab
  * 						- En fonction de l'intervalle changée les min et max du slider
@@ -29,11 +35,15 @@ public class Donnee_panel extends JPanel
 
 	JLabel titre;
 	JLabel freq_lab;
-	JSlider freq_slider;
+	/*JSlider freq_slider; */
+	JFormattedTextField freq_field;
+	JButton freq_button;
 	JLabel val_lab;
-	JSlider val_slider;
+	JButton val_button;
+	JFormattedTextField val_field;
+	/* JSlider val_slider; */
 	
-	public Donnee_panel(double min,double max)
+	public Donnee_panel(double min,double max) throws ParseException
 	{
 		new JPanel();
 		this.setBackground(Color.gray);
@@ -43,63 +53,96 @@ public class Donnee_panel extends JPanel
 
 		this.add(new JLabel("######### Envoi des données #########"));
 		
-		this.freq_slider = new JSlider(1,1000,1000);
-		this.freq_slider.setMajorTickSpacing(10);
-		this.freq_slider.setMinorTickSpacing(1);
+		
+	    MaskFormatter frequence_formatter = new MaskFormatter("########");
+		frequence_formatter.setPlaceholderCharacter('0');
+		
+		// this.freq_slider = new JSlider(1,1000,1000);
+		this.freq_field = new JFormattedTextField(frequence_formatter);
+		this.freq_field.setText("00m01s0000ms");
+		this.freq_button = new JButton("Change");
+		
+		/*this.freq_slider.setMajorTickSpacing(10);
+		this.freq_slider.setMinorTickSpacing(1);*/
 		this.freq_lab = new JLabel();
 		
-		this.add(new JLabel("==========Fréquence=========="));
-	    this.add(freq_slider);
+		this.add(new JLabel("=============Fréquence============"));
+	    this.add(freq_field);
+	    this.add(freq_button);
 	    this.add(freq_lab);
 	    
-	    this.freq_slider.addChangeListener(new ChangeListener() 
+	    this.freq_button.addActionListener(new ActionListener()
 	    {
-			public void stateChanged(ChangeEvent arg0) 
+			public void actionPerformed(ActionEvent e)
 			{
-				changeLabelFrequence(freq_slider.getValue());
+				// changeLabelFrequence(Integer.valueOf(freq_field.getText()));
 			}
 		});
-		
-		this.val_slider = new JSlider((int)min,(int)max,(int)(min+max)/2);
+	    
+		/* this.val_slider = new JSlider((int)min,(int)max,(int)(min+max)/2);
 		this.val_slider.setMajorTickSpacing(10);
 		this.val_slider.setMinorTickSpacing(1);
-		this.val_slider.setPaintTicks(true);
+		this.val_slider.setPaintTicks(true); */
+	    
+	    MaskFormatter value_formatter = new MaskFormatter("###.##");
+		value_formatter.setPlaceholderCharacter('0');
+	    
 		this.val_lab = new JLabel();
-		
-		this.val_slider.addChangeListener(new ChangeListener() 
+		this.val_button = new JButton("Change");
+		this.val_field = new JFormattedTextField(value_formatter);
+		this.val_field.setText("001.00");
+		this.val_field.setValue("001.00");
+		this.val_button.addActionListener(new ActionListener()
 	    {
-			public void stateChanged(ChangeEvent arg0) 
+			public void actionPerformed(ActionEvent e)
 			{
-				changeLabelValeur(val_slider.getValue());
+				changeLabelValeur();
 			}
 		});
 		
-		this.add(new JLabel("===========Valeur==========="));
-		this.add(val_slider);
+		this.add(new JLabel("===============Valeur==============="));
+		this.add(val_field);
+		this.add(val_button);
 		this.add(val_lab);
 	}
 	
-	public void changeLabelFrequence(int frequence)
+	public void changeLabelFrequence()
 	{
+		// Integer.parseInt(this.freq_field.getValue().toString());		
+		int pat = Integer.parseInt((this.freq_field.getValue().toString()));
+		System.out.println("frequence "+pat);
+		
 		System.out.println("Changement Frequence");
-        this.freq_lab.setText(frequence + " micro Seconde                                     ");
+        this.freq_lab.setText(pat + " micro Seconde                                     ");
 	}
 	
-	public void changeLabelValeur(int valeur)
+	public void changeLabelValeur()
 	{
-		System.out.println("Changement Valeur");
-        this.val_lab.setText(valeur + " Something                                              ");
+		// Integer.parseInt(this.freq_field.getValue().toString());
+		System.out.println("freq_field"+this.val_field.getValue().toString());
+		
+		double pat = Double.parseDouble((this.val_field.getValue().toString()));
+		System.out.println("pat "+pat);
+		
+		System.out.println("Changement Valeur :"+pat);
+        this.val_lab.setText(pat + " Something                                              ");
 	}
 	
 	public int getDelay()
 	{
-		System.out.println("Recup Delay");
-		return this.freq_slider.getValue();
+		System.out.println("OUAHAHAHAHAHAHAH");
+		System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
+		// int pat = Integer.parseInt((this.freq_field.getValue().toString()));
+		// System.out.println("Recup delay : "+pat);
+		// int val = Integer.valueOf(this.val_field.getText());
+		return 1;
 	}
 	
 	public double getValeur()
 	{
+		double pat = Double.parseDouble((this.val_field.getValue().toString()));
 		System.out.println("Recup value");
-		return this.val_slider.getValue();
+		// int val = Integer.valueOf(this.val_field.getText());
+		return pat;
 	}
 }

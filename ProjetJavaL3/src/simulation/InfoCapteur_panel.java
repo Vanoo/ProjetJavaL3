@@ -267,9 +267,9 @@ public class InfoCapteur_panel extends JPanel
 			Localisation loc;
 			if( true )
 			{
-				int numEtage = this.arbreChoix[3].charAt(6);
-				this.arbreChoix.toString();
-				loc = new LocalisationInt(this.arbreChoix[1],this.arbreChoix[2],numEtage,"Les licornes sont roses");
+				// int numEtage = this.arbreChoix[3].charAt(6);
+				// this.arbreChoix.toString();
+				loc = new LocalisationInt("Ah","AH",1,"Les licornes sont roses");
 			}
 			else
 			{
@@ -279,11 +279,14 @@ public class InfoCapteur_panel extends JPanel
 			return loc;
 		}
 		
-		public Intervalle getInfoIntervalle()
+		public int getInfoMax()
 		{
-			this.get
-			
-			return inter;
+			return 100;
+		}
+		
+		public int getInfoMin()
+		{
+			return 0;
 		}
 
 }
