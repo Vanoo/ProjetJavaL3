@@ -21,7 +21,11 @@ import org.xml.sax.SAXException;
  */
 public class XmlJTree extends JTree{
 
-    DefaultTreeModel dtModel=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	DefaultTreeModel dtModel=null;
 
     /**
      * XmlJTree constructor

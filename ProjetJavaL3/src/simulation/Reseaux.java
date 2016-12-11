@@ -78,11 +78,11 @@ public class Reseaux {
 	
 	
 	// debug fonction
-	private int send(String message)
-	{
-        out.println(message);
-		return 0;
-	}
+	//private int send(String message)
+	//{
+	//    out.println(message);
+	//	return 0;
+	//}
 	
 	
 /*	public String receive ()
@@ -136,7 +136,7 @@ public class Reseaux {
 	
 	
 	// Connexion d'un capteur d'exterieur
-	public boolean connexionExt(String id, String type, int latitutde, int longitude) {
+	public boolean connexionExt(String id, String type, double latitutde, double longitude) {
 		String str = "plop";
 		
 		// Envoi de la demande
