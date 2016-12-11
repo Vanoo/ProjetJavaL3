@@ -42,7 +42,7 @@ public class Connection_panel extends JPanel
 	{
 		new JPanel();
 		this.setBackground(Color.lightGray);
-		this.setPreferredSize(new Dimension(this.getWidth(),40));
+		this.setPreferredSize(new Dimension(500,40));
 		this.setLayout(new FlowLayout());
 		
 		this.ip_label = new JLabel("IP :");

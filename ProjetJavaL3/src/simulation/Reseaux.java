@@ -158,7 +158,6 @@ public class Reseaux {
         return (str.compareTo("ConnexionOK") == 0);
 	}
 	
-	
 	// Connexion d'un capteur d'interieur
 	public boolean connexionInt(String id, String type, String batiment, int etage, String salle, String pos) {
 		String str = "plop";
@@ -186,12 +185,8 @@ public class Reseaux {
 	// Envoi de la donnee d'un capteur
 	public void sendData (double data) 
 	{
-		for(int i=0;i<3;i++)
-		{
-			out.println("ValeurCapteur;"+4.4);
-			System.out.println("Donnee envoyee : "+4.4);
-		}
-		 
+			out.println("ValeurCapteur;"+data);
+			System.out.println("Donnee envoyee : "+data);
 	}
 	
 

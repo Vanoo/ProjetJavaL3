@@ -35,19 +35,25 @@ public class SimWindows extends JFrame
 	
 	public void sendData()
 	{	
+		changementDelay();
+		System.out.println("Valeur envoyé : "+this.donnee_panel.getValeur()+" Delay : "+this.donnee_panel.getDelay());
 		this.res.sendData(this.donnee_panel.getValeur());
 	}
 	
 	public void changementDelay()
 	{
+		// this.envoiData.setInitialDelay(this.donnee_panel.getDelay());
 		this.envoiData.setDelay(this.donnee_panel.getDelay());
+		// arretEnvoi();
+		// lancementEnvoi();
 	}
 
 	public void lancementEnvoi()
 	{
 		//this.envoiData = new EnvoiData(1,4.4,"envoi",res);
 		//envoiData.start();
-		int delay = this.donnee_panel.getDelay(); //milliseconds
+		int delay = this.donnee_panel.getDelay(); // millisecond
+		System.out.println("Delay : "+delay);
 		ActionListener taskPerformer = new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent evt) 
@@ -104,8 +110,9 @@ public class SimWindows extends JFrame
 		Intervalle interv = this.infoCapteur_panel.getInfoIntervalle();
 		
 		this.donnee_panel = new Donnee_panel(interv.getMin(),interv.getMax());
-		this.fenetre.add(new JLabel("######### Envoi des données #########"));
 		this.fenetre.add(donnee_panel,BorderLayout.WEST);
+		remove(this.getContentPane());
+		this.getContentPane().add(fenetre);
 		revalidate();
 		repaint();
 		pack();
@@ -223,17 +230,6 @@ public class SimWindows extends JFrame
 		String id = "Temperature";
 		success = this.res.deconnexion(id);
 		return success;
-	}
-	
-	public void gray(Component tab_component[],boolean bool)
-	{
-		for(int i=0;i<tab_component.length;i++)
-		{
-			if( ! tab_component[i].equals(this.connection_panel.connection_button) )
-			{
-				tab_component[i].setEnabled(bool);
-			}
-		}
 	}
 	
 	public void fifty_shade_of_gray(boolean bool)
