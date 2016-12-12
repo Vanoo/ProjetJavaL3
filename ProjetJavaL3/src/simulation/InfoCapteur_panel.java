@@ -1,19 +1,14 @@
 package simulation;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -65,7 +60,7 @@ public class InfoCapteur_panel extends JPanel
 	 */
 	public InfoCapteur_panel()
 	{
-		/*============= Création Panel infoCapteur =============*/
+		/*============= Creation Panel infoCapteur =============*/
 		
 		super();
 		
@@ -76,12 +71,11 @@ public class InfoCapteur_panel extends JPanel
 		this.setAlignmentY(CENTER_ALIGNMENT);
 		
 		/*============= Initialisation des composant du Jpanel =============*/
-		
-		JLabel infoCapteur = new JLabel("Information Capteur");
 		// this.add(infoCapteur,BorderLayout.CENTER);
 		
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
+		jp.setPreferredSize(new Dimension(500,20));
 		jp.add(new JLabel("#################### Info Capteur ####################"));
 		jp.setMaximumSize(new Dimension(500,10));
 		this.add(jp);
@@ -141,8 +135,8 @@ public class InfoCapteur_panel extends JPanel
 		inter.setBackground(Color.LIGHT_GRAY);
 		inter.add(new JLabel("====Intervalle===="));
 		inter.setLayout(new FlowLayout());
-		inter.setMaximumSize(new Dimension(200,45));
-		inter.setPreferredSize(new Dimension(200,45));
+		inter.setMaximumSize(new Dimension(200,50));
+		inter.setPreferredSize(new Dimension(200,50));
 		
 		JPanel min_max_panel = new JPanel();
 		
@@ -294,7 +288,7 @@ public class InfoCapteur_panel extends JPanel
 			int_panel.setBackground(Color.LIGHT_GRAY);
 			// int_panel.setLayout(new GridLayout(8,1));
 			JScrollPane scroll_arbre = new JScrollPane(arbre);
-			scroll_arbre.setPreferredSize(new Dimension(500,150));
+			scroll_arbre.setPreferredSize(new Dimension(500,140));
 			
 			int_panel.add(scroll_arbre);
 			arbre.setPath("../ProjetJavaL3/config.xml");
@@ -339,7 +333,7 @@ public class InfoCapteur_panel extends JPanel
 			JTextField commentaire = new JTextField(20);
 			commentaire.setText("noComment");
 			commentaire.setPreferredSize(new Dimension(80,20));
-			int_panel.add(new JLabel("Info complémentaire :"));
+			int_panel.add(new JLabel("Info complementaire :"));
 			int_panel.add(commentaire);
 			
 			this.commentaire = commentaire;

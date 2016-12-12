@@ -2,10 +2,6 @@ package simulation;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -13,8 +9,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
-
-
 /** 
 *	@Javadoc
 *	Classe qui gère le "panel" de connection.
@@ -22,9 +16,6 @@ import javax.swing.text.MaskFormatter;
 */
 public class Connection_panel extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	static Dimension dim = new Dimension(500,60);
@@ -45,6 +36,7 @@ public class Connection_panel extends JPanel
 		
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
+		jp.setPreferredSize(new Dimension(500,20));
 		jp.add(new JLabel("################## Envoi des donnees ##################"));
 		this.add(jp);
 		this.ip_label = new JLabel("IP :");
@@ -54,7 +46,7 @@ public class Connection_panel extends JPanel
 		ip_formatter.setPlaceholderCharacter('0');
 		  
 		this.ip_textField = new JFormattedTextField(ip_formatter);
-		// this.ip_textField.setPreferredSize(new Dimension(115, 20));
+
 		this.add(this.ip_label);
 		this.add(this.ip_textField);
 		
@@ -64,7 +56,6 @@ public class Connection_panel extends JPanel
 		port_formatter = new MaskFormatter("######");
 		port_formatter.setPlaceholderCharacter('0');
 		this.port_textField = new JFormattedTextField(port_formatter);
-		// port_textField.setPreferredSize(new Dimension(55, 20));
 		
 		this.connection_button = new JButton("Connection"); 
 		this.add(port_label);
@@ -72,17 +63,19 @@ public class Connection_panel extends JPanel
 		
 		this.add(connection_button);
 	}
+
 	//retourne une IP sous forme de String
 	public String getIp()
 	{
 		String ip = this.ip_textField.getText();
 		
-		if( ip.compareTo("0000.0000.0000.0000") == 0 )
+		if( ip.compareTo("0.0.0.0") == 0 )
 		{
 			ip = "127.000.000.001";
 		}		
 		return ip;
 	}
+
 	//retourne un port
 	public int getPort()
 	{
@@ -93,7 +86,9 @@ public class Connection_panel extends JPanel
 		}
 		return port;
 	}
-	//retourne le bouton connection
+	/**
+	 * @return le bouton connection
+	 */
 	public JButton getConnection_button() {
 		return connection_button;
 	}

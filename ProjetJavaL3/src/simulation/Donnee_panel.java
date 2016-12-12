@@ -1,13 +1,7 @@
 package simulation;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.BoxLayout;
@@ -88,6 +82,7 @@ public class Donnee_panel extends JPanel
 		
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
+		jp.setPreferredSize(new Dimension(500,20));
 		jp.add(new JLabel("################## Envoi des donnees ##################"));
 		this.add(jp);
 		this.add(frequence_panel);
