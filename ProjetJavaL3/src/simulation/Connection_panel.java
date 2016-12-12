@@ -10,16 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
-
-/* TODO 
- * Positionnement
- * Gestion des event :  - Clique Bouton lance vérification des infos rentrées dans InfoCapteur
- *  					Si valide lance demande de connection
- *  						Si connection OK, on grise InfoCapteur et IP/Port ( aucune modif possible )
- *  					Si non valide affichage pop-up erreur
- *  TextField IP, Formatage du texte ( seulement int )
- *  TextField PORT, formatage du texte et limitation ( seulement int < MAX_PORT )
- *  */
 public class Connection_panel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
@@ -42,6 +32,7 @@ public class Connection_panel extends JPanel
 		
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
+		jp.setPreferredSize(new Dimension(500,20));
 		jp.add(new JLabel("################## Envoi des donnees ##################"));
 		this.add(jp);
 		this.ip_label = new JLabel("IP :");
@@ -51,7 +42,7 @@ public class Connection_panel extends JPanel
 		ip_formatter.setPlaceholderCharacter('0');
 		  
 		this.ip_textField = new JFormattedTextField(ip_formatter);
-		// this.ip_textField.setPreferredSize(new Dimension(115, 20));
+
 		this.add(this.ip_label);
 		this.add(this.ip_textField);
 		
@@ -61,7 +52,6 @@ public class Connection_panel extends JPanel
 		port_formatter = new MaskFormatter("######");
 		port_formatter.setPlaceholderCharacter('0');
 		this.port_textField = new JFormattedTextField(port_formatter);
-		// port_textField.setPreferredSize(new Dimension(55, 20));
 		
 		this.connection_button = new JButton("Connection"); 
 		this.add(port_label);

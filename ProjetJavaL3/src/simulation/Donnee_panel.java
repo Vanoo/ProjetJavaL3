@@ -12,15 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
-/* TODO
- * Gestion des events : - Tant que non connecte tout le pannel doit etre grise
- * 						- ChangeListener sur les deux Slider, avec affichage valeur actuel
- * 						- En fonction du type changer val_lab
- * 						- En fonction de l'intervalle changée les min et max du slider
- * 							et fonction du type changer le TickSpacing ???
- * 						- CheckBox fonctionnel qui lance une fonction random
- * Positionnement a revoir
- */
 public class Donnee_panel extends JPanel 
 {
 	/**
@@ -87,6 +78,7 @@ public class Donnee_panel extends JPanel
 		
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
+		jp.setPreferredSize(new Dimension(500,20));
 		jp.add(new JLabel("################## Envoi des donnees ##################"));
 		this.add(jp);
 		this.add(frequence_panel);
