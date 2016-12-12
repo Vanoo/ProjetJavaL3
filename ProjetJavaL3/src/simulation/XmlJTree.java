@@ -15,15 +15,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
 /**
- * XmlJTree class
+ * 	@Javadoc
+ * 	XmlJTree class qui permet la création d'un JTree à partir d'un fichier XML
  */
-public class XmlJTree extends JTree{
+public class XmlJTree extends JTree
+{
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	DefaultTreeModel dtModel=null;
 
@@ -31,17 +29,20 @@ public class XmlJTree extends JTree{
      * XmlJTree constructor
      * @param filePath
      */
-    public XmlJTree(String filePath){
+    public XmlJTree(String filePath)
+    {
         if(filePath!=null)
         setPath(filePath);
     }
 
-    public void setPath(String filePath){
+    public void setPath(String filePath)
+    {
         Node root = null;
-        /*
-            Parse the xml file
-        */
-        try {
+        /**
+         *    "Parse" le fichier XML
+         */
+        try 
+        {
             DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(filePath);
@@ -52,37 +53,39 @@ public class XmlJTree extends JTree{
             JOptionPane.showMessageDialog(null,"Can't parse file","Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        /*
-            if any result set the appropriate model to the jTree
-        */
-        if(root!=null){
+        /**
+         *   Si un on obtient un résultat, met en place le model pour le JTree
+         */
+        if(root!=null)
+        {
             dtModel= new DefaultTreeModel(builtTreeNode(root));
             this.setModel(dtModel);
         }
     }
 
     /**
-     * fullTreeNode Method
-     * construct the full jTree from any xml file
-     * this method is recursive
+     * @Javadoc
+     * 	Constructeur d'arbre de noeud de manière récursive.
      * @param root
      * @return DefaultMutableTreeNode
      */
-    private DefaultMutableTreeNode builtTreeNode(Node root){
-        DefaultMutableTreeNode dmtNode;
-
+    private DefaultMutableTreeNode builtTreeNode(Node root)
+    {
+    	DefaultMutableTreeNode dmtNode;
         dmtNode = new DefaultMutableTreeNode(root.getNodeName());
-            NodeList nodeList = root.getChildNodes();
-            for (int count = 0; count < nodeList.getLength(); count++) {
-                Node tempNode = nodeList.item(count);
-                // make sure it's element node.
-                if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-                    if (tempNode.hasChildNodes()) {
+        NodeList nodeList = root.getChildNodes();
+        for (int count = 0; count < nodeList.getLength(); count++) 
+        {
+        	Node tempNode = nodeList.item(count);
+            if (tempNode.getNodeType() == Node.ELEMENT_NODE) 
+            {
+            	if (tempNode.hasChildNodes()) 
+            	{
                         // loop again if has child nodes
                         dmtNode.add(builtTreeNode(tempNode));
-                    }
                 }
             }
+        }
         return dmtNode;
     }
 }

@@ -1,5 +1,11 @@
 package simulation;
 
+/**
+ *	@Javadoc
+ *	Classe qui gère les coordonnées GPS, cette classe hérite dde la classe Localisation.
+ *
+ */
+
 public class LocalisationExt extends Localisation
 {
 	
