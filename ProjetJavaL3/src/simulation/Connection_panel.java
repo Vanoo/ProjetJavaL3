@@ -28,6 +28,8 @@ public class Connection_panel extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	static Dimension dim = new Dimension(500,40);
+	
 	JLabel ip_label;
 	JLabel port_label;
 	
@@ -39,8 +41,8 @@ public class Connection_panel extends JPanel
 	{
 		new JPanel();
 		this.setBackground(Color.lightGray);
-		this.setPreferredSize(new Dimension(500,40));
-		this.setLayout(new FlowLayout());
+		this.setPreferredSize(dim);
+		// this.setLayout(new FlowLayout());
 		
 		this.ip_label = new JLabel("IP :");
 		
@@ -49,10 +51,9 @@ public class Connection_panel extends JPanel
 		ip_formatter.setPlaceholderCharacter('0');
 		  
 		this.ip_textField = new JFormattedTextField(ip_formatter);
-		this.ip_textField.setPreferredSize(new Dimension(115, 20));
+		// this.ip_textField.setPreferredSize(new Dimension(115, 20));
 		this.add(this.ip_label);
 		this.add(this.ip_textField);
-		
 		
 		this.port_label = new JLabel("Port :");
 		
@@ -60,15 +61,13 @@ public class Connection_panel extends JPanel
 		port_formatter = new MaskFormatter("######");
 		port_formatter.setPlaceholderCharacter('0');
 		this.port_textField = new JFormattedTextField(port_formatter);
-		port_textField.setPreferredSize(new Dimension(55, 20));
+		// port_textField.setPreferredSize(new Dimension(55, 20));
 		
 		this.connection_button = new JButton("Connection"); 
 		this.add(port_label);
 		this.add(this.port_textField);
 		
 		this.add(connection_button);
-		
-		
 	}
 	
 	public JLabel getIp_label() {

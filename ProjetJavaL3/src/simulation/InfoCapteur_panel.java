@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -41,6 +45,7 @@ public class InfoCapteur_panel extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 
+	static Dimension dim = new Dimension(500,400);
 	JTextField identifiant;
 	JComboBox<Object> type;
 	
@@ -69,16 +74,25 @@ public class InfoCapteur_panel extends JPanel
 	{
 		/*============= Création Panel infoCapteur =============*/
 		
-		new JPanel();
+		super();
+		
 		this.setBackground(Color.yellow);
-		this.setPreferredSize(new Dimension(160,550));
-		this.setLayout(new FlowLayout());
-		this.add(new JLabel("Information Capteur"));
+		this.setPreferredSize(dim);
+
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setAlignmentY(CENTER_ALIGNMENT);
+		
+		JLabel infoCapteur = new JLabel("Information Capteur");
+
+		this.add(infoCapteur);
 		
 		/*============= Initialisation des composant du Jpanel =============*/
 		
 		// Identifiant
-		this.add(new JLabel("===Identifiant===="));
+		
+		JLabel identifiant = new JLabel("===Identifiant====");
+		this.add(identifiant);
+		
 		Init_id_panel();
 		// Type
 		this.add(new JLabel("=====Type======"));
@@ -95,13 +109,16 @@ public class InfoCapteur_panel extends JPanel
 	public void Init_id_panel()
 	{
 		JPanel id = new JPanel();
-		
+		id.setMaximumSize(new Dimension(130,20));
 		JTextField id_text_field = new JTextField();
 		id_text_field.setText("Default");
 		id_text_field.setPreferredSize(new Dimension(130, 20));
 		
 		id.add(id_text_field);
+		
 		this.add(id);
+		
+
 		this.identifiant = id_text_field;
 	}
 	
@@ -111,9 +128,10 @@ public class InfoCapteur_panel extends JPanel
 		String[] type_string = { "Temperature", "Humidité","ConsoElec", "Autre" };
 		 //Create the combo box, select item at index 4.
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
-		type_combo.setPreferredSize(new Dimension(130,20));
+		// type_combo.setPreferredSize(new Dimension(130,20));
 		type_combo.setSelectedItem(type_string[0]);
 		typ.add(type_combo);
+		
 		this.add(typ);
 		this.type = type_combo;
 	}
@@ -121,7 +139,7 @@ public class InfoCapteur_panel extends JPanel
 	public void Init_intervalle_panel()
 	{
 		JPanel inter = new JPanel();
-		inter.setLayout(new GridLayout(2,1));
+		// inter.setLayout(new GridLayout(2,1));
 		
 		JPanel min_panel = new JPanel();
 		JPanel max_panel = new JPanel();
@@ -137,10 +155,10 @@ public class InfoCapteur_panel extends JPanel
 		
 		JFormattedTextField min_texField = new JFormattedTextField(int_formatter);;
 		min_texField.setValue("00000");
-		min_texField.setPreferredSize(new Dimension(60, 20));
+		// min_texField.setPreferredSize(new Dimension(60, 20));
 		
 		JFormattedTextField max_texField = new JFormattedTextField(int_formatter);;
-		max_texField.setPreferredSize(new Dimension(60, 20));
+		// max_texField.setPreferredSize(new Dimension(60, 20));
 		max_texField.setValue("00100");
 		
 		min_panel.add(new JLabel("Min :"),BorderLayout.WEST);
@@ -164,7 +182,7 @@ public class InfoCapteur_panel extends JPanel
 	public void Init_localisation_panel()
 	{
 		JPanel localisationBouton = new JPanel();
-		localisationBouton.setLayout(new GridLayout(2,1));
+		// localisationBouton.setLayout(new GridLayout(2,1));
 		
 		// Bouton "extérieur"
 		JButton bExt = new JButton("Extérieur");
@@ -207,9 +225,9 @@ public class InfoCapteur_panel extends JPanel
 			this.isInterieur = false;
 			
 			JPanel ext_panel = new JPanel();
-			ext_panel.setLayout(new GridLayout(2,1));
+			// ext_panel.setLayout(new GridLayout(2,1));
 			
-			JLabel gps_label = new JLabel("Coordonnées GPS :");
+			JLabel gps_label = new JLabel("      Coordonnées GPS  ");
 			
 			JPanel lat_long_panel = new JPanel();
 			lat_long_panel.setLayout(new FlowLayout());
@@ -225,9 +243,9 @@ public class InfoCapteur_panel extends JPanel
 			
 			JFormattedTextField latitude = new JFormattedTextField(gps_formatter);
 			latitude.setValue("000.000000");
-			latitude.setPreferredSize(new Dimension(20,20));
+			// latitude.setPreferredSize(new Dimension(83,20));
 			JFormattedTextField longitude = new JFormattedTextField(gps_formatter);
-			longitude.setPreferredSize(new Dimension(20,20));
+			// longitude.setPreferredSize(new Dimension(83,20));
 			longitude.setValue("000.000000");
 			
 			ext_panel.add(gps_label);
@@ -241,6 +259,7 @@ public class InfoCapteur_panel extends JPanel
 			this.longitude = longitude;
 			
 			this.localisationChoix = ext_panel;
+			
 			this.add(ext_panel);
 			
 			revalidate();
@@ -255,9 +274,13 @@ public class InfoCapteur_panel extends JPanel
 			this.isInterieur = true;
 			// String path ="../ProjetJavaL3/config.xml";
 			final XmlJTree arbre = new XmlJTree(null);
+			// arbre.setSize(new Dimension(100,200));
 			JPanel int_panel = new JPanel();
-			int_panel.setLayout(new GridLayout(8,1));
-			int_panel.add(new JScrollPane(arbre));
+			// int_panel.setLayout(new GridLayout(8,1));
+			JScrollPane scroll_arbre = new JScrollPane(arbre);
+			scroll_arbre.setPreferredSize(new Dimension(100,200));
+			
+			int_panel.add(scroll_arbre);
 			arbre.setPath("../ProjetJavaL3/config.xml");
 
 			MouseAdapter ml = new MouseAdapter()
@@ -295,17 +318,20 @@ public class InfoCapteur_panel extends JPanel
 
 			JTextField commentaire = new JTextField(20);
 			commentaire.setText("noComment");
-			commentaire.setPreferredSize(new Dimension(20,20));
+			commentaire.setPreferredSize(new Dimension(80,20));
 			int_panel.add(new JLabel("Info complémentaire :"));
 			int_panel.add(commentaire);
 			
 			this.commentaire = commentaire;
 			this.localisationChoix = int_panel;
+
 			this.add(int_panel);
 			
 			revalidate();
 			repaint();
 		}
+		
+		
 		
 		public Localisation getInfoLocalisation()
 		{

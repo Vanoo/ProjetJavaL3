@@ -3,10 +3,13 @@ package simulation;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +25,8 @@ public class SimWindows extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	
+	static Dimension dim = new Dimension(500,600);
+	
 	JPanel fenetre;
 	
 	Reseaux res;
@@ -32,22 +37,28 @@ public class SimWindows extends JFrame
 	Timer envoiData;
 	
 	public SimWindows() throws ParseException
-	{
-		setResizable(false);
-		
+	{		
 		/*============= Initialisation de la fenetre =============*/
 		this.setTitle("Simulation Capteur");
 	    this.setLocationRelativeTo(null);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);             
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+	    // this.setMinimumSize(new Dimension());
 	    this.setVisible(true);
-	    this.setPreferredSize(new Dimension(500,600));
+	    
+	    // this.setPreferredSize(dim);
+	    this.setMinimumSize(dim);
+	    this.setMaximumSize(dim);
 	    
 	    /*============= Initialisation des JPanel =============*/
-	    JPanel content_panel = new JPanel();
-	    
+	    fenetre = new JPanel();
+	    fenetre.setPreferredSize(dim);
+	    fenetre.setMinimumSize(dim);
+	    fenetre.setMaximumSize(dim);
+
 	    this.connection_panel = new Connection_panel();
 	    this.infoCapteur_panel = new InfoCapteur_panel();
-	    this.donnee_panel = null;
+	    this.donnee_panel = new Donnee_panel(0, 100);
+	    
 	    /*============= On grise les elements de la fenetre =============*/
 	    // fifty_shade_of_gray(true);
 	    
@@ -55,13 +66,10 @@ public class SimWindows extends JFrame
 	    boutonConnection();
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
-	    content_panel.setLayout(new BorderLayout(0,0));
-	    content_panel.add(this.connection_panel, BorderLayout.NORTH);
-	    // content_panel.add(this.donnee_panel, BorderLayout.CENTER);
-	    content_panel.add(this.infoCapteur_panel, BorderLayout.EAST);
-	    
-	    this.fenetre = content_panel;
-	    this.getContentPane().add(content_panel);
+	    fenetre.add(connection_panel);
+	    fenetre.add(infoCapteur_panel);
+	    fenetre.add(donnee_panel);
+	    this.add(fenetre);
 	    pack();
 	}
 	
@@ -96,31 +104,11 @@ public class SimWindows extends JFrame
 		fifty_shade_of_gray(true,this.fenetre);
 	}
 	
-	public void creationDonneePanel()
+	public void changementPanel()
 	{
-		
-		try {
-			this.donnee_panel = new Donnee_panel(this.infoCapteur_panel.getInfoMin(),
-					this.infoCapteur_panel.getInfoMax());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		this.fenetre.add(donnee_panel,BorderLayout.WEST);
-		
-		remove(this.getContentPane());
-		
-		this.getContentPane().add(fenetre);
-		
-		revalidate();
-		repaint();
-		pack();
-	}
-	
-	public void suppresionDonneePanel()
-	{
-		// TODO
+		int min = this.infoCapteur_panel.getInfoMin();
+		int max = this.infoCapteur_panel.getInfoMax();
+		this.donnee_panel.changementIntervalle(min,max);
 	}
 	
 	public void boutonConnection()
@@ -141,7 +129,7 @@ public class SimWindows extends JFrame
 					System.out.printf("Fin Connection");
 					if( success )
 					{
-						creationDonneePanel();
+						changementPanel();
 						// connection success ou fail
 						changementBouton(1);
 						System.out.printf("CHANGEMENT BOUTON");
@@ -165,7 +153,6 @@ public class SimWindows extends JFrame
 					success = deconnection();
 					if( success )
 					{
-						suppresionDonneePanel();
 						changementBouton(0);
 					}
 					else

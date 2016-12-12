@@ -1,12 +1,16 @@
 package simulation;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
@@ -30,15 +34,15 @@ public class Donnee_panel extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 
+	static Dimension dim = new Dimension(500,150);
+	
 	JLabel titre;
 	JLabel freq_lab;
-	/*JSlider freq_slider; */
 	JFormattedTextField freq_field;
 	JButton freq_button;
 	JLabel val_lab;
 	JButton val_button;
 	JFormattedTextField val_field;
-	/* JSlider val_slider; */
 	JCheckBox random;
 	double min;
 	double max;
@@ -48,95 +52,69 @@ public class Donnee_panel extends JPanel
 		super();
 		this.min = min;
 		this.max = max;
+
 		this.setBackground(Color.gray);
-		this.setLayout(new FlowLayout());
-		this.setPreferredSize(new Dimension(350,550));
-		this.setSize(new Dimension(350,550));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setAlignmentY(CENTER_ALIGNMENT);
 		
 		this.random = new JCheckBox("Random", false);
 
-		this.add(new JLabel("######### Envoi des donnees #########"));
-		
-	    MaskFormatter frequence_formatter = new MaskFormatter("#######");
+	    MaskFormatter frequence_formatter = new MaskFormatter("########");
 		frequence_formatter.setPlaceholderCharacter('0');
 		
 		// this.freq_slider = new JSlider(1,1000,1000);
 		this.freq_field = new JFormattedTextField(frequence_formatter);
+		this.freq_field.setMaximumSize(new Dimension(120,20));
 		this.freq_field.setValue("00001000");
-		this.freq_button = new JButton("Change");
-		
-		/*this.freq_slider.setMajorTickSpacing(10);
-		this.freq_slider.setMinorTickSpacing(1);*/
-		this.freq_lab = new JLabel();
-		
-		this.add(new JLabel("=============Frequence============"));
-	    this.add(freq_field);
-	    // this.add(freq_button);
-	    this.add(freq_lab);
-		this.add(random);
-	    
-	    this.freq_button.addActionListener(new ActionListener()
-	    {
-			public void actionPerformed(ActionEvent e)
-			{
-				// changeLabelFrequence(Integer.valueOf(freq_field.getText()));
-			}
-		});
-	    
-		/* this.val_slider = new JSlider((int)min,(int)max,(int)(min+max)/2);
-		this.val_slider.setMajorTickSpacing(10);
-		this.val_slider.setMinorTickSpacing(1);
-		this.val_slider.setPaintTicks(true); */
+		// this.freq_lab = new JLabel();
 	    
 	    MaskFormatter value_formatter = new MaskFormatter("###.##");
 		value_formatter.setPlaceholderCharacter('0');
 	    
 		this.val_lab = new JLabel();
-		this.val_button = new JButton("Change");
 		this.val_field = new JFormattedTextField(value_formatter);
+		this.val_field.setMaximumSize(new Dimension(100,20));
 		this.val_field.setText("001.00");
 		this.val_field.setValue("001.00");
-		this.val_button.addActionListener(new ActionListener()
-	    {
-			public void actionPerformed(ActionEvent e)
-			{
-				changeLabelValeur();
-			}
-		});
 		
-		this.add(new JLabel("===============Valeur==============="));
-		this.add(val_field);
-		// this.add(val_button);
-		this.add(val_lab);
+		JPanel frequence_panel = new JPanel();
+		frequence_panel.add(new JLabel("Frequence :"));
+		frequence_panel.add(this.freq_field);
+		frequence_panel.add(new JLabel(" ms"));
+		
+		JPanel valeur_panel = new JPanel();
+		valeur_panel.add(new JLabel("Valeur :"));
+		valeur_panel.add(val_field);
+		valeur_panel.add(new JLabel(" unité   "));;
+		valeur_panel.add(random);
+		
+		
+		this.add(new JLabel("################## Envoi des donnees ##################"));
+	    // this.add(freq_field);
+		this.add(frequence_panel);
+		this.add(valeur_panel);
+	    // this.add(freq_lab);
+		// this.add(val_lab);
 	}
 	
-	public void changeLabelFrequence()
+	public void changementIntervalle(int min,int max)
 	{
-		// Integer.parseInt(this.freq_field.getValue().toString());		
-		System.out.println("Changement Frequence :"+this.freq_field.getValue().toString());
-        this.freq_lab.setText(1 + " micro Seconde                                     ");
-	}
-	
-	public void changeLabelValeur()
-	{
-		// Integer.parseInt(this.freq_field.getValue().toString());
-		System.out.println("Changement Valeur :"+this.val_field.getValue().toString());
-        this.val_lab.setText(1 + " Something                                              ");
+		this.min=min;
+		this.max=max;
 	}
 	
 	public int getDelay()
 	{
 		System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
 		int pat = Integer.parseInt((this.freq_field.getValue().toString()));
-		// System.out.println("Recup delay : "+pat);
-		// int val = Integer.valueOf(this.val_field.getText());
 		return pat;
 	}
 	
 	public double getValeur()
 	{
 		double pat = 0;
-		if(this.random.isSelected()) {
+		if(this.random.isSelected()) 
+		{
 			pat = min + (Math.random() * (max - min));
 		}
 		else
@@ -144,8 +122,15 @@ public class Donnee_panel extends JPanel
 			pat = Double.parseDouble((this.val_field.getValue().toString()));
 		}
 		
+		if( pat > max )
+		{
+			pat = max;
+		}
+		else if( pat < min )
+		{
+			pat = min;
+		}
 		System.out.println("Recup value");
-		// int val = Integer.valueOf(this.val_field.getText());
 		return pat;
 	}
 }
