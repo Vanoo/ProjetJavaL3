@@ -10,6 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
+/**
+ * @author r00t
+ *
+ */
 public class Connection_panel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
@@ -60,6 +64,9 @@ public class Connection_panel extends JPanel
 		this.add(connection_button);
 	}
 	
+	/**
+	 * @return
+	 */
 	public String getIp()
 	{
 		String ip = this.ip_textField.getText();
@@ -71,6 +78,9 @@ public class Connection_panel extends JPanel
 		return ip;
 	}
 	
+	/**
+	 * @return
+	 */
 	public int getPort()
 	{
 		int port = Integer.parseInt(this.port_textField.getText());
@@ -81,6 +91,9 @@ public class Connection_panel extends JPanel
 		return port;
 	}
 
+	/**
+	 * @return
+	 */
 	public JButton getConnection_button() {
 		return connection_button;
 	}
