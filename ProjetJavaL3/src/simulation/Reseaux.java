@@ -11,7 +11,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
-
+/**
+ * 
+ * @Javadoc
+ * Classe réseau qui s'occupe de la communication avec le serveur.
+ *
+ */
 public class Reseaux {
 	
 	Socket socket;
@@ -19,57 +24,14 @@ public class Reseaux {
 	int port;
     BufferedReader in;
     PrintWriter out;
-    boolean noerror;
+    boolean noerror;    
     
-    
-    // Test  
-/*    public static void main(String[] args)
-	{
-    	boolean bool;
-    	
-		Reseaux res = new Reseaux("127.0.0.1", 7888);
-		bool = res.connexionExt("Thermomètre", "Temperature", 50, 65);
-		if(bool) {
-			res.sendData(22.5);
-			res.sendData(23.5);
-			res.deconnexion("Thermomètre");
-			res.deconnexion("Thermomètre");
-		}
-		System.out.println("plop");
-	} */
-    
-    
-    
-	// Creeation d'une classe reseaux, connection au serveur, et ouverture des entrees/sorties
+	// Création d'une classe reseaux, connection au serveur, et ouverture des entrees/sorties
 	public Reseaux()
 	{
 		this.noerror = true;
 	}
-	
-	
-	// debug fonction
-	//private int send(String message)
-	//{
-	//    out.println(message);
-	//	return 0;
-	//}
-	
-	
-/*	public String receive ()
-	{
-		String message = "";
-		try
-		{
-			message = in.readLine();
-		}
-		catch (IOException e)
-		{	
-			e.printStackTrace();
-		}
-		return message;
-	} */
-	
-	
+		
 	public boolean connection (String adress, int port) {
 		// Avoir l'adresse grace a l'ip fournie 
 		try

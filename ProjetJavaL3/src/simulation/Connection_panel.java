@@ -15,15 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
 
-/* TODO 
- * Positionnement
- * Gestion des event :  - Clique Bouton lance vérification des infos rentrées dans InfoCapteur
- *  					Si valide lance demande de connection
- *  						Si connection OK, on grise InfoCapteur et IP/Port ( aucune modif possible )
- *  					Si non valide affichage pop-up erreur
- *  TextField IP, Formatage du texte ( seulement int )
- *  TextField PORT, formatage du texte et limitation ( seulement int < MAX_PORT )
- *  */
+/** 
+*	@Javadoc
+*	Classe qui gère le "panel" de connection.
+*
+*/
 public class Connection_panel extends JPanel
 {
 	/**
@@ -76,7 +72,7 @@ public class Connection_panel extends JPanel
 		
 		this.add(connection_button);
 	}
-	
+	//retourne une IP sous forme de String
 	public String getIp()
 	{
 		String ip = this.ip_textField.getText();
@@ -87,7 +83,7 @@ public class Connection_panel extends JPanel
 		}		
 		return ip;
 	}
-	
+	//retourne un port
 	public int getPort()
 	{
 		int port = Integer.parseInt(this.port_textField.getText());
@@ -97,11 +93,11 @@ public class Connection_panel extends JPanel
 		}
 		return port;
 	}
-
+	//retourne le bouton connection
 	public JButton getConnection_button() {
 		return connection_button;
 	}
-
+	
 	public void setConnection_button(JButton connection_button) {
 		this.connection_button = connection_button;
 	}

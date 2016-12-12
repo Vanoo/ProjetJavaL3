@@ -18,10 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 
-/* TODO 
- * Positionnement
- * Lecture Fichier
- * Communication Serveur
+/**
+ * @Javadoc
+ * Classe centrale qui regroupe et met en application les autres classes.
  */
 public class SimWindows extends JFrame
 {

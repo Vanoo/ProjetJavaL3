@@ -26,7 +26,9 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.tree.TreePath;
 
 
-/* TODO 
+/**
+ * @Javadoc
+ * Classe qui gère le panel "capteur" où les informations concernant le capteur sont entrées. 
  * 
  */
 public class InfoCapteur_panel extends JPanel

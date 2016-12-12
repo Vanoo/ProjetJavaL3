@@ -18,14 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
-/* TODO
- * Gestion des events : - Tant que non connecte tout le pannel doit etre grise
- * 						- ChangeListener sur les deux Slider, avec affichage valeur actuel
- * 						- En fonction du type changer val_lab
- * 						- En fonction de l'intervalle changée les min et max du slider
- * 							et fonction du type changer le TickSpacing ???
- * 						- CheckBox fonctionnel qui lance une fonction random
- * Positionnement a revoir
+/**
+ * @Javadoc
+ * Classe qui gère les données à envoyer lors qu'on est connecté.
  */
 public class Donnee_panel extends JPanel 
 {

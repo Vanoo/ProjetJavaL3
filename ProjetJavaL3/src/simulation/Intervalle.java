@@ -1,5 +1,10 @@
 package simulation;
-
+/**
+ * 
+ * @Javadoc
+ * Classe qui gère les intervalles et empêche la saisie de mauvaises entrées.
+ *
+ */
 public class Intervalle {
 
 	int min;

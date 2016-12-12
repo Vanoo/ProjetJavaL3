@@ -8,7 +8,12 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField.AbstractFormatter;
-
+/**
+ * 
+ * @Javadoc
+ * 
+ *
+ */
 public class IPTextFieldVerifier extends InputVerifier 
 {
    public boolean verify(JComponent input) 
