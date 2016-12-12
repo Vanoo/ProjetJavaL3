@@ -230,7 +230,7 @@ public class InfoCapteur_panel extends JPanel
 	    this.add(localisationChoix);
 	}
 	
-	// Callback quand on clique sur "Extérieur"
+	// Callback quand on clique sur "Extérieur".
 		private void exterieur() 
 		{
 			remove(this.localisationChoix);
