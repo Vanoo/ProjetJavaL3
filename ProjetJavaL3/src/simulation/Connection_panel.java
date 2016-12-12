@@ -2,10 +2,6 @@ package simulation;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -26,9 +22,6 @@ import javax.swing.text.MaskFormatter;
  *  */
 public class Connection_panel extends JPanel
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	static Dimension dim = new Dimension(500,60);

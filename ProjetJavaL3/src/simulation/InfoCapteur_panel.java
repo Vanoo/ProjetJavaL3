@@ -1,19 +1,14 @@
 package simulation;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -74,8 +69,6 @@ public class InfoCapteur_panel extends JPanel
 		this.setAlignmentY(CENTER_ALIGNMENT);
 		
 		/*============= Initialisation des composant du Jpanel =============*/
-		
-		JLabel infoCapteur = new JLabel("Information Capteur");
 		// this.add(infoCapteur,BorderLayout.CENTER);
 		
 		JPanel jp = new JPanel();

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 
 public class Reseaux {
 	
+	static int timeout_in_ms = 5000;
 	Socket socket;
 	InetAddress server_address;
 	int port;
@@ -92,9 +94,8 @@ public class Reseaux {
 		{
 			try
 			{
-				System.out.println("Patate 1.25");
-				socket = new Socket(server_address, port);
-				System.out.println("Patate 1.75");
+				socket = new Socket();
+				socket.connect(new InetSocketAddress(server_address, port), timeout_in_ms);
 			}
 			catch (IOException e)
 			{	
