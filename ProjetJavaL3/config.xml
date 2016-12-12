@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<faculte>
+	<U1>
+		<etage1>
+			<s101>101</s101>
+			<s102>102</s102>
+		</etage1>
+		<etage2>
+			<s202>202</s202>
+		</etage2>
+	</U1>
+	<U4>
+		<etage1>
+			<s103>103</s103>
+		</etage1>
+	</U4>
+</faculte>
