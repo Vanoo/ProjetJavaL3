@@ -1,6 +1,7 @@
 package simulation;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -44,10 +45,11 @@ public class SimWindows extends JFrame
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
 	    // this.setMinimumSize(new Dimension());
 	    this.setVisible(true);
-	    
+	    this.setResizable(false);
 	    // this.setPreferredSize(dim);
 	    this.setMinimumSize(dim);
 	    this.setMaximumSize(dim);
+	    this.setBounds(0, 0, 0, 0);
 	    
 	    /*============= Initialisation des JPanel =============*/
 	    fenetre = new JPanel();
@@ -69,6 +71,7 @@ public class SimWindows extends JFrame
 	    fenetre.add(connection_panel);
 	    fenetre.add(infoCapteur_panel);
 	    fenetre.add(donnee_panel);
+	    fenetre.setBackground(Color.lightGray);
 	    this.add(fenetre);
 	    pack();
 	}
@@ -138,13 +141,6 @@ public class SimWindows extends JFrame
 						// envoi donnée recu de donnee panel
 						//JOptionPane.showMessageDialog(,ip_textField.getValue());
 					}
-					else
-					{
-						JOptionPane.showMessageDialog(fenetre,
-							    "Erreur Connection.",
-							    "Serveur error",
-							    JOptionPane.ERROR_MESSAGE);
-					}
 				}
 				else
 				{
@@ -154,13 +150,6 @@ public class SimWindows extends JFrame
 					if( success )
 					{
 						changementBouton(0);
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(fenetre,
-								"Erreur déconnection.",
-							    "Serveur error",
-							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -198,7 +187,12 @@ public class SimWindows extends JFrame
 	{
 		boolean success = false;
 		
-		this.res = new Reseaux("127.0.0.1", 7888);
+		this.res = new Reseaux();
+		
+		if( this.res.connection("127.0.0.1", 7888) == false )
+		{
+			return false;
+		}
 		
 		System.out.printf("Plop 1\n");
 		System.out.printf("Plop 2\n");

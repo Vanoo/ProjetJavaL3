@@ -27,16 +27,7 @@ import javax.swing.tree.TreePath;
 
 
 /* TODO 
- * Gestion du GridBagLayout
- * TextField identifiant vérification identifiant possible
- * TextField Type vérification type possible ??????
- * Intervalle mettre deux TextField avec formatage int
  * 
- * Gestion des events : - Localisation affichage deux boutons Interieur Exterieur
- * Clique sur Interieur -> Affichage Quatre menus déroulants pour sélection Batiment / Etage / Salle / info
- * 						   Recuperation des infos dans un fichier de conf
- * Clique sur Exterieur -> Affichage deux textFields pour coordonnées GPD Lat/Long
- * 							( Vérification position possible ???? sur campus .... )
  */
 public class InfoCapteur_panel extends JPanel
 {
@@ -76,32 +67,26 @@ public class InfoCapteur_panel extends JPanel
 		
 		super();
 		
-		this.setBackground(Color.yellow);
+		this.setBackground(Color.LIGHT_GRAY);
 		this.setPreferredSize(dim);
-
+		this.setMaximumSize(dim);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentY(CENTER_ALIGNMENT);
 		
-		JLabel infoCapteur = new JLabel("Information Capteur");
-
-		this.add(infoCapteur);
-		
 		/*============= Initialisation des composant du Jpanel =============*/
 		
-		// Identifiant
+		JLabel infoCapteur = new JLabel("Information Capteur");
+		// this.add(infoCapteur,BorderLayout.CENTER);
 		
-		JLabel identifiant = new JLabel("===Identifiant====");
-		this.add(identifiant);
+		JPanel jp = new JPanel();
+		jp.setBackground(Color.gray);
+		jp.add(new JLabel("#################### Info Capteur ####################"));
+		jp.setMaximumSize(new Dimension(500,20));
+		this.add(jp);
 		
 		Init_id_panel();
-		// Type
-		this.add(new JLabel("=====Type======"));
 		Init_type_panel();
-		// Intervalle
-		this.add(new JLabel("====Intervalle===="));
 		Init_intervalle_panel();
-		// Localisation
-		this.add(new JLabel("===Localisation==="));
 		Init_localisation_panel();
 		exterieur();
 	}
@@ -109,15 +94,20 @@ public class InfoCapteur_panel extends JPanel
 	public void Init_id_panel()
 	{
 		JPanel id = new JPanel();
-		id.setMaximumSize(new Dimension(130,20));
+		id.setAlignmentY(CENTER_ALIGNMENT);
+		id.setBackground(Color.LIGHT_GRAY);
+		id.setMaximumSize(new Dimension(130,50));
+		id.setPreferredSize(new Dimension(130,50));
 		JTextField id_text_field = new JTextField();
 		id_text_field.setText("Default");
 		id_text_field.setPreferredSize(new Dimension(130, 20));
 		
+		JLabel identifiant = new JLabel("==Identifiant==");
+		
+		id.add(identifiant);
 		id.add(id_text_field);
 		
 		this.add(id);
-		
 
 		this.identifiant = id_text_field;
 	}
@@ -125,12 +115,19 @@ public class InfoCapteur_panel extends JPanel
 	public void Init_type_panel()
 	{
 		JPanel typ = new JPanel();
+		typ.setBackground(Color.LIGHT_GRAY);
+		typ.add(new JLabel("====Type===="));
+		typ.setMaximumSize(new Dimension(130,50));
+		typ.setPreferredSize(new Dimension(130,50));
 		String[] type_string = { "Temperature", "Humidité","ConsoElec", "Autre" };
 		 //Create the combo box, select item at index 4.
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
 		// type_combo.setPreferredSize(new Dimension(130,20));
 		type_combo.setSelectedItem(type_string[0]);
+		
 		typ.add(type_combo);
+		
+		
 		
 		this.add(typ);
 		this.type = type_combo;
@@ -139,16 +136,21 @@ public class InfoCapteur_panel extends JPanel
 	public void Init_intervalle_panel()
 	{
 		JPanel inter = new JPanel();
-		// inter.setLayout(new GridLayout(2,1));
+		inter.setBackground(Color.LIGHT_GRAY);
+		inter.add(new JLabel("====Intervalle===="));
+		inter.setLayout(new FlowLayout());
+		inter.setMaximumSize(new Dimension(200,60));
+		inter.setPreferredSize(new Dimension(200,60));
 		
-		JPanel min_panel = new JPanel();
-		JPanel max_panel = new JPanel();
+		JPanel min_max_panel = new JPanel();
 		
 		MaskFormatter int_formatter = null;
-		try {
+		try 
+		{
 			int_formatter = new MaskFormatter("#####");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (ParseException e) 
+		{
 			e.printStackTrace();
 		}
 		int_formatter.setPlaceholderCharacter('0');
@@ -161,19 +163,17 @@ public class InfoCapteur_panel extends JPanel
 		// max_texField.setPreferredSize(new Dimension(60, 20));
 		max_texField.setValue("00100");
 		
-		min_panel.add(new JLabel("Min :"),BorderLayout.WEST);
-		min_panel.add(min_texField,BorderLayout.EAST);
-		min_panel.setBackground( Color.red );
+		min_max_panel.add(new JLabel("Min :"));
+		min_max_panel.add(min_texField);
 		
-		max_panel.add(new JLabel("Max :"),BorderLayout.WEST);
-		max_panel.add(max_texField,BorderLayout.EAST);
-		max_panel.setBackground( Color.MAGENTA );
+		min_max_panel.add(new JLabel("Max :"));
+		min_max_panel.add(max_texField);
+		min_max_panel.setBackground( Color.LIGHT_GRAY );
 		
 		this.min = min_texField;
 		this.max = max_texField;
 		
-		inter.add(min_panel);
-		inter.add(max_panel);
+		inter.add(min_max_panel);
 		
 		this.add(inter);
 		// this.intervalle = inter;
@@ -181,8 +181,17 @@ public class InfoCapteur_panel extends JPanel
 	
 	public void Init_localisation_panel()
 	{
+		
+		JPanel localPanel = new JPanel();
+		localPanel.setMaximumSize(new Dimension(250,50));
+		localPanel.add(new JLabel("==Localisation=="));
+		
 		JPanel localisationBouton = new JPanel();
+		// localisationBouton.setLayout(new FlowLayout());
+		localisationBouton.setMaximumSize(new Dimension(250,50));
 		// localisationBouton.setLayout(new GridLayout(2,1));
+		
+		
 		
 		// Bouton "extérieur"
 		JButton bExt = new JButton("Extérieur");
@@ -209,13 +218,16 @@ public class InfoCapteur_panel extends JPanel
 		localisationBouton.add(bInt);
 		
 		JPanel localisationChoix = new JPanel();
-		
+		localisationBouton.setBackground(Color.LIGHT_GRAY);
+
+		localPanel.setBackground(Color.LIGHT_GRAY);
 		
 		this.localisationChoix = localisationChoix;
 		this.localisationBouton = localisationBouton;
 		
+		this.add(localPanel);
 		this.add(localisationBouton);
-		this.add(localisationChoix);
+	    this.add(localisationChoix);
 	}
 	
 	// Callback quand on clique sur "Extérieur"
@@ -225,18 +237,21 @@ public class InfoCapteur_panel extends JPanel
 			this.isInterieur = false;
 			
 			JPanel ext_panel = new JPanel();
-			// ext_panel.setLayout(new GridLayout(2,1));
-			
-			JLabel gps_label = new JLabel("      Coordonnées GPS  ");
-			
+			ext_panel.setBackground(Color.LIGHT_GRAY);
+			JLabel gps_label = new JLabel("Coordonnées GPS");
+
+
 			JPanel lat_long_panel = new JPanel();
 			lat_long_panel.setLayout(new FlowLayout());
+			lat_long_panel.setBackground(Color.lightGray);
 			
 			MaskFormatter gps_formatter = null;
-			try {
+			try 
+			{
 				gps_formatter = new MaskFormatter("###.######");
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (ParseException e) 
+			{
 				e.printStackTrace();
 			}
 			gps_formatter.setPlaceholderCharacter('0');
@@ -276,9 +291,10 @@ public class InfoCapteur_panel extends JPanel
 			final XmlJTree arbre = new XmlJTree(null);
 			// arbre.setSize(new Dimension(100,200));
 			JPanel int_panel = new JPanel();
+			int_panel.setBackground(Color.LIGHT_GRAY);
 			// int_panel.setLayout(new GridLayout(8,1));
 			JScrollPane scroll_arbre = new JScrollPane(arbre);
-			scroll_arbre.setPreferredSize(new Dimension(100,200));
+			scroll_arbre.setPreferredSize(new Dimension(500,150));
 			
 			int_panel.add(scroll_arbre);
 			arbre.setPath("../ProjetJavaL3/config.xml");
@@ -309,6 +325,10 @@ public class InfoCapteur_panel extends JPanel
 			            		 System.out.println("Etage : "+etage);
 			            		 System.out.println("Salle : "+salle);
 			            	 }
+			            	 else
+			            	 {
+			            		 salle = null;
+			            	 }
 			             }
 			         }
 			     }
@@ -330,8 +350,6 @@ public class InfoCapteur_panel extends JPanel
 			revalidate();
 			repaint();
 		}
-		
-		
 		
 		public Localisation getInfoLocalisation()
 		{

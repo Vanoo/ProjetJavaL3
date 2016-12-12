@@ -56,6 +56,7 @@ public class Donnee_panel extends JPanel
 		this.setBackground(Color.gray);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentY(CENTER_ALIGNMENT);
+		this.setBackground(Color.GRAY);
 		
 		this.random = new JCheckBox("Random", false);
 
@@ -78,23 +79,24 @@ public class Donnee_panel extends JPanel
 		this.val_field.setValue("001.00");
 		
 		JPanel frequence_panel = new JPanel();
+		frequence_panel.setBackground(Color.LIGHT_GRAY);
 		frequence_panel.add(new JLabel("Frequence :"));
 		frequence_panel.add(this.freq_field);
 		frequence_panel.add(new JLabel(" ms"));
 		
 		JPanel valeur_panel = new JPanel();
+		valeur_panel.setBackground(Color.LIGHT_GRAY);
 		valeur_panel.add(new JLabel("Valeur :"));
 		valeur_panel.add(val_field);
 		valeur_panel.add(new JLabel(" unité   "));;
 		valeur_panel.add(random);
 		
-		
-		this.add(new JLabel("################## Envoi des donnees ##################"));
-	    // this.add(freq_field);
+		JPanel jp = new JPanel();
+		jp.setBackground(Color.gray);
+		jp.add(new JLabel("################## Envoi des donnees ##################"));
+		this.add(jp);
 		this.add(frequence_panel);
 		this.add(valeur_panel);
-	    // this.add(freq_lab);
-		// this.add(val_lab);
 	}
 	
 	public void changementIntervalle(int min,int max)

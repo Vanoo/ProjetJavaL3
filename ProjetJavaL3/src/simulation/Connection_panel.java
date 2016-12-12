@@ -28,7 +28,7 @@ public class Connection_panel extends JPanel
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	static Dimension dim = new Dimension(500,40);
+	static Dimension dim = new Dimension(500,60);
 	
 	JLabel ip_label;
 	JLabel port_label;
@@ -39,11 +39,15 @@ public class Connection_panel extends JPanel
 	
 	public Connection_panel() throws ParseException 
 	{
-		new JPanel();
-		this.setBackground(Color.lightGray);
+		super();
+		this.setBackground(Color.LIGHT_GRAY);
 		this.setPreferredSize(dim);
 		// this.setLayout(new FlowLayout());
 		
+		JPanel jp = new JPanel();
+		jp.setBackground(Color.gray);
+		jp.add(new JLabel("################## Envoi des donnees ##################"));
+		this.add(jp);
 		this.ip_label = new JLabel("IP :");
 		
 		MaskFormatter ip_formatter;

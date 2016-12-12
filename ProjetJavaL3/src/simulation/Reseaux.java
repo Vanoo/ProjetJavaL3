@@ -10,6 +10,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 public class Reseaux {
 	
 	Socket socket;
@@ -17,6 +19,7 @@ public class Reseaux {
 	int port;
     BufferedReader in;
     PrintWriter out;
+    boolean noerror;
     
     
     // Test  
@@ -38,41 +41,9 @@ public class Reseaux {
     
     
 	// Creeation d'une classe reseaux, connection au serveur, et ouverture des entrees/sorties
-	public Reseaux(String adress, int port)
+	public Reseaux()
 	{
-		// Avoir l'adresse grace a l'ip fournie 
-		try
-		{
-			server_address = InetAddress.getByName(adress);
-			this.port = port;
-			System.out.println("Tentative de connection a"+server_address+":"+port);
-		}
-		catch (UnknownHostException e)
-		{
-			e.printStackTrace();
-		}
-		
-		// Ouverture de la connexion
-		try
-		{
-			socket = new Socket(server_address, port);	
-		}
-		catch (IOException e)
-		{	
-			e.printStackTrace();
-		}
-		// TODO CHANGER A METTRE DANS CONNEXION
-		// Creation des entrees/sorties
-		try
-		{
-			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			//socket.close();
-		}
-		catch (IOException e)
-		{	
-			e.printStackTrace();
-		}
+		this.noerror = true;
 	}
 	
 	
@@ -99,7 +70,56 @@ public class Reseaux {
 	} */
 	
 	
-	// Pour déconnecter un capteur
+	public boolean connection (String adress, int port) {
+		// Avoir l'adresse grace a l'ip fournie 
+		try
+		{
+			server_address = InetAddress.getByName(adress);
+			this.port = port;
+			System.out.println("Tentative de connection a"+server_address+":"+port);
+		}
+		catch (UnknownHostException e)
+		{
+			// popup
+			noerror = false;
+			System.out.println("Error wrong IP");
+			JOptionPane.showMessageDialog(null, "Error : Invalid IP adress");
+		}
+		
+		// Ouverture de la connexion
+		if(noerror) {
+			try
+			{
+				socket = new Socket(server_address, port);	
+			}
+			catch (IOException e)
+			{	
+				noerror = false;
+				JOptionPane.showMessageDialog(null, "Error : can't reach server");
+			}
+		}
+		// TODO CHANGER A METTRE DANS CONNEXION
+		// Creation des entrees/sorties
+		if(noerror) {
+			try
+			{
+				out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				//socket.close();
+			}
+			catch (IOException e)
+			{
+				JOptionPane.showMessageDialog(null, "Fatal error : can't create network listener/writer");
+			}
+		}
+		
+		return noerror;
+	}
+	
+	
+	
+	
+	// Pour deconnecter un capteur
 	public boolean deconnexion(String id) {
 		String str = "plop";
 		
@@ -129,6 +149,10 @@ public class Reseaux {
 			
 			return true;
 		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Error : Unallowed Disconnection");
+		}
 
 		return false;
 	}
@@ -139,8 +163,16 @@ public class Reseaux {
 	{		
 		String str = "plop";
 		
+		// Verification de parametre
+		if(id == null || type == null)
+		{
+			return false;
+		}
+		
+		System.out.println("ConnexionCapteur;"+id+";"+type+";"+latitutde+";"+longitude+"plopplop");
+		
 		// Envoi de la demande
-        out.println("ConnexionCapteur;"+id+";"+type+";"+latitutde+";"+longitude);
+        out.println("ConnexionCapteur;"+id+";"+type+";"+latitutde+";"+longitude+"");
         
         // Reponse du serveur
         try
@@ -155,12 +187,24 @@ public class Reseaux {
         // Affichage debug
         System.out.println(str);
 
-        return (str.compareTo("ConnexionOK") == 0);
+        if( str.compareTo("ConnexionOK") != 0 )
+        {
+        	JOptionPane.showMessageDialog(null, "Error : Reject Connection from server ");
+        	return false;
+        }
+        
+        return (true);
 	}
 	
 	// Connexion d'un capteur d'interieur
 	public boolean connexionInt(String id, String type, String batiment, int etage, String salle, String pos) {
 		String str = "plop";
+		
+		if( id == null || batiment == null || salle == null )
+		{
+			JOptionPane.showMessageDialog(null, "Error : No location selected ");
+			return false;
+		}
 		
 		// Envoi de la demande
         out.println("ConnexionCapteur;"+id+";"+type+";"+batiment+";"+etage+";"+salle+";"+pos);
@@ -178,7 +222,13 @@ public class Reseaux {
         // Affichage debug
         System.out.println(str);
 
-        return (str.compareTo("ConnexionOK") == 0);
+        if( str.compareTo("ConnexionOK") != 0 )
+        {
+        	JOptionPane.showMessageDialog(null, "Error : Reject Connection from server ");
+        	return false;
+        }
+        
+        return true;
 	}
 	
 	
