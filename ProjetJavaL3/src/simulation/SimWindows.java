@@ -18,11 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 
-/* TODO 
- * Positionnement
- * Lecture Fichier
- * Communication Serveur
- */
 public class SimWindows extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -61,9 +56,6 @@ public class SimWindows extends JFrame
 	    this.infoCapteur_panel = new InfoCapteur_panel();
 	    this.donnee_panel = new Donnee_panel(0, 100);
 	    
-	    /*============= On grise les elements de la fenetre =============*/
-	    // fifty_shade_of_gray(true);
-	    
 	    /*============= Ajout actionListener sur bouton =============*/
 	    boutonConnection();
 	    
@@ -74,6 +66,9 @@ public class SimWindows extends JFrame
 	    fenetre.setBackground(Color.lightGray);
 	    this.add(fenetre);
 	    pack();
+	    
+	    /*============= On grise les elements de la fenetre =============*/
+	    fifty_shade_of_gray(true,this.fenetre);
 	}
 	
 	public void sendData()
@@ -237,14 +232,19 @@ public class SimWindows extends JFrame
 		
 		for(int i = 0; i < tab_component.length; i++) 
 	    {
-	        if(tab_component[i] instanceof JPanel ) 
+	        if(tab_component[i] instanceof JPanel) 
 	        {
 	        	fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
 	        }
-
 	        tab_component[i].setEnabled(bool);
+	        if(tab_component[i] instanceof Donnee_panel)
+	        {
+	        	fifty_shade_of_gray(!bool, (JPanel)tab_component[i]);
+	        }
+	        if(tab_component[i] == connection_panel) 
+	        {
+	        	connection_panel.connection_button.setEnabled(true);
+	        }
 	    }
-		
-		
 	}	
 }

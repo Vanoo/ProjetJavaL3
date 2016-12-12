@@ -70,7 +70,8 @@ public class Reseaux {
 	} */
 	
 	
-	public boolean connection (String adress, int port) {
+	public boolean connection (String adress, int port) 
+	{
 		// Avoir l'adresse grace a l'ip fournie 
 		try
 		{
@@ -123,7 +124,8 @@ public class Reseaux {
 	
 	
 	// Pour deconnecter un capteur
-	public boolean deconnexion(String id) {
+	public boolean deconnexion(String id) 
+	{
 		String str = "plop";
 		
 		out.println("DeconnexionCapteur;"+id);

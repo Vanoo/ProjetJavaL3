@@ -81,7 +81,7 @@ public class Connection_panel extends JPanel
 	{
 		String ip = this.ip_textField.getText();
 		
-		if( ip.compareTo("0000.0000.0000.0000") == 0 )
+		if( ip.compareTo("0.0.0.0") == 0 )
 		{
 			ip = "127.000.000.001";
 		}		
