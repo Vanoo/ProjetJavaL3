@@ -88,7 +88,7 @@ public class Donnee_panel extends JPanel
 		valeur_panel.setBackground(Color.LIGHT_GRAY);
 		valeur_panel.add(new JLabel("Valeur :"));
 		valeur_panel.add(val_field);
-		valeur_panel.add(new JLabel(" unité   "));;
+		valeur_panel.add(new JLabel(" unite   "));;
 		valeur_panel.add(random);
 		
 		JPanel jp = new JPanel();

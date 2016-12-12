@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
 import java.text.ParseException;
 
 import javax.swing.BoxLayout;
@@ -49,8 +50,7 @@ public class SimWindows extends JFrame
 	    // this.setPreferredSize(dim);
 	    this.setMinimumSize(dim);
 	    this.setMaximumSize(dim);
-	    this.setBounds(0, 0, 0, 0);
-	    
+	    this.setPreferredSize(dim);
 	    /*============= Initialisation des JPanel =============*/
 	    fenetre = new JPanel();
 	    fenetre.setPreferredSize(dim);
@@ -189,7 +189,13 @@ public class SimWindows extends JFrame
 		
 		this.res = new Reseaux();
 		
-		if( this.res.connection("127.0.0.1", 7888) == false )
+		String ip;
+		int port;
+		
+		ip = this.connection_panel.getIp();
+		port = this.connection_panel.getPort();
+		
+		if( this.res.connection(ip, port) == false )
 		{
 			return false;
 		}
@@ -231,7 +237,7 @@ public class SimWindows extends JFrame
 		
 		for(int i = 0; i < tab_component.length; i++) 
 	    {
-	        if(tab_component[i].getClass().getName() == "javax.swing.JPanel") 
+	        if(tab_component[i] instanceof JPanel ) 
 	        {
 	        	fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
 	        }

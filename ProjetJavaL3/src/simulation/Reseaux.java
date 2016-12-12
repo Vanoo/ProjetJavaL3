@@ -85,12 +85,15 @@ public class Reseaux {
 			System.out.println("Error wrong IP");
 			JOptionPane.showMessageDialog(null, "Error : Invalid IP adress");
 		}
-		
+
 		// Ouverture de la connexion
-		if(noerror) {
+		if(noerror) 
+		{
 			try
 			{
-				socket = new Socket(server_address, port);	
+				System.out.println("Patate 1.25");
+				socket = new Socket(server_address, port);
+				System.out.println("Patate 1.75");
 			}
 			catch (IOException e)
 			{	
@@ -98,18 +101,18 @@ public class Reseaux {
 				JOptionPane.showMessageDialog(null, "Error : can't reach server");
 			}
 		}
-		// TODO CHANGER A METTRE DANS CONNEXION
-		// Creation des entrees/sorties
-		if(noerror) {
+
+		if(noerror) 
+		{
 			try
 			{
 				out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				//socket.close();
 			}
 			catch (IOException e)
 			{
 				JOptionPane.showMessageDialog(null, "Fatal error : can't create network listener/writer");
+				noerror = false;
 			}
 		}
 		

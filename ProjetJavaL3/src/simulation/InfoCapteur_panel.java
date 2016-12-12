@@ -81,7 +81,7 @@ public class InfoCapteur_panel extends JPanel
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
 		jp.add(new JLabel("#################### Info Capteur ####################"));
-		jp.setMaximumSize(new Dimension(500,20));
+		jp.setMaximumSize(new Dimension(500,10));
 		this.add(jp);
 		
 		Init_id_panel();
@@ -96,8 +96,8 @@ public class InfoCapteur_panel extends JPanel
 		JPanel id = new JPanel();
 		id.setAlignmentY(CENTER_ALIGNMENT);
 		id.setBackground(Color.LIGHT_GRAY);
-		id.setMaximumSize(new Dimension(130,50));
-		id.setPreferredSize(new Dimension(130,50));
+		id.setMaximumSize(new Dimension(130,45));
+		id.setPreferredSize(new Dimension(130,45));
 		JTextField id_text_field = new JTextField();
 		id_text_field.setText("Default");
 		id_text_field.setPreferredSize(new Dimension(130, 20));
@@ -117,9 +117,9 @@ public class InfoCapteur_panel extends JPanel
 		JPanel typ = new JPanel();
 		typ.setBackground(Color.LIGHT_GRAY);
 		typ.add(new JLabel("====Type===="));
-		typ.setMaximumSize(new Dimension(130,50));
-		typ.setPreferredSize(new Dimension(130,50));
-		String[] type_string = { "Temperature", "Humidité","ConsoElec", "Autre" };
+		typ.setMaximumSize(new Dimension(130,45));
+		typ.setPreferredSize(new Dimension(130,45));
+		String[] type_string = { "Temperature", "Humidite","ConsoElec", "Autre" };
 		 //Create the combo box, select item at index 4.
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
 		// type_combo.setPreferredSize(new Dimension(130,20));
@@ -139,8 +139,8 @@ public class InfoCapteur_panel extends JPanel
 		inter.setBackground(Color.LIGHT_GRAY);
 		inter.add(new JLabel("====Intervalle===="));
 		inter.setLayout(new FlowLayout());
-		inter.setMaximumSize(new Dimension(200,60));
-		inter.setPreferredSize(new Dimension(200,60));
+		inter.setMaximumSize(new Dimension(200,45));
+		inter.setPreferredSize(new Dimension(200,45));
 		
 		JPanel min_max_panel = new JPanel();
 		
@@ -183,18 +183,16 @@ public class InfoCapteur_panel extends JPanel
 	{
 		
 		JPanel localPanel = new JPanel();
-		localPanel.setMaximumSize(new Dimension(250,50));
+		localPanel.setMaximumSize(new Dimension(250,30));
 		localPanel.add(new JLabel("==Localisation=="));
 		
 		JPanel localisationBouton = new JPanel();
 		// localisationBouton.setLayout(new FlowLayout());
-		localisationBouton.setMaximumSize(new Dimension(250,50));
+		localisationBouton.setMaximumSize(new Dimension(250,30));
 		// localisationBouton.setLayout(new GridLayout(2,1));
 		
-		
-		
 		// Bouton "extérieur"
-		JButton bExt = new JButton("Extérieur");
+		JButton bExt = new JButton("Exterieur");
 		
 		bExt.addActionListener(new ActionListener()
 		{
@@ -205,7 +203,7 @@ public class InfoCapteur_panel extends JPanel
 		});
 		
 		// Bouton intérieur
-		JButton bInt = new JButton("Intérieur");
+		JButton bInt = new JButton("Interieur");
 		bInt.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -238,7 +236,7 @@ public class InfoCapteur_panel extends JPanel
 			
 			JPanel ext_panel = new JPanel();
 			ext_panel.setBackground(Color.LIGHT_GRAY);
-			JLabel gps_label = new JLabel("Coordonnées GPS");
+			JLabel gps_label = new JLabel("Coordonnees GPS");
 
 
 			JPanel lat_long_panel = new JPanel();

@@ -3,6 +3,9 @@ package simulation;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -74,36 +77,25 @@ public class Connection_panel extends JPanel
 		this.add(connection_button);
 	}
 	
-	public JLabel getIp_label() {
-		return ip_label;
+	public String getIp()
+	{
+		String ip = this.ip_textField.getText();
+		
+		if( ip.compareTo("0000.0000.0000.0000") == 0 )
+		{
+			ip = "127.000.000.001";
+		}		
+		return ip;
 	}
-
-	public void setIp_label(JLabel ip_label) {
-		this.ip_label = ip_label;
-	}
-
-	public JFormattedTextField getIp_textField() {
-		return ip_textField;
-	}
-
-	public void setIp_textField(JFormattedTextField ip_textField) {
-		this.ip_textField = ip_textField;
-	}
-
-	public JLabel getPort_label() {
-		return port_label;
-	}
-
-	public void setPort_label(JLabel port_label) {
-		this.port_label = port_label;
-	}
-
-	public JFormattedTextField getPort_textField() {
-		return port_textField;
-	}
-
-	public void setPort_textField(JFormattedTextField port_textField) {
-		this.port_textField = port_textField;
+	
+	public int getPort()
+	{
+		int port = Integer.parseInt(this.port_textField.getText());
+		if( port == 0 )
+		{
+			port = 7888;
+		}
+		return port;
 	}
 
 	public JButton getConnection_button() {
