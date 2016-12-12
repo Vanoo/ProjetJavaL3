@@ -115,15 +115,14 @@ public class InfoCapteur_panel extends JPanel
 		typ.add(new JLabel("====Type===="));
 		typ.setMaximumSize(new Dimension(130,45));
 		typ.setPreferredSize(new Dimension(130,45));
-		String[] type_string = { "Temperature", "Humidite","ConsoElec", "Autre" };
+		String[] type_string = { "Temperature", "Humidite",
+				"Luminosite", "VolumeSonore","ConsoEclairage","EauFroide"
+				,"EauChaude","VitesseVent","PressionAtm"};
 		 //Create the combo box, select item at index 4.
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
 		// type_combo.setPreferredSize(new Dimension(130,20));
 		type_combo.setSelectedItem(type_string[0]);
-		
-		typ.add(type_combo);
-		
-		
+		typ.add(type_combo);		
 		
 		this.add(typ);
 		this.type = type_combo;
