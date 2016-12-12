@@ -290,7 +290,7 @@ public class InfoCapteur_panel extends JPanel
 			scroll_arbre.setPreferredSize(new Dimension(500,140));
 			
 			int_panel.add(scroll_arbre);
-			arbre.setPath("../ProjetJavaL3/config.xml");
+			arbre.setPath("../config.xml");
 
 			MouseAdapter ml = new MouseAdapter()
 			{

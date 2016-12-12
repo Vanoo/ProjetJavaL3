@@ -13,6 +13,7 @@ public class Simulation {
 	public static void main(String[] args) throws ParseException 
 	{
 		SimWindows fenetre = new SimWindows();
+		fenetre.isActive();
 	}
 
 }
