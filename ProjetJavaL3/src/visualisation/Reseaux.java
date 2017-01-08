@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
  */
 public class Reseaux {
 	
-	static int timeout_in_ms = 5000;
 	Socket socket;
 	InetAddress server_address;
 	int port;
@@ -28,7 +27,7 @@ public class Reseaux {
     PrintWriter out;
     boolean noerror;    
     
-	// Création d'une classe reseaux, connection au serveur, et ouverture des entrees/sorties
+    
 	public Reseaux()
 	{
 		this.noerror = true;
@@ -67,7 +66,7 @@ public class Reseaux {
 			try
 			{
 				socket = new Socket();
-				socket.connect(new InetSocketAddress(server_address, port), timeout_in_ms);
+				socket.connect(new InetSocketAddress(server_address, port), 5000);
 			}
 			catch (IOException e)
 			{	
@@ -88,6 +87,30 @@ public class Reseaux {
 				JOptionPane.showMessageDialog(null, "Fatal error : can't create network listener/writer");
 				noerror = false;
 			}
+			
+			out.println("ConnexionVisu;"+idInterface);
+			
+			String str = "plop";
+			
+			// Reponse du serveur
+	        try
+	        {
+				str = in.readLine();
+	        }
+	        catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+	        
+	        // Affichage debug
+	        System.out.println(str);
+
+	        if( str.compareTo("ConnexionOK") != 0 )
+	        {
+	        	JOptionPane.showMessageDialog(null, "Error : Reject Connection from server ");
+	        	return false;
+	        }
+			
 		}
 		
 		return noerror;
@@ -97,13 +120,13 @@ public class Reseaux {
 	 * 
 	 * Etablit la connection entre l'interface de visualisation et le serveur
 	 * 
-	 * @return true si deconnection réussi, false si probleme rencontree
+	 * @return true si deconnection reussi, false si probleme rencontree
 	 */
-	public boolean deconnexion(String id) 
+	public boolean deconnexion() 
 	{
 		String str = "plop";
 		
-		out.println("DeconnexionCapteur;"+id);
+		out.println("DeconnexionVisu");
 		
 		try
         {
@@ -136,9 +159,5 @@ public class Reseaux {
 
 		return false;
 	}
-	
-	
-
-
 }
 
