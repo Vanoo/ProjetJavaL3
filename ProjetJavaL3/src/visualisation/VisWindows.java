@@ -18,7 +18,7 @@ public class VisWindows extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
-	private static String idInterface = "groupe X";
+	private static String idInterface = "groupe BARBEUMONTRAN";
 	
 	visualisation.Connection_panel connection_panel;
 	visualisation.Reseaux res;
@@ -82,7 +82,11 @@ public class VisWindows extends JFrame
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    this.add(connection_panel);
 	    // this.add(fenetre);
-	    pack();   
+	    pack();
+	    
+	    /*============= Ajout des JPanel dans la fenetre =============*/
+	    this.res = new visualisation.Reseaux();
+	    
 	}
 	/**
 	 * 
@@ -112,11 +116,14 @@ public class VisWindows extends JFrame
 	{
 		String ip;
 		int port;
+		boolean success;
 		
-		this.connection_panel.getIp();
-		this.connection_panel.getPort();
+		ip = this.connection_panel.getIp();
+		port = this.connection_panel.getPort();
 		
-		return true;
+		success = this.res.connection(ip, port, idInterface);
+		
+		return success;
 	}
 	
 	/**
@@ -126,10 +133,8 @@ public class VisWindows extends JFrame
 	 */
 	private boolean deconnection()
 	{
-		return true;
+		boolean success;
+		success = this.res.deconnexion();
+		return success;
 	}
-	
-	
-	// I was here all along !
-	
 }
