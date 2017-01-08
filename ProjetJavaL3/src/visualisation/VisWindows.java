@@ -1,5 +1,6 @@
 package visualisation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ public class VisWindows extends JFrame
 	
 	visualisation.Connection_panel connection_panel;
 	visualisation.Reseaux res;
+	Choix_capteur_panel choixCapteur;
+	Tableau_capteur tab_capteur;
 	
 	public VisWindows(Dimension dim) throws ParseException
 	{		
@@ -37,10 +40,17 @@ public class VisWindows extends JFrame
 	    this.setPreferredSize(dim);
 	    
 	    /*============= Initialisation des JPanel =============*/
+	    JPanel fenetreVisualisation = new JPanel();
+	    fenetreVisualisation.setPreferredSize(dim);
+	    fenetreVisualisation.setMinimumSize(dim);
+	    fenetreVisualisation.setMaximumSize(dim);
+	    fenetreVisualisation.setBackground(Color.GRAY);
+	    
 	    this.connection_panel = new visualisation.Connection_panel();
+	    this.choixCapteur = new Choix_capteur_panel();
+	    this.tab_capteur = new Tableau_capteur();
 	    
-	    
-	    /*============= Ajout actionListener sur bouton =============*/
+	    /*============= Ajout Listener =============*/
 	    this.connection_panel.getBouton().addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -80,11 +90,14 @@ public class VisWindows extends JFrame
 		});
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
-	    this.add(connection_panel);
-	    // this.add(fenetre);
+	    fenetreVisualisation.add(this.connection_panel);
+	    fenetreVisualisation.add(this.choixCapteur);
+	    fenetreVisualisation.add(this.tab_capteur);
+	    
+	    this.add(fenetreVisualisation);
 	    pack();
 	    
-	    /*============= Ajout des JPanel dans la fenetre =============*/
+	    /*============= Initialisation Reseau =============*/
 	    this.res = new visualisation.Reseaux();
 	    
 	}

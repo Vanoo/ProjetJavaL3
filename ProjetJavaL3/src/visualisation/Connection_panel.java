@@ -1,6 +1,7 @@
 package visualisation;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 
 import java.awt.Dimension;
 import java.text.ParseException;
@@ -26,11 +27,16 @@ public class Connection_panel extends JPanel
 	
 	public Connection_panel() throws ParseException
 	{
+		this.setPreferredSize(new Dimension(500,60));
+
+		this.setBackground(Color.white);
 		/*=============  Titre Panel =============*/
 		JPanel title = new JPanel();
 		title.setBackground(Color.gray);
-		title.setPreferredSize(new Dimension(500,20));
-		title.add(new JLabel("################## Information Serveur ##################"));
+
+		JLabel title_label = new JLabel("################## Information Serveur ##################");
+		title_label.setBackground(Color.gray);
+		title.add(title_label);
 		
 		/*=============  IP  =============*/
 		JLabel ip_label = new JLabel("IP :");
