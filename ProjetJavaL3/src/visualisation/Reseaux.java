@@ -1,5 +1,7 @@
 package visualisation;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,12 +12,15 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
+import javax.swing.Popup;
+import javax.swing.Timer;
 /**
  * 
  * @Javadoc
- * Classe réseau qui s'occupe de la communication avec le serveur.
+ * Classe reseau qui s'occupe de la communication avec le serveur.
  *
  */
 public class Reseaux {
@@ -25,7 +30,8 @@ public class Reseaux {
 	int port;
     BufferedReader in;
     PrintWriter out;
-    boolean noerror;    
+    boolean noerror;
+    Set<Capteur> capteurs;
     
     
 	public Reseaux()
@@ -40,7 +46,7 @@ public class Reseaux {
 	 * @param adress, Adresse IP du serveur
 	 * @param port, numero de port de communication
 	 * @param idInterface, identifiant de l'interface de visualisation
-	 * @return true si connection réussi, false si probleme rencontree
+	 * @return true si connection reussi, false si probleme rencontree
 	 */
 	public boolean connection (String adress, int port,String idInterface) 
 	{
@@ -113,6 +119,8 @@ public class Reseaux {
 			
 		}
 		
+		listen();
+		
 		return noerror;
 	}
 	
@@ -150,14 +158,77 @@ public class Reseaux {
 				e.printStackTrace();
 			}
 			
+			// casser le thread
+			
 			return true;
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Error : Unallowed Disconnection");
 		}
-
 		return false;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * Receptionne les infos en continu et les traite
+	 * /!\ boucle infinie
+	 * 
+	 */
+	public void listen() {
+		
+		ActionListener taskPerformer = new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent evt) 
+			{
+				
+				String message = "plop";
+				
+			    while(true) {
+			    	
+			    	try
+			    	{
+			    		message = in.readLine();
+			    	}
+			    	catch(IOException e)
+			    	{
+			    		e.printStackTrace();
+			    	}
+			    	
+			    	if(message.startsWith("CapteurPresent;"))
+			    	{
+			    		String[] splittedString = message.split(";");
+			    		if(splittedString.length == 5)
+			    		{
+			    			ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]));
+			    			System.out.println("Capteur ajoute : "+splittedString[1]);
+			    			// popup
+			    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
+			    		}
+			    		else if (splittedString.length == 7)
+			    		{
+			    			ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]));
+			    			System.out.println("Capteur ajoute : "+splittedString[1]);
+			    			// popup
+			    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
+			    		}
+			    		else
+			    			System.out.println("Message erron�");
+			    	}
+			    }
+			}
+		};
+		
+		Timer recoisData = new Timer(1, taskPerformer);
+		recoisData.start();
+	}
+	
+	
+	public void ajouterCapteur (Capteur cap)
+	{
+		
 	}
 }
 
