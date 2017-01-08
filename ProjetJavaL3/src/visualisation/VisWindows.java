@@ -16,158 +16,119 @@ import simulation.Reseaux;
 
 public class VisWindows extends JFrame
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	private static String idInterface = "groupe X";
 	
+	visualisation.Connection_panel connection_panel;
+	visualisation.Reseaux res;
 	
-	Connection_panel connection_panel;
-	Reseaux res;
-	
-	
-	
-	Dimension dim = new Dimension(500,600);
-	
-	public VisWindows() throws ParseException
+	public VisWindows(Dimension dim) throws ParseException
 	{		
 		/*============= Initialisation de la fenetre =============*/
-		this.setTitle("Visualisation Data");
+		
+		this.setTitle("Interface Visualisation");
 	    this.setLocationRelativeTo(null);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
-	    // this.setMinimumSize(new Dimension());
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);     
 	    this.setVisible(true);
 	    this.setResizable(false);
-	    // this.setPreferredSize(dim);
-	    this.setMinimumSize(dim);
-	    this.setMaximumSize(dim);
+	    // this.setMinimumSize(dim);
+	    // this.setMaximumSize(dim);
 	    this.setPreferredSize(dim);
 	    
 	    /*============= Initialisation des JPanel =============*/
-	    this.connection_panel = new Connection_panel();
+	    this.connection_panel = new visualisation.Connection_panel();
 	    
 	    
 	    /*============= Ajout actionListener sur bouton =============*/
-	    boutonConnection();
-	    
-	    /*============= Ajout des JPanel dans la fenetre =============*/
-	    // fenetre.add(connection_panel);
-	    this.add(connection_panel);
-	    // this.add(fenetre);
-	    pack();
-	    
-	    /*============= On grise les elements de la fenetre =============*/
-
-	}
-	
-	
-	public void boutonConnection()
-	{
-		this.connection_panel.getConnection_button().addActionListener(new ActionListener() 
+	    this.connection_panel.getBouton().addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
 				boolean success;
-				int boutonConnection = typeBouton();
+				String text_Bouton_Connection = typeBoutonConnection();
 				
-				if( boutonConnection == 1  )
+				// On n'est pas encore connectee au serveur
+				if( text_Bouton_Connection.equals("Connection")  )
 				{
-					// Vérifie info
-					// établit connection
-					System.out.printf("Connection");
 					success = connection();
-					System.out.printf("Fin Connection");
 					if( success )
 					{
-						// changementPanel();
-						// connection success ou fail
-						changementBouton(1);
-						System.out.printf("CHANGEMENT BOUTON");
-						lancementReception();
-						// Affichage bouton déconnection a la place du bouton connection
-						// envoi donnée recu de donnee panel
-						//JOptionPane.showMessageDialog(,ip_textField.getValue());
+						changementBouton();
+						// LANCEMENT RECEPTION DONNEE
+					}
+					else
+					{
+						System.out.println(" VisWindows : connection error ");
 					}
 				}
+				// 
 				else
 				{
-					arretReception();
-					// Deconnection
+					// ARRET RECEPTION
 					success = deconnection();
 					if( success )
 					{
-						changementBouton(0);
+						changementBouton();
+					}
+					else
+					{
+						System.out.println(" VisWindows : deconnection error ");
 					}
 				}
 			}
 		});
+	    
+	    /*============= Ajout des JPanel dans la fenetre =============*/
+	    this.add(connection_panel);
+	    // this.add(fenetre);
+	    pack();   
+	}
+	/**
+	 * 
+	 * @return texte du bouton de connection
+	 */
+	private String typeBoutonConnection()
+	{
+		return connection_panel.getBouton().getText();
 	}
 	
-	protected void lancementReception() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	protected void arretReception() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void changementBouton(int typeBouton)
+	/**
+	 * appel la methode changeButton de connection_panel
+	 * qui modifie le texte du button de connection
+	 * 
+	 */
+	private void changementBouton()
 	{
-		if( typeBouton == 1 )
-		{
-			// CHangment en deco
-			this.connection_panel.getConnection_button().setText("Deconnection");
-		}
-		else
-		{
-			// Changement en connection
-			this.connection_panel.getConnection_button().setText("Connection");
-		}
+		this.connection_panel.changeButton();
 	}
 	
-	public int typeBouton()
+	/**
+	 * Connecte l'interface de visualisation au serveur
+	 * 
+	 * @return true si connection reussi false sinon
+	 */
+	private boolean connection()
 	{
-		String label = this.connection_panel.getConnection_button().getText();
-		if( label.equals("Connection") )
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public boolean connection()
-	{
-		boolean success = false;
-		
-		this.res = new Reseaux();
-		
 		String ip;
 		int port;
 		
-		ip = this.connection_panel.getIp();
-		port = this.connection_panel.getPort();
+		this.connection_panel.getIp();
+		this.connection_panel.getPort();
 		
-		if( this.res.connection(ip, port) == false )
-		{
-			return false;
-		}
-		
-		return success;
+		return true;
 	}
 	
-	public boolean deconnection()
+	/**
+	 * Deconnecte l'interface de visualisation du serveur
+	 * 
+	 * @return true si connection reussi false sinon
+	 */
+	private boolean deconnection()
 	{
-		boolean success = false;
-		String id = "Temperature";
-		success = this.res.deconnexion(id);
-		return success;
+		return true;
 	}
+	
+	
+	
 }

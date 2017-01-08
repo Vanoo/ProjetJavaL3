@@ -1,0 +1,144 @@
+package visualisation;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import javax.swing.JOptionPane;
+/**
+ * 
+ * @Javadoc
+ * Classe réseau qui s'occupe de la communication avec le serveur.
+ *
+ */
+public class Reseaux {
+	
+	static int timeout_in_ms = 5000;
+	Socket socket;
+	InetAddress server_address;
+	int port;
+    BufferedReader in;
+    PrintWriter out;
+    boolean noerror;    
+    
+	// Création d'une classe reseaux, connection au serveur, et ouverture des entrees/sorties
+	public Reseaux()
+	{
+		this.noerror = true;
+	}
+	
+	/**
+	 * 
+	 * Etablit la connection entre l'interface de visualisation et le serveur
+	 * 
+	 * @param adress, Adresse IP du serveur
+	 * @param port, numero de port de communication
+	 * @param idInterface, identifiant de l'interface de visualisation
+	 * @return true si connection réussi, false si probleme rencontree
+	 */
+	public boolean connection (String adress, int port,String idInterface) 
+	{
+		// Avoir l'adresse grace a l'ip fournie 
+		try
+		{
+			server_address = InetAddress.getByName(adress);
+			this.port = port;
+			System.out.println("Tentative de connection a"+server_address+":"+port);
+		}
+		catch (UnknownHostException e)
+		{
+			noerror = false;
+			System.out.println("Error wrong IP");
+			
+			// popup
+			JOptionPane.showMessageDialog(null, "Error : Invalid IP adress");
+		}
+
+		// Ouverture de la connexion
+		if(noerror) 
+		{
+			try
+			{
+				socket = new Socket();
+				socket.connect(new InetSocketAddress(server_address, port), timeout_in_ms);
+			}
+			catch (IOException e)
+			{	
+				noerror = false;
+				JOptionPane.showMessageDialog(null, "Error : can't reach server");
+			}
+		}
+
+		if(noerror) 
+		{
+			try
+			{
+				out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			}
+			catch (IOException e)
+			{
+				JOptionPane.showMessageDialog(null, "Fatal error : can't create network listener/writer");
+				noerror = false;
+			}
+		}
+		
+		return noerror;
+	}
+	
+	/**
+	 * 
+	 * Etablit la connection entre l'interface de visualisation et le serveur
+	 * 
+	 * @return true si deconnection réussi, false si probleme rencontree
+	 */
+	public boolean deconnexion(String id) 
+	{
+		String str = "plop";
+		
+		out.println("DeconnexionCapteur;"+id);
+		
+		try
+        {
+			str = in.readLine();
+        }
+        catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		// Affichage debug
+		System.out.println(str);
+
+		if(str.compareTo("DeconnexionOK") == 0) {
+			try
+			{
+				this.socket.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			
+			return true;
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Error : Unallowed Disconnection");
+		}
+
+		return false;
+	}
+	
+	
+
+
+}
+

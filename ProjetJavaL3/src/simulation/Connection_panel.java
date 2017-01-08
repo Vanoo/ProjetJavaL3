@@ -37,7 +37,7 @@ public class Connection_panel extends JPanel
 		JPanel jp = new JPanel();
 		jp.setBackground(Color.gray);
 		jp.setPreferredSize(new Dimension(500,20));
-		jp.add(new JLabel("################## Envoi des donnees ##################"));
+		jp.add(new JLabel("################## Information Serveur ##################"));
 		this.add(jp);
 		this.ip_label = new JLabel("IP :");
 		
