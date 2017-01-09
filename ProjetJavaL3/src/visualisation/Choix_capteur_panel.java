@@ -8,12 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.tree.TreePath;
-
-import com.sun.crypto.provider.DESCipher;
-
-import simulation.XmlJTree;
-import sun.security.krb5.internal.crypto.DesCbcCrcEType;
+import javax.swing.JTree;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -50,11 +45,14 @@ public class Choix_capteur_panel extends JPanel
 		capteur_tree.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
 		capteur_tree.setBackground(Color.lightGray);
 		
-		
+		XMLParser parseur = new XMLParser();
+		/*
 		final XmlJTree arbre = new XmlJTree(null);
 		arbre.setPath("./config.xml");
+		*/
 		
-		JScrollPane scroll_arbre = new JScrollPane(arbre);
+		
+		JScrollPane scroll_arbre = new JScrollPane(new JTree(parseur.parse()));
 		scroll_arbre.setPreferredSize(new Dimension(200,250));
 		
 		capteur_tree.add(scroll_arbre);

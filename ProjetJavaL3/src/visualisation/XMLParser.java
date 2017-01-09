@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 
-   public static DefaultMutableTreeNode parse () {
+   public DefaultMutableTreeNode parse () {
 	   
 	   DefaultMutableTreeNode root = null;
       // On récupère une instance de factory qui se chargera de nous fournir un parseur
@@ -74,7 +74,7 @@ public class XMLParser {
     * @param tab
     * @return
     */
-   public static void createJTree(Node n, DefaultMutableTreeNode treeNode){
+   private static void createJTree(Node n, DefaultMutableTreeNode treeNode){
       
       if(n instanceof Element)
       {
@@ -116,7 +116,7 @@ public class XMLParser {
                //Pour afficher les valeurs des noeuds
                if(n2.getTextContent() != null && n2.getTextContent().trim() != "" && n2.getChildNodes().getLength() == 1)
                {
-                  DefaultMutableTreeNode value = new DefaultMutableTreeNode("VALEUR : " + n2.getTextContent());
+                  DefaultMutableTreeNode value = new DefaultMutableTreeNode(n2.getTextContent());
                   noeud.add(value);
                }    
                //appel récursif à la méthode pour le traitement du noeud et de ses enfants 
