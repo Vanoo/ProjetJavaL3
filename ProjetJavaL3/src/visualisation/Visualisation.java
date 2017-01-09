@@ -11,7 +11,7 @@ public class Visualisation {
 	 */
 	public static void main(String[] args) throws ParseException 
 	{
-		VisWindow fenetre = new VisWindow(new Dimension(500,630));
+		VisWindow fenetre = new VisWindow(new Dimension(500,700));
 		fenetre.isActive();
 	}
 
