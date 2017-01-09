@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class Tableau_capteur extends JPanel{
 
@@ -16,7 +21,7 @@ public class Tableau_capteur extends JPanel{
 
 	public Tableau_capteur() 
 	{
-		Dimension dim = new Dimension(500,275);
+		Dimension dim = new Dimension(500,250);
 		
 		this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		
@@ -31,32 +36,43 @@ public class Tableau_capteur extends JPanel{
 		JLabel title_label = new JLabel("#################### Capteur Suivis ####################");
 		title.add(title_label);
 		
-		/*=============  Tree Panel =============*/
-		JPanel capteur_tree = new JPanel();
-		capteur_tree.setPreferredSize(new Dimension(300,260));
-		capteur_tree.setBackground(Color.blue);
+		/*=============  Tableau Panel =============*/
+		
+		Object[][] donnees = 
+		{
+				
+        };
+ 
+        String[] entetes = {"Id", "Type", "Localisation", "Valeur"};
+ 
+		JTable capteur_tab = new JTable(donnees, entetes);
+		capteur_tab.setPreferredSize(new Dimension(500,150));
+		
+		JScrollPane scrollTab= new JScrollPane(capteur_tab);
+		scrollTab.setPreferredSize(new Dimension(500,150));
 		
 		/*=============  Option Panel =============*/
-		JPanel option_tree = new JPanel();
-		option_tree.setPreferredSize(new Dimension(200,260));
-		option_tree.setBackground(Color.yellow);
 		
-		/*=============  Interactif Panel =============*/
+		JPanel alert_panel = new JPanel();
+		alert_panel.add(new JLabel());
 		
-		JPanel tree_option = new JPanel();
-		tree_option.setPreferredSize(new Dimension(500,260));
-		tree_option.setBackground(Color.lightGray);
-		tree_option.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+		JTextField alert_min = new JTextField();
+		JTextField alert_max = new JTextField();		
 		
-		/* Rassemblement Composant */
+		JPanel filtre_panel = new JPanel();
+		
+		String[] type_string = { "Temperature", "Humidite",
+				"Luminosite", "VolumeSonore","ConsoEclairage","EauFroide"
+				,"EauChaude","VitesseVent","PressionAtm"};
+		 //Create the combo box, select item at index 4.
+		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
+		type_combo.setSelectedItem(type_string[0]);
 
-		tree_option.add(capteur_tree);
-		tree_option.add(option_tree);
+		filtre_panel.add(type_combo);
 		
 		/*=============  Ajout Panel =============*/
 		
 		this.add(title);
-		this.add(tree_option);
-
+		this.add(scrollTab);
 	}
 }

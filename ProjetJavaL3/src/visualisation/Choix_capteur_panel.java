@@ -46,7 +46,7 @@ public class Choix_capteur_panel extends JPanel
 		
 		/*=============  Tree Panel =============*/
 		JPanel capteur_tree = new JPanel();
-		capteur_tree.setPreferredSize(new Dimension(300,260));
+		capteur_tree.setPreferredSize(new Dimension(250,260));
 		capteur_tree.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
 		capteur_tree.setBackground(Color.lightGray);
 		
@@ -55,15 +55,15 @@ public class Choix_capteur_panel extends JPanel
 		arbre.setPath("./config.xml");
 		
 		JScrollPane scroll_arbre = new JScrollPane(arbre);
-		scroll_arbre.setPreferredSize(new Dimension(200,250));		
+		scroll_arbre.setPreferredSize(new Dimension(200,250));
 		
 		capteur_tree.add(scroll_arbre);
 		
 		/*=============  Bouton =============*/
 		JPanel bouton_panel = new JPanel();
 		
-		bouton_panel.setPreferredSize(new Dimension(150,70));
-		bouton_panel.setBackground(Color.blue);
+		bouton_panel.setPreferredSize(new Dimension(150,60));
+		bouton_panel.setBackground(Color.lightGray);
 		
 		JButton inscription = new JButton("Inscription");
 		inscription.setPreferredSize(new Dimension(150,20));
@@ -83,9 +83,22 @@ public class Choix_capteur_panel extends JPanel
 		this.add(bouton_panel);
 	}
 	
+	/**
+	 * Retourne le bouton d inscription
+	 * @return JButton
+	 */
 	public JButton getInscriptionButton()
 	{
 		return this.inscription_button;
+	}
+	
+	/**
+	 * Retourne le bouton de desinscription
+	 * @return JButton
+	 */
+	public JButton getDesinscriptionButton()
+	{
+		return this.desinscription_button;
 	}
 	
 }
