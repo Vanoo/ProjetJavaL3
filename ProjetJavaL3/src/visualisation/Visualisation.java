@@ -3,8 +3,6 @@ package visualisation;
 import java.awt.Dimension;
 import java.text.ParseException;
 
-import simulation.SimWindows;
-
 public class Visualisation {
 
 	/**

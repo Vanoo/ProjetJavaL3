@@ -9,12 +9,6 @@ import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import simulation.Connection_panel;
-import simulation.Localisation;
-import simulation.LocalisationExt;
-import simulation.LocalisationInt;
-import simulation.Reseaux;
-
 public class VisWindow extends JFrame
 {
 	private static final long serialVersionUID = 1L;
