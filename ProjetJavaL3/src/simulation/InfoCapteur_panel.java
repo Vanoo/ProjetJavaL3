@@ -46,8 +46,6 @@ public class InfoCapteur_panel extends JPanel
 	JPanel localisationBouton;
 	JPanel localisationChoix;
 	
-	TreePath arbreChoix;
-	
 	boolean isInterieur;
 	
 	String batiment;
@@ -351,8 +349,6 @@ public class InfoCapteur_panel extends JPanel
 			Localisation loc;
 			if( isInterieur )
 			{
-				// int numEtage = this.arbreChoix[3].charAt(6);
-				// this.arbreChoix.toString();
 				loc = new LocalisationInt(batiment,etage,salle,this.commentaire.getText());
 			}
 			else

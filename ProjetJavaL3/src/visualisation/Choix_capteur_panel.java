@@ -6,12 +6,19 @@ import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.tree.TreePath;
+
+import simulation.XmlJTree;
 
 public class Choix_capteur_panel extends JPanel
 {
 	/**
 	 * 
 	 */
+	
+	TreePath arbreChoix;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Choix_capteur_panel() 
@@ -36,6 +43,20 @@ public class Choix_capteur_panel extends JPanel
 		JPanel capteur_tree = new JPanel();
 		capteur_tree.setPreferredSize(new Dimension(300,260));
 		capteur_tree.setBackground(Color.blue);
+		
+		
+		final XmlJTree arbre = new XmlJTree(null);
+		// arbre.setSize(new Dimension(100,200));
+		JPanel int_panel = new JPanel();
+		int_panel.setBackground(Color.LIGHT_GRAY);
+		// int_panel.setLayout(new GridLayout(8,1));
+		JScrollPane scroll_arbre = new JScrollPane(arbre);
+		scroll_arbre.setPreferredSize(new Dimension(270,240));
+		
+		int_panel.add(scroll_arbre);
+		arbre.setPath("./config.xml");
+		
+		capteur_tree.add(int_panel);
 		
 		/*=============  Option Panel =============*/
 		JPanel option_tree = new JPanel();
