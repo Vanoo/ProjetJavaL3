@@ -1,6 +1,8 @@
 package visualisation;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Insets;
 
 import java.awt.Dimension;
 import java.text.ParseException;
@@ -26,41 +28,55 @@ public class Connection_panel extends JPanel
 	
 	public Connection_panel() throws ParseException
 	{
+		/*=============  OptionPanelConnexion =============*/
+		this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+		this.setPreferredSize(new Dimension(500,50));
+		
 		/*=============  Titre Panel =============*/
 		JPanel title = new JPanel();
+		title.setLayout(new FlowLayout(FlowLayout.CENTER,0,2));
 		title.setBackground(Color.gray);
-		title.setPreferredSize(new Dimension(500,20));
-		title.add(new JLabel("################## Information Serveur ##################"));
+		JLabel title_label = new JLabel("################## Information Serveur ##################");
+		title.add(title_label);
 		
-		/*=============  IP  =============*/
+		/*=============  InteractifPanel =============*/
+		
+		/* IP */
 		JLabel ip_label = new JLabel("IP :");
 		MaskFormatter ip_formatter;
 		ip_formatter = new MaskFormatter("###.###.###.###");
 		ip_formatter.setPlaceholderCharacter('0');
-		  
 		this.ip_textField = new JFormattedTextField(ip_formatter);
-
 		
-		/*=============  Port =============*/
+		/* Port */
 		JLabel port_label = new JLabel("Port :");
-		
 		MaskFormatter port_formatter;
 		port_formatter = new MaskFormatter("######");
 		port_formatter.setPlaceholderCharacter('0');
 		this.port_textField = new JFormattedTextField(port_formatter);
 		
-		/*============= Bouton =============*/
+		/* Bouton */
 		
 		this.connection_button = new JButton("Connection");
+		this.connection_button.setMargin(new Insets(0, 5, 0, 5));
 		
-		/*============= Ajout des composants =============*/
+		/* Rassemblement composants */
+		
+		JPanel ip_port_bouton = new JPanel();
+		ip_port_bouton.setPreferredSize(new Dimension(500,40));
+		ip_port_bouton.setBackground(Color.lightGray);
+		
+		ip_port_bouton.add(ip_label);
+		ip_port_bouton.add(ip_textField);
+		ip_port_bouton.add(port_label);
+		ip_port_bouton.add(port_textField);
+		ip_port_bouton.add(this.connection_button);
+		
+		
+		/*============= AjoutPanel =============*/
 		
 		this.add(title);
-		this.add(ip_label);
-		this.add(this.ip_textField);
-		this.add(port_label);
-		this.add(this.port_textField);
-		this.add(connection_button);
+		this.add(ip_port_bouton);
 	}
 
 	/**

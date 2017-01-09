@@ -1,6 +1,8 @@
 package visualisation;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -8,22 +10,18 @@ import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import simulation.Connection_panel;
-import simulation.Localisation;
-import simulation.LocalisationExt;
-import simulation.LocalisationInt;
-import simulation.Reseaux;
-
-public class VisWindows extends JFrame
+public class VisWindow extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
-	private static String idInterface = "groupe X";
+	private static String idInterface = "groupe BARBEUMONTRAN";
 	
 	visualisation.Connection_panel connection_panel;
 	visualisation.Reseaux res;
+	Choix_capteur_panel choixCapteur;
+	Tableau_capteur tab_capteur;
 	
-	public VisWindows(Dimension dim) throws ParseException
+	public VisWindow(Dimension dim) throws ParseException
 	{		
 		/*============= Initialisation de la fenetre =============*/
 		
@@ -36,11 +34,21 @@ public class VisWindows extends JFrame
 	    // this.setMaximumSize(dim);
 	    this.setPreferredSize(dim);
 	    
+	    
 	    /*============= Initialisation des JPanel =============*/
+	    JPanel fenetreVisualisation = new JPanel();
+	    fenetreVisualisation.setLayout(new FlowLayout(0,0,0));
+	    fenetreVisualisation.setPreferredSize(dim);
+	    fenetreVisualisation.setMinimumSize(dim);
+	    fenetreVisualisation.setMaximumSize(dim);
+	    fenetreVisualisation.setBackground(Color.cyan);
+	    
 	    this.connection_panel = new visualisation.Connection_panel();
+	    this.choixCapteur = new Choix_capteur_panel();
+	    this.tab_capteur = new Tableau_capteur();
 	    
-	    
-	    /*============= Ajout actionListener sur bouton =============*/
+	    /*============= Ajout Listener =============*/
+	    // Listener sur bouton de connexion
 	    this.connection_panel.getBouton().addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -78,12 +86,22 @@ public class VisWindows extends JFrame
 				}
 			}
 		});
+	    // Listener sur Apparition disparition d'un capteur
+	    
+	    // Listener sur inscription capteur
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
-	    this.add(connection_panel);
-	    // this.add(fenetre);
-	    pack();   
+	    fenetreVisualisation.add(this.connection_panel);
+	    fenetreVisualisation.add(this.choixCapteur);
+	    fenetreVisualisation.add(this.tab_capteur);
+	    
+	    this.add(fenetreVisualisation);
+	    pack();
+	    
+	    /*============= Initialisation Reseau =============*/
+	    this.res = new visualisation.Reseaux();
 	}
+	
 	/**
 	 * 
 	 * @return texte du bouton de connection
@@ -112,11 +130,14 @@ public class VisWindows extends JFrame
 	{
 		String ip;
 		int port;
+		boolean success;
 		
-		this.connection_panel.getIp();
-		this.connection_panel.getPort();
+		ip = this.connection_panel.getIp();
+		port = this.connection_panel.getPort();
 		
-		return true;
+		success = this.res.connection(ip, port, idInterface);
+		
+		return success;
 	}
 	
 	/**
@@ -126,10 +147,8 @@ public class VisWindows extends JFrame
 	 */
 	private boolean deconnection()
 	{
-		return true;
+		boolean success;
+		success = this.res.deconnexion();
+		return success;
 	}
-	
-	
-	// I was here all along !
-	
 }
