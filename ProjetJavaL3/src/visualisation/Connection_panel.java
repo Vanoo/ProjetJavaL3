@@ -74,7 +74,6 @@ public class Connection_panel extends JPanel
 		ip_port_bouton.add(port_textField);
 		ip_port_bouton.add(this.connection_button);
 		
-		
 		/*============= AjoutPanel =============*/
 		
 		this.add(title);

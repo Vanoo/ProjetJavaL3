@@ -63,11 +63,11 @@ public class Choix_capteur_panel extends JPanel
 		JPanel bouton_panel = new JPanel();
 		
 		bouton_panel.setPreferredSize(new Dimension(150,70));
-		bouton_panel.setBackground(Color.lightGray);
+		bouton_panel.setBackground(Color.blue);
 		
 		JButton inscription = new JButton("Inscription");
 		inscription.setPreferredSize(new Dimension(150,20));
-		JButton desinscription = new JButton("Desinscrip tion");
+		JButton desinscription = new JButton("Desinscription");
 		desinscription.setPreferredSize(new Dimension(150,20));
 		
 		this.inscription_button = inscription;
