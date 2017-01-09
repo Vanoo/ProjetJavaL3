@@ -34,8 +34,9 @@ public class Connection_panel extends JPanel
 		
 		/*=============  Titre Panel =============*/
 		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.CENTER,0,2));
+		title.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		title.setBackground(Color.gray);
+		title.setPreferredSize(new Dimension(500,15));
 		JLabel title_label = new JLabel("################## Information Serveur ##################");
 		title.add(title_label);
 		
@@ -63,7 +64,8 @@ public class Connection_panel extends JPanel
 		/* Rassemblement composants */
 		
 		JPanel ip_port_bouton = new JPanel();
-		ip_port_bouton.setPreferredSize(new Dimension(500,40));
+		ip_port_bouton.setPreferredSize(new Dimension(500,35));
+		ip_port_bouton.setLayout(new FlowLayout(FlowLayout.CENTER,5,7));
 		ip_port_bouton.setBackground(Color.lightGray);
 		
 		ip_port_bouton.add(ip_label);

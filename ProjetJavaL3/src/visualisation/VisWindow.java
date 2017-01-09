@@ -34,14 +34,13 @@ public class VisWindow extends JFrame
 	    // this.setMaximumSize(dim);
 	    this.setPreferredSize(dim);
 	    
-	    
 	    /*============= Initialisation des JPanel =============*/
 	    JPanel fenetreVisualisation = new JPanel();
 	    fenetreVisualisation.setLayout(new FlowLayout(0,0,0));
 	    fenetreVisualisation.setPreferredSize(dim);
 	    fenetreVisualisation.setMinimumSize(dim);
 	    fenetreVisualisation.setMaximumSize(dim);
-	    fenetreVisualisation.setBackground(Color.cyan);
+	    fenetreVisualisation.setBackground(Color.lightGray);
 	    
 	    this.connection_panel = new visualisation.Connection_panel();
 	    this.choixCapteur = new Choix_capteur_panel();
