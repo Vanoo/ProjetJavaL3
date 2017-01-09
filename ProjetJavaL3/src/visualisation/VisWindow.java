@@ -2,6 +2,7 @@ package visualisation;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -33,18 +34,21 @@ public class VisWindow extends JFrame
 	    // this.setMaximumSize(dim);
 	    this.setPreferredSize(dim);
 	    
+	    
 	    /*============= Initialisation des JPanel =============*/
 	    JPanel fenetreVisualisation = new JPanel();
+	    fenetreVisualisation.setLayout(new FlowLayout(0,0,0));
 	    fenetreVisualisation.setPreferredSize(dim);
 	    fenetreVisualisation.setMinimumSize(dim);
 	    fenetreVisualisation.setMaximumSize(dim);
-	    fenetreVisualisation.setBackground(Color.GRAY);
+	    fenetreVisualisation.setBackground(Color.cyan);
 	    
 	    this.connection_panel = new visualisation.Connection_panel();
 	    this.choixCapteur = new Choix_capteur_panel();
 	    this.tab_capteur = new Tableau_capteur();
 	    
 	    /*============= Ajout Listener =============*/
+	    // Listener sur bouton de connexion
 	    this.connection_panel.getBouton().addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -82,6 +86,9 @@ public class VisWindow extends JFrame
 				}
 			}
 		});
+	    // Listener sur Apparition disparition d'un capteur
+	    
+	    // Listener sur inscription capteur
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    fenetreVisualisation.add(this.connection_panel);
@@ -93,8 +100,8 @@ public class VisWindow extends JFrame
 	    
 	    /*============= Initialisation Reseau =============*/
 	    this.res = new visualisation.Reseaux();
-	    
 	}
+	
 	/**
 	 * 
 	 * @return texte du bouton de connection
