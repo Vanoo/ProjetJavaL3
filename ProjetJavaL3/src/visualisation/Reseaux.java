@@ -15,7 +15,6 @@ import java.net.UnknownHostException;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
-import javax.swing.Popup;
 import javax.swing.Timer;
 /**
  * 
@@ -24,6 +23,7 @@ import javax.swing.Timer;
  *
  */
 public class Reseaux {
+	
 	
 	Socket socket;
 	InetAddress server_address;
@@ -116,10 +116,15 @@ public class Reseaux {
 	        	JOptionPane.showMessageDialog(null, "Error : Reject Connection from server ");
 	        	return false;
 	        }
+	        else
+	        {
+	        	
+	        	
+	        	
+	        	listen();
+	        }
 			
 		}
-		
-		listen();
 		
 		return noerror;
 	}
@@ -188,6 +193,8 @@ public class Reseaux {
 				
 			    while(true) {
 			    	
+			    	System.out.println("debug dans boucle");
+			    	
 			    	try
 			    	{
 			    		message = in.readLine();
@@ -226,6 +233,15 @@ public class Reseaux {
 	}
 	
 	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param cap
+	 */
 	public void ajouterCapteur (Capteur cap)
 	{
 		
