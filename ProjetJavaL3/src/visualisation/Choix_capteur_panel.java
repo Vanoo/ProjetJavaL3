@@ -4,12 +4,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.tree.TreePath;
 
+import com.sun.crypto.provider.DESCipher;
+
 import simulation.XmlJTree;
+import sun.security.krb5.internal.crypto.DesCbcCrcEType;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -17,7 +21,8 @@ public class Choix_capteur_panel extends JPanel
 	 * 
 	 */
 	
-	TreePath arbreChoix;
+	private JButton inscription_button;
+	private JButton desinscription_button;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +34,7 @@ public class Choix_capteur_panel extends JPanel
 		this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		
 		this.setPreferredSize(dim);
-		this.setBackground(Color.black);
+		this.setBackground(Color.lightGray);
 		
 		/*=============  Titre Panel =============*/
 		JPanel title = new JPanel();
@@ -42,44 +47,45 @@ public class Choix_capteur_panel extends JPanel
 		/*=============  Tree Panel =============*/
 		JPanel capteur_tree = new JPanel();
 		capteur_tree.setPreferredSize(new Dimension(300,260));
-		capteur_tree.setBackground(Color.blue);
+		capteur_tree.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
+		capteur_tree.setBackground(Color.lightGray);
 		
 		
 		final XmlJTree arbre = new XmlJTree(null);
-		// arbre.setSize(new Dimension(100,200));
-		JPanel int_panel = new JPanel();
-		int_panel.setBackground(Color.LIGHT_GRAY);
-		// int_panel.setLayout(new GridLayout(8,1));
-		JScrollPane scroll_arbre = new JScrollPane(arbre);
-		scroll_arbre.setPreferredSize(new Dimension(270,240));
-		
-		int_panel.add(scroll_arbre);
 		arbre.setPath("./config.xml");
 		
-		capteur_tree.add(int_panel);
+		JScrollPane scroll_arbre = new JScrollPane(arbre);
+		scroll_arbre.setPreferredSize(new Dimension(200,250));		
 		
-		/*=============  Option Panel =============*/
-		JPanel option_tree = new JPanel();
-		option_tree.setPreferredSize(new Dimension(200,260));
-		option_tree.setBackground(Color.yellow);
+		capteur_tree.add(scroll_arbre);
 		
-		/*=============  Interactif Panel =============*/
+		/*=============  Bouton =============*/
+		JPanel bouton_panel = new JPanel();
 		
-		JPanel tree_option = new JPanel();
-		tree_option.setPreferredSize(new Dimension(500,260));
-		tree_option.setBackground(Color.lightGray);
-		tree_option.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+		bouton_panel.setPreferredSize(new Dimension(150,70));
+		bouton_panel.setBackground(Color.lightGray);
 		
-		/* Rassemblement Composant */
-
-		tree_option.add(capteur_tree);
-		tree_option.add(option_tree);
+		JButton inscription = new JButton("Inscription");
+		inscription.setPreferredSize(new Dimension(150,20));
+		JButton desinscription = new JButton("Desinscription");
+		desinscription.setPreferredSize(new Dimension(150,20));
+		
+		this.inscription_button = inscription;
+		this.desinscription_button = desinscription;
+		
+		bouton_panel.add(this.inscription_button);
+		bouton_panel.add(this.desinscription_button);
 		
 		/*=============  Ajout Panel =============*/
 		
 		this.add(title);
-		this.add(tree_option);
+		this.add(capteur_tree);
+		this.add(bouton_panel);
 	}
 	
+	public JButton getInscriptionButton()
+	{
+		return this.inscription_button;
+	}
 	
 }
