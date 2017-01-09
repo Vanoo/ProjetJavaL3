@@ -4,15 +4,16 @@ import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 public class Tableau_capteur extends JPanel{
 
@@ -72,11 +73,22 @@ public class Tableau_capteur extends JPanel{
 		title_alert.add(new JLabel("Alerte"));
 		
 		// MIN MAX
-		JTextField alert_min_textField = new JTextField();
-		JTextField alert_max_textField = new JTextField();	
+		MaskFormatter int_formatter = null;
+		try 
+		{
+			int_formatter = new MaskFormatter("####");
+		} 
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}
+		int_formatter.setPlaceholderCharacter('0');
 		
-		alert_min_textField.setPreferredSize(new Dimension(40, 20));
-		alert_max_textField.setPreferredSize(new Dimension(40, 20));
+		JFormattedTextField alert_min_texField = new JFormattedTextField(int_formatter);
+		JFormattedTextField alert_max_texField = new JFormattedTextField(int_formatter);
+		
+		alert_min_texField.setPreferredSize(new Dimension(40, 20));
+		alert_max_texField.setPreferredSize(new Dimension(40, 20));
 		
 		// CheckBox
 		
@@ -85,9 +97,9 @@ public class Tableau_capteur extends JPanel{
 		// Assemblage alert
 		alert_panel.add(title_alert);
 		alert_panel.add(new JLabel("Min :"));
-		alert_panel.add(alert_min_textField);
+		alert_panel.add(alert_min_texField);
 		alert_panel.add(new JLabel("Max :"));
-		alert_panel.add(alert_max_textField);
+		alert_panel.add(alert_max_texField);
 		alert_panel.add(alert_checkbox);
 		
 		/* Filtre Panel */
@@ -123,8 +135,7 @@ public class Tableau_capteur extends JPanel{
 		filtre_panel.add(type_combo);
 		filtre_panel.add(type_checkbox);
 		filtre_panel.add(filtre_loc_button);
-		
-		
+			
 		/*=============  Ajout Panel =============*/
 		
 		this.add(title);
