@@ -2,9 +2,6 @@ package visualisation;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -81,24 +78,25 @@ public class XMLParser {
       
       if(n instanceof Element)
       {
+    	  
+    	// On récupère la liste des attributs
+          NamedNodeMap att = n.getAttributes();
+          int nbAtt = att.getLength();
          
-         // On contrôle la liste des attributs présents
-         if(n.getAttributes() != null && n.getAttributes().getLength() > 0)
-         {
-            
-            // On récupère la liste des attributs
-            NamedNodeMap att = n.getAttributes();
-            int nbAtt = att.getLength();
-            
-            // On parcours tous les noeuds
-            for(int j = 0; j < nbAtt; j++)
-            {
-               Node noeud = att.item(j);
-               //On récupère le nom de l'attribut et sa valeur
-               DefaultMutableTreeNode attribut = new DefaultMutableTreeNode ("ATTRIBUT : " + noeud.getNodeName() + "=" + noeud.getNodeValue());
-               treeNode.add(attribut);
-            }
-         }
+		// On contrôle la liste des attributs présents
+		if(att != null && nbAtt > 0)
+		{
+			// On parcours tous les noeuds
+			int j = 0;
+			do
+			{
+				Node noeud = att.item(j);
+				//On récupère le nom de l'attribut et sa valeur
+				DefaultMutableTreeNode attribut = new DefaultMutableTreeNode (noeud.getNodeName() + "=" + noeud.getNodeValue());
+				treeNode.add(attribut);
+				j++;
+			} while(j < nbAtt);
+		}
         
          // On traite les enfants du noeud en cours
          int nbChild = n.getChildNodes().getLength();
