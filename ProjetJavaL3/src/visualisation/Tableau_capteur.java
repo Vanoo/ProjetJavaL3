@@ -53,26 +53,56 @@ public class Tableau_capteur extends JPanel{
 		
 		/*=============  Option Panel =============*/
 		
+		/* Alert Panel */
 		JPanel alert_panel = new JPanel();
 		alert_panel.add(new JLabel());
 		
-		JTextField alert_min = new JTextField();
-		JTextField alert_max = new JTextField();		
+		JTextField alert_min_textField = new JTextField();
+		alert_min_textField.setPreferredSize(new Dimension(40, 20));
+		JTextField alert_max_textField = new JTextField();	
+		alert_max_textField.setPreferredSize(new Dimension(40, 20));
+		
+		alert_panel.add(new JLabel("Alerte"));
+		alert_panel.add(new JLabel("Min :"));
+		alert_panel.add(alert_min_textField);
+		alert_panel.add(new JLabel("Max :"));
+		alert_panel.add(alert_max_textField);
+		
+		/* Filtre Panel */
 		
 		JPanel filtre_panel = new JPanel();
 		
 		String[] type_string = { "Temperature", "Humidite",
 				"Luminosite", "VolumeSonore","ConsoEclairage","EauFroide"
 				,"EauChaude","VitesseVent","PressionAtm"};
-		 //Create the combo box, select item at index 4.
+
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
 		type_combo.setSelectedItem(type_string[0]);
 
+		String[] loc_string = this.getLocString();
+		
+		JComboBox<Object> loc_combo = new JComboBox<Object>(type_string);
+		type_combo.setSelectedItem(type_string[0]);
+		
+		filtre_panel.add(new JLabel("Filtre"));
+		filtre_panel.add(new JLabel("Type :"));
 		filtre_panel.add(type_combo);
+		filtre_panel.add(new JLabel("Localisation :"));
+		filtre_panel.add(loc_combo);
 		
 		/*=============  Ajout Panel =============*/
 		
 		this.add(title);
 		this.add(scrollTab);
+		this.add(alert_panel);
+		this.add(filtre_panel);
+	}
+	
+	public String[] getLocString()
+	{
+		String[] loc_string = { "Temperature", "Humidite",
+				"Luminosite", "VolumeSonore","ConsoEclairage","EauFroide"
+				,"EauChaude","VitesseVent","PressionAtm"};
+		return loc_string;
 	}
 }
