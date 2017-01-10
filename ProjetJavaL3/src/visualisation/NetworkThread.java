@@ -1,12 +1,9 @@
 package visualisation;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -18,6 +15,11 @@ public class NetworkThread extends Thread {
 	private BufferedReader in;
 	private BufferedWriter w;
 	
+	/**
+	 * Constructeur
+	 * 
+	 * @param res Reseaux qui cree le thread
+	 */
     public NetworkThread(Reseaux res) {
 		this.res = res;
 		this.in = res.in;
@@ -43,7 +45,10 @@ public class NetworkThread extends Thread {
 	}
 	
 
-	
+	/**
+	 * Methode lancee a l'execution du thread
+	 * /!\ boucle infinie
+	 */
 	public void run()
 	{
 		
