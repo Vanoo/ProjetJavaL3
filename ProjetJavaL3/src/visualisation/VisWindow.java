@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,10 +20,11 @@ public class VisWindow extends JFrame
 
 	private static String idInterface = "groupe BARBEUMONTRAN";
 	
-	visualisation.Connection_panel connection_panel;
-	visualisation.Reseaux res;
-	Choix_capteur_panel choixCapteur;
-	Tableau_capteur tab_capteur;
+	private visualisation.Connection_panel connection_panel;
+	private visualisation.Reseaux res;
+	private Choix_capteur_panel choixCapteur;
+	private Tableau_capteur tab_capteur;
+	private Set<Capteur> ListCapteurPresent;
 	
 	public VisWindow(Dimension dim) throws ParseException
 	{		
@@ -48,6 +50,7 @@ public class VisWindow extends JFrame
 	    this.connection_panel = new visualisation.Connection_panel();
 	    this.choixCapteur = new Choix_capteur_panel();
 	    this.tab_capteur = new Tableau_capteur();
+	    this.ListCapteurPresent = null;
 	    
 	    /*============= Ajout Listener =============*/
 	    // Listener sur bouton de connexion
@@ -181,4 +184,36 @@ public class VisWindow extends JFrame
 	        }
 	    }
 	}	
+	
+	/**
+	 * 
+	 */
+	public void inscription()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void desincription()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 */
+	void newCapteur(Capteur cap)
+	{
+		this.ListCapteurPresent.add(cap);
+	}
+	
+	/**
+	 * 
+	 */
+	void supprCapteur(String idCapteur)
+	{
+		
+	}
 }

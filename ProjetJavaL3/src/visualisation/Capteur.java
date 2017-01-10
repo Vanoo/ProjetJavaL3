@@ -46,4 +46,9 @@ public class Capteur {
 	{
 		return this.id;
 	}
+	
+	public visualisation.Localisation getLoc()
+	{
+		return this.loc;
+	}
 }
