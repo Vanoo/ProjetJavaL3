@@ -14,8 +14,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
-
-import javafx.collections.transformation.SortedList;
 /**
  * 
  * @Javadoc
