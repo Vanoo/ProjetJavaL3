@@ -8,18 +8,22 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class NetworkThread implements Runnable {
+public class NetworkThread extends Thread {
 	
 	private BufferedReader in;
-	private DataOutputStream write;
+	private DataOutputStream w;
 	
     public NetworkThread(BufferedReader in) {
 		this.in = in;
+		
+		
+		
 		try
 		{
 			File plop = new File("plop.txt");
 			plop.createNewFile();
-			write = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(plop)));
+			
+			w = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(plop)));
 		}
 		catch(FileNotFoundException e)
 		{
@@ -32,15 +36,16 @@ public class NetworkThread implements Runnable {
 	}
 	
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	
+	public void run()
+	{
+		
 		String message = "plop";
-		String plop;
+		
+		
+		
 		
 	    while(true) {
-	    	
-	    	System.out.println("debug dans boucle");
 	    	
 	    	try
 	    	{
@@ -53,8 +58,12 @@ public class NetworkThread implements Runnable {
 	    	
 	    	try
 			{
-	    		plop = message+"\n";
-				write.writeChars("plop");
+	    		
+				w.writeBytes(message);
+				w.writeChar(10);
+				w.writeChar(13);
+				w.flush();
+				
 			}
 			catch(IOException e)
 			{
