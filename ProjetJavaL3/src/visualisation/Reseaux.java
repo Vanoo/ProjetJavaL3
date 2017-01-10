@@ -1,7 +1,5 @@
 package visualisation;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,7 +13,6 @@ import java.net.UnknownHostException;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 /**
  * 
  * @Javadoc
@@ -117,9 +114,6 @@ public class Reseaux {
 	        }
 	        else
 	        {
-	        	
-	        	
-	        	
 	        	listen();
 	        }
 			
@@ -176,10 +170,7 @@ public class Reseaux {
 	
 	
 	/**
-	 * 
-	 * Receptionne les infos en continu et les traite
-	 * /!\ boucle infinie
-	 * 
+	 * Cree un thread qui receptionne les messages en continu
 	 */
 	public void listen() {
 		
@@ -243,7 +234,8 @@ public class Reseaux {
 	 */
 	public void ajouterCapteur (Capteur cap)
 	{
-		
+		NetworkThread listener = new NetworkThread(in);
+		listener.run();
 	}
 }
 

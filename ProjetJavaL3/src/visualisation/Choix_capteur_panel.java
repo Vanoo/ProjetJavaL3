@@ -3,12 +3,14 @@ package visualisation;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -46,14 +48,20 @@ public class Choix_capteur_panel extends JPanel
 		capteur_tree.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
 		capteur_tree.setBackground(Color.lightGray);
 		
-		XMLParser parseur = new XMLParser();
-		/*
+		
+		/* Deprecated
 		final XmlJTree arbre = new XmlJTree(null);
 		arbre.setPath("./config.xml");
 		*/
 		
+		XMLParser parseur = new XMLParser();		
+		JTree arbre = new JTree(parseur.parse());
 		
-		JScrollPane scroll_arbre = new JScrollPane(new JTree(parseur.parse()));
+		Set<Capteur> capteurs = null;
+		
+		verifierSalle(parseur.parse(), capteurs);
+		
+		JScrollPane scroll_arbre = new JScrollPane(arbre);
 		scroll_arbre.setPreferredSize(new Dimension(200,250));
 		
 		capteur_tree.add(scroll_arbre);
@@ -121,4 +129,17 @@ public class Choix_capteur_panel extends JPanel
 		
 	}
 	
+	/**
+	 * 
+	 * Verifie si une salle contient un capteur et l'affiche en consequence
+	 * 
+	 */
+	private void verifierSalle(DefaultMutableTreeNode arbre, Set<Capteur> capteurs)
+	{
+		System.out.println(arbre);
+		// checker les fils r�cursivement
+		// v�rifier qu'il n'y a pas de capteurs avec les set
+		// si pas de capteur ni de fils, enlever de l'arbre
+		
+	}
 }
