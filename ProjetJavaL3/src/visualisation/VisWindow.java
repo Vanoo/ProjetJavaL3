@@ -170,7 +170,8 @@ public class VisWindow extends JFrame
 	}
 	
 	/**
-	 * Permet de grise les composants de la fenetre avant la connexion au serveur
+	 * Permet de grise les composants de la fenetre
+	 * En fonction de la connexion au serveur
 	 * 
 	 * @param bool true grise,false degrise
 	 * @param panel panel a grise
