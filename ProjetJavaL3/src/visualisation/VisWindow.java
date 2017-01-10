@@ -6,17 +6,18 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
-
-import simulation.Donnee_panel;
 
 public class VisWindow extends JFrame
 {
@@ -59,6 +60,7 @@ public class VisWindow extends JFrame
 	    this.ListCapteurPresent = null;
 	    
 	    /*============= Ajout Listener =============*/
+	    
 	    // Listener sur bouton de connexion
 	    this.connection_panel.getBouton().addActionListener(new ActionListener() 
 		{
@@ -99,9 +101,25 @@ public class VisWindow extends JFrame
 				}
 			}
 		});
-	    // Listener sur Apparition disparition d'un capteur
+	    // Listener reception message serveur
 	    
-	    // Listener sur inscription capteur
+		this.tab_capteur.getLocFilter().addItemListener(new ItemListener() 
+		{
+			@Override
+			public void itemStateChanged(ItemEvent event) 
+			{
+				if(event.getStateChange()==ItemEvent.SELECTED)
+				{
+					// TODO Filtre les capteurs en fonction de la localisation selectionner dans choix_capteur :s
+				}
+				else
+				{
+					// TODO remettre les capteurs suivis par defaut	( en fonction des filtres actif )
+				}
+			}
+		});
+	    
+
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    fenetreVisualisation.add(this.connection_panel);
@@ -180,7 +198,6 @@ public class VisWindow extends JFrame
 	{
 		panel.setEnabled(bool);
 		Component tab_component[] = panel.getComponents();
-		Component connectionComponent[] = connection_panel.getComponents();
 		
 		for(int i = 0; i < tab_component.length; i++) 
 	    {	        

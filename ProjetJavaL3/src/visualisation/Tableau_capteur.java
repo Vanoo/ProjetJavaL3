@@ -4,13 +4,19 @@ import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,9 +31,9 @@ public class Tableau_capteur extends JPanel{
 	
 	private final String[] entetes = {"Identifiant", "Type", "Localisation", "Valeur"};
 	
-	private JButton loc_button;
-	private Checkbox type_filter;
-	private Checkbox alarm;
+	private JCheckBox loc_filter;
+	private JCheckBox type_filter;
+	private JCheckBox alarm;
 	private JFormattedTextField min_alarm;
 	private JFormattedTextField max_alarm;
 	private JComboBox<Object> type_combo;
@@ -95,7 +101,27 @@ public class Tableau_capteur extends JPanel{
 		
 		// CheckBox
 		
-		Checkbox alert_checkbox = new Checkbox();
+		JCheckBox alert_checkbox = new JCheckBox();
+		
+		alert_checkbox.addItemListener(new ItemListener() 
+		{
+			
+			@Override
+			public void itemStateChanged(ItemEvent event) 
+			{
+				if(event.getStateChange()==ItemEvent.SELECTED)
+				{
+					// TODO setAlarm sur le tableau
+				}
+				else
+				{
+					// TODO retire l'alarm sur le tableau
+					
+				}
+			}
+		});
+		
+		this.alarm = alert_checkbox;
 		
 		// Assemblage alert
 		alert_panel.add(title_alert);
@@ -126,18 +152,38 @@ public class Tableau_capteur extends JPanel{
 
 		JComboBox<Object> type_combo = new JComboBox<Object>(type_string);
 		type_combo.setSelectedItem(type_string[0]);
+		this.type_combo = type_combo;
 		
-		Checkbox type_checkbox = new Checkbox();
+		JCheckBox type_checkbox = new JCheckBox("Type");
+		type_checkbox.addItemListener(new ItemListener() 
+		{
+			
+			@Override
+			public void itemStateChanged(ItemEvent event) 
+			{
+				if(event.getStateChange()==ItemEvent.SELECTED)
+				{
+					// TODO filtre les capteurs en fonction du type choisi dans la comboBox
+					// filterType( type_combo );
+				}
+				else
+				{
+					// TODO remettre les capteurs suivis par defaut	( en fonction des filtres actif )
+					resetFilter();
+					
+				}
+			}
+		});
 		
 		// LOCALISATION
-		JButton filtre_loc_button = new JButton("Localisation");
+		JCheckBox loc_combo = new JCheckBox("Localisation");
+		this.loc_filter = loc_combo;
 		
 		// Assemblage
 		filtre_panel.add(title_filtre);
-		filtre_panel.add(new JLabel("Type :"));
 		filtre_panel.add(type_combo);
 		filtre_panel.add(type_checkbox);
-		filtre_panel.add(filtre_loc_button);
+		filtre_panel.add(loc_combo);
 			
 		/*=============  Ajout Panel =============*/
 		
@@ -145,36 +191,35 @@ public class Tableau_capteur extends JPanel{
 		this.add(scrollTab);
 		this.add(alert_panel);
 		this.add(filtre_panel);
+	}	
+	
+	/**
+	 * 
+	 */
+	private void filterType(String type)
+	{
+		
 	}
 	
-	public JButton getLoc_button() 
+	/**
+	 * 
+	 */
+	private void filterLoc(Localisation loc)
 	{
-		return loc_button;
-	}
-
-	public Checkbox getType_filter() 
-	{
-		return type_filter;
-	}
-
-	public Checkbox getAlarm() 
-	{
-		return alarm;
-	}
-
-	public JFormattedTextField getMin_alarm() 
-	{
-		return min_alarm;
+		
 	}
 	
-	public JFormattedTextField getMax_alarm() 
+	/**
+	 * 
+	 */
+	private void resetFilter()
 	{
-		return max_alarm;
+		
 	}
-
-	public JComboBox<Object> getType_combo() 
+	
+	public JCheckBox getLocFilter()
 	{
-		return type_combo;
+		return this.loc_filter;
 	}
 	
 	private Object[][] transfSetCapteur(Set<Capteur> listCapteur)
