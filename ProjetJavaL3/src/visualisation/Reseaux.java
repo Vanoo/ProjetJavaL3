@@ -1,7 +1,5 @@
 package visualisation;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,7 +13,6 @@ import java.net.UnknownHostException;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 /**
  * 
  * @Javadoc
@@ -118,9 +115,6 @@ public class Reseaux {
 	        }
 	        else
 	        {
-	        	
-	        	
-	        	
 	        	listen();
 	        }
 			
@@ -177,74 +171,11 @@ public class Reseaux {
 	
 	
 	/**
-	 * 
-	 * Receptionne les infos en continu et les traite
-	 * /!\ boucle infinie
-	 * 
+	 * Cree un thread qui receptionne les messages en continu
 	 */
 	public void listen() {
-		
-		ActionListener taskPerformer = new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent evt) 
-			{
-				
-				String message = "plop";
-				
-			    while(true) {
-			    	
-			    	System.out.println("debug dans boucle");
-			    	
-			    	try
-			    	{
-			    		message = in.readLine();
-			    	}
-			    	catch(IOException e)
-			    	{
-			    		e.printStackTrace();
-			    	}
-			    	
-			    	if(message.startsWith("CapteurPresent;"))
-			    	{
-			    		String[] splittedString = message.split(";");
-			    		if(splittedString.length == 5)
-			    		{
-			    			ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]));
-			    			System.out.println("Capteur ajoute : "+splittedString[1]);
-			    			// popup
-			    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
-			    		}
-			    		else if (splittedString.length == 7)
-			    		{
-			    			ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]));
-			    			System.out.println("Capteur ajoute : "+splittedString[1]);
-			    			// popup
-			    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
-			    		}
-			    		else
-			    			System.out.println("Message erroné");
-			    	}
-			    }
-			}
-		};
-		
-		Timer recoisData = new Timer(1, taskPerformer);
-		recoisData.start();
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * 
-	 * @param cap
-	 */
-	public void ajouterCapteur (Capteur cap)
-	{
-		
+		NetworkThread listener = new NetworkThread(in);
+		listener.run();
 	}
 }
 
