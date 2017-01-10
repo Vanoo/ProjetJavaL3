@@ -47,6 +47,15 @@ public class Capteur {
 		return this.id;
 	}
 	
+	/**
+	 * 
+	 * @return type du capteur
+	 */
+	public String getType()
+	{
+		return this.type;
+	}
+	
 	public visualisation.Localisation getLoc()
 	{
 		return this.loc;
