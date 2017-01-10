@@ -47,6 +47,7 @@ public class Reseaux {
 	 */
 	public boolean connection (String adress, int port,String idInterface) 
 	{
+		this.noerror = true;
 		// Avoir l'adresse grace a l'ip fournie 
 		try
 		{
