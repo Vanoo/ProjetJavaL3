@@ -142,4 +142,9 @@ public class Choix_capteur_panel extends JPanel
 		// si pas de capteur ni de fils, enlever de l'arbre
 		
 	}
+	
+	public String[] getSelected()
+	{
+		return null;
+	}
 }

@@ -9,8 +9,12 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.Set;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTree;
 
 import simulation.Donnee_panel;
 
@@ -24,7 +28,9 @@ public class VisWindow extends JFrame
 	private visualisation.Reseaux res;
 	private Choix_capteur_panel choixCapteur;
 	private Tableau_capteur tab_capteur;
+	private JPanel fenetre;
 	private Set<Capteur> ListCapteurPresent;
+	
 	
 	public VisWindow(Dimension dim) throws ParseException
 	{		
@@ -68,6 +74,7 @@ public class VisWindow extends JFrame
 					if( success )
 					{
 						changementBouton();
+						fifty_shade_of_gray(true,fenetre);
 						// LANCEMENT RECEPTION DONNEE
 					}
 					else
@@ -83,6 +90,7 @@ public class VisWindow extends JFrame
 					if( success )
 					{
 						changementBouton();
+						fifty_shade_of_gray(false,fenetre);
 					}
 					else
 					{
@@ -101,6 +109,10 @@ public class VisWindow extends JFrame
 	    fenetreVisualisation.add(this.tab_capteur);
 	    
 	    this.add(fenetreVisualisation);
+	    this.fenetre = fenetreVisualisation;
+	    
+	    this.fifty_shade_of_gray(false,this.fenetre);
+	    
 	    pack();
 	    
 	    /*============= Initialisation Reseau =============*/
@@ -158,62 +170,88 @@ public class VisWindow extends JFrame
 	}
 	
 	/**
+	 * Permet de grise les composants de la fenetre avant la connexion au serveur
 	 * 
-	 * @param bool
-	 * @param panel
+	 * @param bool true grise,false degrise
+	 * @param panel panel a grise
 	 */
-	public void fifty_shade_of_gray(boolean bool,JPanel panel)
+	private void fifty_shade_of_gray(boolean bool,JPanel panel)
 	{
 		panel.setEnabled(bool);
 		Component tab_component[] = panel.getComponents();
+		Component connectionComponent[] = connection_panel.getComponents();
 		
 		for(int i = 0; i < tab_component.length; i++) 
-	    {
-	        if(tab_component[i] instanceof JPanel) 
+	    {	        
+	        if(tab_component[i] instanceof JPanel ) 
 	        {
-	        	fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
+	        	if(! tab_component[i].equals(connection_panel))
+	        	{
+	        		fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
+	        	}
+	        	else
+	        	{
+	        		fifty_shade_of_gray(!bool,(JPanel) tab_component[i]);
+	        	}
 	        }
-	        tab_component[i].setEnabled(bool);
-	        if(tab_component[i] instanceof Donnee_panel)
-	        {
-	        	fifty_shade_of_gray(!bool, (JPanel)tab_component[i]);
-	        }
-	        if(tab_component[i] == connection_panel) 
-	        {
-	        	// connection_panel.connection_button.setEnabled(true);
-	        }
+        	tab_component[i].setEnabled(bool);        	
 	    }
+		connection_panel.getBouton().setEnabled(true);
 	}	
 	
 	/**
-	 * 
+	 * Ajout des capteurs selectionnes dans le panel ChoixCapteur
+	 * a la liste des capteurs suivis dans le panel TableauCapteur
 	 */
 	public void inscription()
 	{
-		
+		String[] tabIdCapteurASuivre;
+		String[] tabIdCapteurSuccessInscr = null;
+		tabIdCapteurASuivre = this.choixCapteur.getSelected();
+		// String[] tabIdCapteurSuccessInscr = res.inscription(tabIdCapteurASuivre);
+		Set<Capteur> newCapteur = this.getCapteurFormId(tabIdCapteurSuccessInscr);
+		this.tab_capteur.ajouterCapteur(newCapteur);
 	}
 	
 	/**
-	 * 
+	 * Suppression des capteurs selectionnes dans le panel ChoixCapteur
+	 * a la liste des capteurs suivis dans le panel TableauCapteur
 	 */
 	public void desincription()
 	{
-		
+		String[] tabIdCapteurAsuppr;
+		tabIdCapteurAsuppr = this.choixCapteur.getSelected();
+		// res.desinscription(tabIdCapteurAsuppr);
+		Set<Capteur> listCapteur = this.getCapteurFormId(tabIdCapteurAsuppr);
+		this.tab_capteur.supprCapteur(listCapteur);
 	}
 	
 	/**
+	 * Ajout d un capteur dans la liste des capteurs suivis
 	 * 
 	 */
-	void newCapteur(Capteur cap)
+	public void newCapteur(Capteur cap)
 	{
 		this.ListCapteurPresent.add(cap);
 	}
 	
 	/**
+	 * Suppresion d un capteur de la liste des capteurs suivis
 	 * 
 	 */
-	void supprCapteur(String idCapteur)
+	public void supprCapteur(Capteur cap)
 	{
-		
+		this.ListCapteurPresent.remove(cap);
+	}
+	
+	/**
+	 * Renvoi la liste des objects capteurs correspondant au tableau des identifiants des capteurs
+	 * 
+	 * @param tabIdCapteur tableau d identifiant de capteur
+	 * @return liste de Capteurs
+	 */
+	private Set<Capteur> getCapteurFormId(String[] tabIdCapteur)
+	{
+		return null;
 	}
 }
