@@ -20,5 +20,4 @@ public class Capteur {
 		this.loc = new visualisation.LocalisationInt(batiment, Integer.parseInt(etage), salle, positionrelative);
 	}
 	
-	
 }

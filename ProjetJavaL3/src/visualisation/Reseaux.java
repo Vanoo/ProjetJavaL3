@@ -33,7 +33,6 @@ public class Reseaux {
     boolean noerror;
     Set<Capteur> capteurs;
     
-    
 	public Reseaux()
 	{
 		this.noerror = true;
@@ -222,7 +221,7 @@ public class Reseaux {
 			    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
 			    		}
 			    		else
-			    			System.out.println("Message erroné");
+			    			System.out.println("Message erronï¿½");
 			    	}
 			    }
 			}

@@ -19,12 +19,13 @@ public class Choix_capteur_panel extends JPanel
 	private JButton inscription_button;
 	private JButton desinscription_button;
 	
+	private JTree capteur_tree;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Choix_capteur_panel() 
 	{
 		Dimension dim = new Dimension(500,275);
-		
 		
 		this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		
@@ -97,6 +98,27 @@ public class Choix_capteur_panel extends JPanel
 	public JButton getDesinscriptionButton()
 	{
 		return this.desinscription_button;
+	}
+	
+	/**
+	 * Ajout dans le JTree le capteur voulus
+	 * 
+	 * @param IdentifiantCapteur
+	 * @param locCapteur localisation du capteur a ajouter
+	 */
+	public void newCapteur(String IdentifiantCapteur,Localisation locCapteur)
+	{
+		
+	}
+	
+	/**
+	 * Supprime du JTree le capteur voulus
+	 * 
+	 * @param IdentifiantCapteur
+	 */
+	public void supprCapteur(String IdentifiantCapteur)
+	{
+		
 	}
 	
 }

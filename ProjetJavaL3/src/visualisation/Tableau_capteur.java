@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.text.ParseException;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +21,19 @@ public class Tableau_capteur extends JPanel{
 	/**
 	 * 
 	 */
+	private Set<Capteur> capteurSuivis;
+	
+	private final String[] entetes = {"Identifiant", "Type", "Localisation", "Valeur"};
+	
+	private JButton loc_button;
+	private Checkbox type_filter;
+	private Checkbox alarm;
+	private JFormattedTextField min_alarm;
+	private JFormattedTextField max_alarm;
+	private JComboBox<Object> type_combo;
+	
+	private JTable tabCapteurSuivis;
+
 	private static final long serialVersionUID = 1L;
 
 	public Tableau_capteur() 
@@ -40,25 +54,14 @@ public class Tableau_capteur extends JPanel{
 		title.add(title_label);
 		
 		/*=============  Tableau Panel =============*/
-		
-		Object[][] donnees = 
-		{
-				{"Id", "Type", "Localisation", "Valeur"},
-				{"Id", "Type", "Localisation", "Valeur"},
-				{"Id", "Type", "Localisation", "Valeur"},
-				{"Id", "Type", "Localisation", "Valeur"},
-				{"Id", "Type", "Localisation", "Valeur"}
-        };
- 
-        String[] entetes = {"Id", "Type", "Localisation", "Valeur"};
- 
-		JTable capteur_tab = new JTable(donnees, entetes);
-		
-		JScrollPane scrollTab= new JScrollPane(capteur_tab);
+		Object[][] donnees = {};
+        
+		this.tabCapteurSuivis = new JTable(donnees, this.entetes);
+		JScrollPane scrollTab= new JScrollPane(this.tabCapteurSuivis);
 		scrollTab.setPreferredSize(new Dimension(500,250));
 		
 		/*=============  Option Panel =============*/
-		
+	
 		/* Alert Panel */
 		JPanel alert_panel = new JPanel();
 		alert_panel.setPreferredSize(new Dimension(500,40));
@@ -143,4 +146,65 @@ public class Tableau_capteur extends JPanel{
 		this.add(alert_panel);
 		this.add(filtre_panel);
 	}
+	
+	public JButton getLoc_button() 
+	{
+		return loc_button;
+	}
+
+	public Checkbox getType_filter() 
+	{
+		return type_filter;
+	}
+
+	public Checkbox getAlarm() 
+	{
+		return alarm;
+	}
+
+	public JFormattedTextField getMin_alarm() 
+	{
+		return min_alarm;
+	}
+	
+	public JFormattedTextField getMax_alarm() 
+	{
+		return max_alarm;
+	}
+
+	public JComboBox<Object> getType_combo() 
+	{
+		return type_combo;
+	}
+	
+	private Object[][] transfSetCapteur(Set<Capteur> listCapteur)
+	{
+		Object[][] donnees = {};
+		return donnees;
+	}
+	
+	/**
+	 * Ajoute de nouveaux capteurs dans le set des capteurs deja suivis
+	 * puis modifie la JTable affichant les capteurs suivis
+	 * @param newCapteur set des capteurs nouvellement suivis
+	 */
+	public void ajouterCapteur(Set<Capteur> newCapteur)
+	{
+		System.out.println("Ajout Capteur dans tableau_capteur panel");
+		this.capteurSuivis.addAll(newCapteur);
+		this.tabCapteurSuivis = new JTable(transfSetCapteur(newCapteur), this.entetes);
+	}
+	
+	/**
+	 * Supprime des capteurs du set des capteurs suivis
+	 * puis modifie la JTable affichant les capteurs suivis
+	 * @param newCapteur set des capteurs qui ne seront plus suivis
+	 */
+	public void supprCapteur(Set<Capteur> capteurAsuppr)
+	{
+		System.out.println("Suppresion Capteur dans tableau_capteur panel");
+		this.capteurSuivis.removeAll(capteurAsuppr);
+		this.tabCapteurSuivis = new JTable(transfSetCapteur(capteurAsuppr), this.entetes);
+	}
+	
 }

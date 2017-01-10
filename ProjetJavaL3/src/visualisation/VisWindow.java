@@ -1,6 +1,7 @@
 package visualisation;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,8 @@ import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import simulation.Donnee_panel;
 
 public class VisWindow extends JFrame
 {
@@ -150,4 +153,32 @@ public class VisWindow extends JFrame
 		success = this.res.deconnexion();
 		return success;
 	}
+	
+	/**
+	 * 
+	 * @param bool
+	 * @param panel
+	 */
+	public void fifty_shade_of_gray(boolean bool,JPanel panel)
+	{
+		panel.setEnabled(bool);
+		Component tab_component[] = panel.getComponents();
+		
+		for(int i = 0; i < tab_component.length; i++) 
+	    {
+	        if(tab_component[i] instanceof JPanel) 
+	        {
+	        	fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
+	        }
+	        tab_component[i].setEnabled(bool);
+	        if(tab_component[i] instanceof Donnee_panel)
+	        {
+	        	fifty_shade_of_gray(!bool, (JPanel)tab_component[i]);
+	        }
+	        if(tab_component[i] == connection_panel) 
+	        {
+	        	// connection_panel.connection_button.setEnabled(true);
+	        }
+	    }
+	}	
 }
