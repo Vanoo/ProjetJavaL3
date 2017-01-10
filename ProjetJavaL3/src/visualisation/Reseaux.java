@@ -11,8 +11,11 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
+
+import javafx.collections.transformation.SortedList;
 /**
  * 
  * @Javadoc
@@ -28,7 +31,15 @@ public class Reseaux {
     BufferedReader in;
     PrintWriter out;
     boolean noerror;
+    
+    String retourInscription;
+    
+    
+    
     Set<Capteur> capteurs;
+    
+    
+    
     
     
 	public Reseaux()
@@ -175,7 +186,45 @@ public class Reseaux {
 	 * Cree un thread qui receptionne les messages en continu
 	 */
 	public void listen() {
-		new NetworkThread(in).start();
+		new NetworkThread(this).start();
+	}
+	
+	
+	/**
+	 * Inscrit l'interface de visualisation a un ensemble de capteurs
+	 * 
+	 * @param tabIdCapteur tableau des noms des capteurs auxquels il faut s'inscrire
+	 * @return
+	 */
+	public String[] inscription(String[] tabIdCapteur)
+	{
+		String check = this.retourInscription;
+		String message = "InscriptionCapteur";
+		TreeSet<String> capteursSuivis = new TreeSet<String>();
+		
+		for(int i = 0; i < tabIdCapteur.length; i++)
+		{
+			capteursSuivis.add(tabIdCapteur[i]);
+			message = message+";"+tabIdCapteur[i];
+		}
+		
+		// On envoie le message decrivant les capteurs auxquels on souhaite s'inscrire
+		out.println(message);
+		
+		// Attente active
+		while(check.compareTo(this.retourInscription) == 0);
+		
+		
+		String[] capteursRejetes = retourInscription.split(";");
+		
+		if(capteursRejetes[0].compareTo("InscriptionCapteurOK") == 0) return tabIdCapteur;
+		
+		for(int i = 1; i < capteursRejetes.length; i++)
+		{
+			capteursSuivis.remove(capteursRejetes[i]);
+		}
+		
+		return capteursSuivis.toArray(new String[0]);
 	}
 }
 

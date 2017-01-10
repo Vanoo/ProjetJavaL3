@@ -2,28 +2,35 @@ package visualisation;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
 
 public class NetworkThread extends Thread {
 	
+	private Reseaux res;
 	private BufferedReader in;
-	private DataOutputStream w;
+	private BufferedWriter w;
 	
-    public NetworkThread(BufferedReader in) {
-		this.in = in;
+    public NetworkThread(Reseaux res) {
+		this.res = res;
+		this.in = res.in;
 		
 		
 		
 		try
 		{
-			File plop = new File("plop.txt");
-			plop.createNewFile();
+			File logs = new File("logs.txt");
+			logs.createNewFile();
 			
-			w = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(plop)));
+			
+			w = new BufferedWriter(new FileWriter(logs));
 		}
 		catch(FileNotFoundException e)
 		{
@@ -59,9 +66,8 @@ public class NetworkThread extends Thread {
 	    	try
 			{
 	    		
-				w.writeBytes(message);
-				w.writeChar(10);
-				w.writeChar(13);
+				w.write(message);
+				w.write("\r\n");
 				w.flush();
 				
 			}
@@ -79,17 +85,21 @@ public class NetworkThread extends Thread {
 	    			
 	    			System.out.println("Capteur ajoute : "+splittedString[1]);
 	    			// popup
-	    			//JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
+	    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
 	    		}
 	    		else if (splittedString.length == 7)
 	    		{
 	    			//ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]));
 	    			System.out.println("Capteur ajoute : "+splittedString[1]);
 	    			// popup
-	    			//JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
+	    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
 	    		}
 	    		else
 	    			System.out.println("Message erroné");
+	    	}
+	    	else if (message.startsWith("InscriptionCapteur"))
+	    	{
+	    		res.retourInscription = message;
 	    	}
 	    }
 		
