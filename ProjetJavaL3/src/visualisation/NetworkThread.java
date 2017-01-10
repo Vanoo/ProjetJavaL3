@@ -36,6 +36,7 @@ public class NetworkThread implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		String message = "plop";
+		String plop;
 		
 	    while(true) {
 	    	
@@ -52,7 +53,8 @@ public class NetworkThread implements Runnable {
 	    	
 	    	try
 			{
-				write.writeChars();
+	    		plop = message+"\n";
+				write.writeChars("plop");
 			}
 			catch(IOException e)
 			{

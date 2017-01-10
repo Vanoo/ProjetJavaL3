@@ -115,7 +115,7 @@ public class Reseaux {
 	        }
 	        else
 	        {
-	        	listen();
+	        	//listen();
 	        }
 			
 		}
@@ -174,8 +174,7 @@ public class Reseaux {
 	 * Cree un thread qui receptionne les messages en continu
 	 */
 	public void listen() {
-		NetworkThread listener = new NetworkThread(in);
-		listener.run();
+		new Thread(new NetworkThread(in)).start();
 	}
 }
 
