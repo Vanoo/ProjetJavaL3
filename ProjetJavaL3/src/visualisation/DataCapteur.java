@@ -68,13 +68,6 @@ public class DataCapteur extends AbstractTableModel
                 return null; //Must never happens
         }
     }
-    /*
-    public void setValueAt(Object value, int row, int col) 
-    {
-        data[row][col] = value;
-        fireTableCellUpdated(row, col);
-    }
-    */
     
     public void changeValue(String idCapteur,double valeur) 
     {
@@ -90,8 +83,6 @@ public class DataCapteur extends AbstractTableModel
     			break;
     		}
     	}
-    	
-    	// capteurs.get(0).setValeur(valeur);
     	
     	fireTableDataChanged();
     }
