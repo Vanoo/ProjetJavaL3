@@ -12,6 +12,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class VisWindow extends JFrame implements Observer
@@ -324,6 +325,7 @@ public class VisWindow extends JFrame implements Observer
 	// Appartition Nouveau Capteur
 	    if(message.startsWith("CapteurPresent"))
 	    {
+	    	JOptionPane.showMessageDialog(null, message);
 	    	Capteur cap = null;
 	    	String [] splittedString = message.split(";");
 	    	if(splittedString.length == 7)
@@ -349,6 +351,7 @@ public class VisWindow extends JFrame implements Observer
 	    {
 	    	String [] splittedString = message.split(";");
 	    	// tab_capteur.changeValue(idCapteur, value);
+	    	tab_capteur.changeValue(splittedString[1], Double.parseDouble(splittedString[2]));
 	    }
 	    
 	}

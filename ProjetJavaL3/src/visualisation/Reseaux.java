@@ -30,6 +30,7 @@ public class Reseaux extends java.util.Observable
     BufferedReader in;
     PrintWriter out;
     boolean noerror;
+    boolean connected;
     
     // L'objectif est de signaler via le boolean que les capteurs ont change
     // private boolean retourInscriptionCheck;
@@ -128,6 +129,7 @@ public class Reseaux extends java.util.Observable
 	        }
 	        else
 	        {
+	        	this.connected = true;
 	        	listen();
 	        }
 			
@@ -170,7 +172,7 @@ public class Reseaux extends java.util.Observable
 				e.printStackTrace();
 			}
 			
-			// casser le thread
+			this.connected = false;
 			
 			return true;
 		}
