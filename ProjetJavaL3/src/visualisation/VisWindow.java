@@ -26,6 +26,7 @@ public class VisWindow extends JFrame implements Observer
 	private Tableau_capteur tab_capteur;
 	private JPanel fenetre;
 	private Set<Capteur> ListCapteurPresent;
+	private Set<String>  capteursEnAttente;
 	
 	public VisWindow(Dimension dim) throws ParseException
 	{		
@@ -232,6 +233,7 @@ public class VisWindow extends JFrame implements Observer
 		String[] tabIdCapteurASuivre;
 		tabIdCapteurASuivre = this.choixCapteur.getSelected();
 		res.inscription(tabIdCapteurASuivre);
+		this.choixCapteur.getInscriptionButton().setEnabled(false);
 	}
 	
 	/**
@@ -290,9 +292,6 @@ public class VisWindow extends JFrame implements Observer
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
-	    String inutile; // pour faire un warniong pour le retrouver
-	    // ici je peux d�j� avoir pr�format� le message pour ce que tu veux, ou tu peux le faire toi-m�me
 	    
 	    String message = res.getRetour();
 	    
@@ -302,29 +301,54 @@ public class VisWindow extends JFrame implements Observer
 	
 	    
 	    // InscriptionOK / KO
-		// VisWindowd.InscriptionOK(tabIdCapteurSuccessInscr)
-	    if(message.startsWith("Inscription"))
+	    if(message.startsWith("InscriptionCapteur"))
 	    {
-	    	String temp = "";
 	    	String [] splittedString = message.split(";"); // Test sur l'attribut length d'un tableau Java
-	    	String [] capteurAcceptes = null;
 	    	
-	    	for(int i = 1; i < splittedString.length; i++)
+	    	if(splittedString.length != 1)
 	    	{
-	    		temp = temp+splittedString[i];
+	    		for(int i = 0; i < splittedString.length; i++)
+	    		{
+	    			if(capteursEnAttente.contains(splittedString[i]))
+	    			{
+	    				capteursEnAttente.remove(splittedString[i]);
+	    			}
+	    		}
 	    	}
-	    	
-	    	InscriptionOk(capteurAcceptes);
+	    	InscriptionOk((String[])capteursEnAttente.toArray());
+	    	this.choixCapteur.getInscriptionButton().setEnabled(true);
 	    }
 	    
 	
 	// Appartition Nouveau Capteur
-		// VisWindows.newCapteur
+	    if(message.startsWith("CapteurPresent"))
+	    {
+	    	Capteur cap = null;
+	    	String [] splittedString = message.split(";");
+	    	if(splittedString.length == 7)
+	    	{
+	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]);
+	    	}
+	    	if(splittedString.length == 5)
+	    	{
+	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]);
+	    	}
+	    	this.newCapteur(cap);
+	    }
 	
 	// Disparition Capteur
-		// VisWindows.supprCapteur
+	    if(message.startsWith("CapteurDeco"))
+	    {
+	    	String [] splittedString = message.split(";");
+	    	supprCapteur(new Capteur(splittedString[1], null, null, null));
+	    }
 	
 	// Data Capteur
+	    if(message.startsWith("ValeurCapteur"))
+	    {
+	    	String [] splittedString = message.split(";");
+	    	
+	    }
 	    
 	}
 }
