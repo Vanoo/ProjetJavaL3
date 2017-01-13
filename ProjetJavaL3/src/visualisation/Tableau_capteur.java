@@ -8,8 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -112,6 +111,8 @@ public class Tableau_capteur extends JPanel{
 				if(event.getStateChange()==ItemEvent.SELECTED)
 				{
 					// TODO setAlarm sur le tableau
+					
+					
 				}
 				else
 				{
@@ -149,7 +150,8 @@ public class Tableau_capteur extends JPanel{
 		{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
-			{
+			{				
+				/*
 				ArrayList<Capteur> capteuraAffichee = new ArrayList<Capteur>();
 				Iterator<Capteur> iter = capteurSuivis.iterator();
 				Capteur current;
@@ -182,8 +184,9 @@ public class Tableau_capteur extends JPanel{
 						capteuraAffichee.add(current);
 					}
 				} 
-				
+				*/
 			}
+			
 		});
 		
 		title_filtre.add(filter_bouton);
@@ -220,7 +223,7 @@ public class Tableau_capteur extends JPanel{
 	
 	/**
 	 * Ajoute de nouveaux capteurs dans le set des capteurs deja suivis
-	 * puis modifie la JTable affichant les capteurs suivis
+	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs nouvellement suivis
 	 */
 	public void ajouterCapteur(Set<Capteur> newCapteur)
@@ -230,12 +233,21 @@ public class Tableau_capteur extends JPanel{
 	
 	/**
 	 * Supprime des capteurs du set des capteurs suivis
-	 * puis modifie la JTable affichant les capteurs suivis
+	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs qui ne seront plus suivis
 	 */
 	public void supprCapteur(Set<Capteur> capteurAsuppr)
 	{
 		dataCapteur.removeCapteur(0);
 	}
-	
+	/**
+	 * Modifie la valeur du capteur dans la table avec l identifiant idCapteur
+	 * 
+	 * @param idCapteur
+	 * @param value nouvelle valeur du capteur
+	 */
+	public void changeValue(String idCapteur,double value)
+	{
+		dataCapteur.changeValue(idCapteur, value);
+	}
 }

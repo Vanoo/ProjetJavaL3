@@ -68,4 +68,9 @@ public class Capteur {
 	{
 		return this.valeur;
 	}
+	
+	public void setValeur(double val)
+	{
+		this.valeur = val;
+	}
 }

@@ -2,6 +2,7 @@ package visualisation;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -41,11 +42,13 @@ public class DataCapteur extends AbstractTableModel
         return capteurs.size();
     }
 
-    public int getColumnCount() {
+    public int getColumnCount() 
+    {
         return headers.length;
     }
 
-    public String getColumnName(int columnIndex) {
+    public String getColumnName(int columnIndex) 
+    {
         return headers[columnIndex];
     }
 
@@ -64,5 +67,32 @@ public class DataCapteur extends AbstractTableModel
             default:
                 return null; //Must never happens
         }
+    }
+    /*
+    public void setValueAt(Object value, int row, int col) 
+    {
+        data[row][col] = value;
+        fireTableCellUpdated(row, col);
+    }
+    */
+    
+    public void changeValue(String idCapteur,double valeur) 
+    {
+    	Iterator<Capteur> iter = capteurs.iterator();
+    	Capteur cap;
+    	
+    	for(int i=0; iter.hasNext();i++)
+    	{
+    		cap = iter.next();
+    		if( cap.getId().equals(idCapteur))
+    		{
+    			capteurs.get(i).setValeur(valeur);
+    			break;
+    		}
+    	}
+    	
+    	// capteurs.get(0).setValeur(valeur);
+    	
+    	fireTableDataChanged();
     }
 }
