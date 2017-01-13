@@ -9,7 +9,8 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-public class NetworkThread extends Thread {
+public class NetworkThread extends Thread
+{
 	
 	private Reseaux res;
 	private BufferedReader in;
@@ -104,7 +105,14 @@ public class NetworkThread extends Thread {
 	    	}
 	    	else if (message.startsWith("InscriptionCapteur"))
 	    	{
-	    		res.retourInscription = message;
+	    		res.setRetourInscription(message);
+	    		// res.retourInscriptionCheck = true;
+	    	}
+	    	else if (message.startsWith("")) {
+	    		
+	    	}
+	    	else {
+	    		System.out.println("Message recu errone : "+message);
 	    	}
 	    }
 		

@@ -9,17 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTree;
 
-public class VisWindow extends JFrame
+public class VisWindow extends JFrame implements Observer
 {
 	private static final long serialVersionUID = 1L;
 
@@ -137,6 +134,13 @@ public class VisWindow extends JFrame
 	    
 	    /*============= Initialisation Reseau =============*/
 	    this.res = new visualisation.Reseaux();
+	    res.addObserver(this);
+	    
+	    
+	    
+	    // ATTENTION ! : penser à faire la méthode update()
+	    // chercher le warning à la fin pour la retrouver
+	    
 	}
 	
 	/**
@@ -281,5 +285,13 @@ public class VisWindow extends JFrame
 	private Set<Capteur> getCapteurFormId(String[] tabIdCapteur)
 	{
 		return null;
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+
+	    String inutile; // pour faire un warniong pour le retrouver
+	    // ici je peux déjà avoir préformaté le message pour ce que tu veux, ou tu peux le faire toi-même
 	}
 }

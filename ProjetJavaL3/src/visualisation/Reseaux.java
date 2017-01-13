@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,7 +21,8 @@ import javax.swing.JOptionPane;
  * Classe reseau qui s'occupe de la communication avec le serveur.
  *
  */
-public class Reseaux {
+public class Reseaux extends java.util.Observable
+{
 	
 	
 	Socket socket;
@@ -30,7 +32,9 @@ public class Reseaux {
     PrintWriter out;
     boolean noerror;
     
-    String retourInscription;
+    // L'objectif est de signaler via le boolean que les capteurs ont change
+    // private boolean retourInscriptionCheck;
+    private String retourInscription;
     
     
     
@@ -43,6 +47,7 @@ public class Reseaux {
 	public Reseaux()
 	{
 		this.noerror = true;
+		// retourInscriptionCheck = false;
 	}
 	
 	/**
@@ -179,7 +184,6 @@ public class Reseaux {
 	}
 	
 	
-	
 	/**
 	 * Cree un thread qui receptionne les messages en continu
 	 */
@@ -188,6 +192,20 @@ public class Reseaux {
 	}
 	
 	
+	
+	
+	public String getRetourInscription() {
+		return retourInscription;
+	}
+
+	public void setRetourInscription(String retourInscription) {
+		synchronized (this) {
+			this.retourInscription = retourInscription;
+		}
+		setChanged();
+		notifyObservers();
+	}
+
 	/**
 	 * Inscrit l'interface de visualisation a un ensemble de capteurs
 	 * 
@@ -196,7 +214,7 @@ public class Reseaux {
 	 */
 	public String[] inscription(String[] tabIdCapteur)
 	{
-		String check = this.retourInscription;
+		// String check = this.retourInscription;
 		String message = "InscriptionCapteur";
 		TreeSet<String> capteursSuivis = new TreeSet<String>();
 		
@@ -208,9 +226,6 @@ public class Reseaux {
 		
 		// On envoie le message decrivant les capteurs auxquels on souhaite s'inscrire
 		out.println(message);
-		
-		// Attente active
-		while(check.compareTo(this.retourInscription) == 0);
 		
 		
 		String[] capteursRejetes = retourInscription.split(";");
