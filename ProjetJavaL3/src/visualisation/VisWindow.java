@@ -27,14 +27,11 @@ public class VisWindow extends JFrame implements Observer
 	private Tableau_capteur tab_capteur;
 	private JPanel fenetre;
 	
-	private ArrayList<Capteur> ListCapteurPresent;
-	private ArrayList<String>  capteursEnAttente;
+	private ArrayList<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
+	private ArrayList<String>  capteursEnAttente = new ArrayList<String>();
 	
 	public VisWindow(Dimension dim) throws ParseException
 	{
-		this.ListCapteurPresent = new ArrayList<Capteur>();
-		
-		this.capteursEnAttente = new ArrayList<String>();
 		
 		/*============= Initialisation de la fenetre =============*/
 		
@@ -123,7 +120,6 @@ public class VisWindow extends JFrame implements Observer
 			}
 		});
 
-	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    fenetreVisualisation.add(this.connection_panel);
 	    fenetreVisualisation.add(this.choixCapteur);
@@ -139,11 +135,6 @@ public class VisWindow extends JFrame implements Observer
 	    /*============= Initialisation Reseau =============*/
 	    this.res = new visualisation.Reseaux();
 	    res.addObserver(this);
-	    
-	    
-	    
-	    // ATTENTION ! : penser � faire la m�thode update()
-	    // chercher le warning � la fin pour la retrouver
 	    
 	}
 	
@@ -238,6 +229,7 @@ public class VisWindow extends JFrame implements Observer
 		tabIdCapteurASuivre = this.choixCapteur.getSelected();
 		res.inscription(tabIdCapteurASuivre);
 		this.choixCapteur.getInscriptionButton().setEnabled(false);
+		this.choixCapteur.getDesinscriptionButton().setEnabled(false);
 	}
 	
 	/**
@@ -245,10 +237,10 @@ public class VisWindow extends JFrame implements Observer
 	 * dans le panel TableauCapteur
 	 * @param tabIdCapteurSuccessInscr
 	 */
-	public void InscriptionOk(String[] tabIdCapteurSuccessInscr)
+	public void InscriptionOk(ArrayList<String> listIdCapteur)
 	{
 		JOptionPane.showMessageDialog(null, "InscriptionOK");
-		for(int i=0;i<tabIdCapteurSuccessInscr.length;i++)
+		for(int i=0;i<listIdCapteur.size();i++)
 		{
 			// Transformation id -> capteur
 			this.tab_capteur.ajouterCapteur(ListCapteurPresent.get(i));
@@ -271,7 +263,6 @@ public class VisWindow extends JFrame implements Observer
 			// Transformation id -> capteur
 			this.tab_capteur.supprCapteur(ListCapteurPresent.get(i));
 		}
-
 	}
 	
 	/**
@@ -290,8 +281,6 @@ public class VisWindow extends JFrame implements Observer
 	{	    
 	    String message = res.getRetour();
 	    
-	    JOptionPane.showMessageDialog(null, message);
-	    
 	    // InscriptionOK / KO
 	    if(message.startsWith("InscriptionCapteur"))
 	    {
@@ -307,8 +296,9 @@ public class VisWindow extends JFrame implements Observer
 	    			}
 	    		}
 	    	}
-	    	InscriptionOk((String[])capteursEnAttente.toArray());
+	    	InscriptionOk(capteursEnAttente);
 	    	this.choixCapteur.getInscriptionButton().setEnabled(true);
+	    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
 	    }
 	    
 	
@@ -336,7 +326,7 @@ public class VisWindow extends JFrame implements Observer
 	    	
 	    	// TODO erreur NUllPointerException !!!!!
 	    	// ListCapteurPresent.add(new Capteur("id", "type", "2.0", "5.0"));
-	    	// ListCapteurPresent.add(cap);
+	    	ListCapteurPresent.add(cap);
 	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
 	    }
 	
@@ -345,7 +335,6 @@ public class VisWindow extends JFrame implements Observer
 	    {
 	    	String [] splittedString = message.split(";");
 	    	
-	    	// supprCapteur(new Capteur(splittedString[1], null, null, null));
 	    	choixCapteur.supprCapteur(splittedString[1]);
 	    }
 	
