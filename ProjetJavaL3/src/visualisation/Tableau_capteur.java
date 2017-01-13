@@ -64,7 +64,10 @@ public class Tableau_capteur extends JPanel{
 		title.add(title_label);
 		
 		/*=============  Tableau Panel =============*/
-		Object[][] donnees = {};
+		Object[][] donnees = { {"Lampe","Luminosite","S101","3"},
+				{"Lampe2","Luminosite","S102","3"},
+				{"Lampe3","Luminosite","S102","3"},
+				{"Radiateur","Temperature","S103","25"}};
         this.capteur = donnees;
 		
 		this.tabCapteurSuivis = new JTable(this.capteur, this.entetes);
@@ -189,7 +192,6 @@ public class Tableau_capteur extends JPanel{
 				} 
 				
 				capteurAffichee = capteuraAffichee;
-				
 			}
 		});
 		
@@ -245,7 +247,7 @@ public class Tableau_capteur extends JPanel{
 	{
 		System.out.println("Ajout Capteur dans tableau_capteur panel");
 		this.capteurSuivis.addAll(newCapteur);
-		this.tabCapteurSuivis = new JTable(transfSetCapteur(newCapteur), this.entetes);
+		this.majTab();
 	}
 	
 	/**
@@ -257,7 +259,12 @@ public class Tableau_capteur extends JPanel{
 	{
 		System.out.println("Suppresion Capteur dans tableau_capteur panel");
 		this.capteurSuivis.removeAll(capteurAsuppr);
-		this.tabCapteurSuivis = new JTable(transfSetCapteur(capteurAsuppr), this.entetes);
+		this.majTab();
+	}
+	
+	private void majTab()
+	{
+		this.tabCapteurSuivis = new JTable(transfSetCapteur(this.capteurAffichee), this.entetes);
 	}
 	
 }
