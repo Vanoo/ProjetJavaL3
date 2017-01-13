@@ -247,7 +247,6 @@ public class Tableau_capteur extends JPanel{
 	{
 		System.out.println("Ajout Capteur dans tableau_capteur panel");
 		this.capteurSuivis.addAll(newCapteur);
-		this.majTab();
 	}
 	
 	/**
@@ -259,12 +258,6 @@ public class Tableau_capteur extends JPanel{
 	{
 		System.out.println("Suppresion Capteur dans tableau_capteur panel");
 		this.capteurSuivis.removeAll(capteurAsuppr);
-		this.majTab();
-	}
-	
-	private void majTab()
-	{
-		this.tabCapteurSuivis = new JTable(transfSetCapteur(this.capteurAffichee), this.entetes);
 	}
 	
 }
