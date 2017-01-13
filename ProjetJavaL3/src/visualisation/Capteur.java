@@ -5,6 +5,7 @@ public class Capteur {
 	private String id;
 	private String type;
 	private visualisation.Localisation loc;
+	private double valeur;
 	
 	/**
 	 * Constructeur pour un capteur d'exterieur
@@ -59,5 +60,10 @@ public class Capteur {
 	public visualisation.Localisation getLoc()
 	{
 		return this.loc;
+	}
+	
+	public double getValeur()
+	{
+		return this.valeur;
 	}
 }
