@@ -146,7 +146,49 @@ public class Tableau_capteur extends JPanel{
 		title_filtre.setPreferredSize(new Dimension(500,15));
 		title_filtre.setBackground(Color.lightGray);
 		title_filtre.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-		title_filtre.add(new JLabel("Filtre"));
+		
+		JButton filter_bouton = new JButton("Filtre");
+		filter_bouton.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				Set<Capteur> capteurAffichee = null;
+				Iterator<Capteur> iter = capteurSuivis.iterator();
+				Capteur current;
+				
+				String typeSelected = (String) type_combo.getSelectedItem();
+				// TODO recuperation localisation selectionee
+				// Localisation locSelected = .....
+				String locSelected = "S101";
+				
+				while( iter.hasNext() )
+				{
+					current = iter.next();
+					String currentType = current.getType();
+					// TODO recuperation localisation du capteur
+					// Localisation currentLoc = .....
+					String currentLoc = "S101";
+					boolean capteurOk = true;
+					
+					if( type_filter.isSelected() && ! currentType.equals(typeSelected))
+					{
+						capteurOk = false;
+					}
+					if( type_filter.isSelected() && ! currentLoc.equals(locSelected))
+					{
+						capteurOk = false;
+					}
+
+					if( capteurOk )
+					{
+						capteurAffichee.add(current);
+					}
+				}				
+			}
+		});
+		
+		title_filtre.add(filter_bouton);
 		
 		// TYPE
 		String[] type_string = { "Temperature", "Humidite",
@@ -158,25 +200,7 @@ public class Tableau_capteur extends JPanel{
 		this.type_combo = type_combo;
 		
 		JCheckBox type_checkbox = new JCheckBox("Type");
-		type_checkbox.addItemListener(new ItemListener() 
-		{
-			
-			@Override
-			public void itemStateChanged(ItemEvent event) 
-			{
-				if(event.getStateChange()==ItemEvent.SELECTED)
-				{
-					// TODO filtre les capteurs en fonction du type choisi dans la comboBox
-					filterType( (String)type_combo.getSelectedItem() );
-				}
-				else
-				{
-					// TODO remettre les capteurs suivis par defaut	( en fonction des filtres actif )
-					resetFilter();
-				}
-			}
-		});
-		
+
 		// LOCALISATION
 		JCheckBox loc_combo = new JCheckBox("Localisation");
 		this.loc_filter = loc_combo;
@@ -186,6 +210,7 @@ public class Tableau_capteur extends JPanel{
 		filtre_panel.add(type_combo);
 		filtre_panel.add(type_checkbox);
 		filtre_panel.add(loc_combo);
+		
 			
 		/*=============  Ajout Panel =============*/
 		
@@ -196,52 +221,10 @@ public class Tableau_capteur extends JPanel{
 	}	
 	
 	/**
-	 * Filtre la liste des capteurs suivis en fonction de leur type
-	 * 
-	 * @param type
+	 * TODO
+	 * @param listCapteur
+	 * @return
 	 */
-	private void filterType(String type)
-	{
-		// JOptionPane.showMessageDialog(null, "Filtre type"+type);
-		Set<Capteur> listFiltre = null ;
-		Iterator<Capteur> iter = capteurSuivis.iterator();
-		Capteur current;
-		Object[][] donnee;
-		
-		while(iter.hasNext())
-		{
-			current = iter.next();
-			if(current.getType().equals(type))
-			{
-				listFiltre.add(current);
-			}
-		}
-		
-		//this.donnee = transfSet(listFiltre);
-	}
-	
-	/**
-	 * Filtre la liste des capteurs suivis en fonction de leur localisation
-	 * @param loc localisation du capteur ( interieur ou exterieur )
-	 */
-	private void filterLoc(Localisation loc)
-	{
-		
-	}
-	
-	/**
-	 * Recree la liste des capteurs suivis a afficher en fonction des filtres present
-	 */
-	private void resetFilter()
-	{
-				
-	}
-	
-	public JCheckBox getLocFilter()
-	{
-		return this.loc_filter;
-	}
-	
 	private Object[][] transfSetCapteur(Set<Capteur> listCapteur)
 	{
 		Object[][] donnees = {};

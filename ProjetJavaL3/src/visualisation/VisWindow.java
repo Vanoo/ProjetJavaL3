@@ -32,7 +32,6 @@ public class VisWindow extends JFrame
 	private JPanel fenetre;
 	private Set<Capteur> ListCapteurPresent;
 	
-	
 	public VisWindow(Dimension dim) throws ParseException
 	{		
 		/*============= Initialisation de la fenetre =============*/
@@ -101,23 +100,26 @@ public class VisWindow extends JFrame
 				}
 			}
 		});
-	    // Listener reception message serveur
 	    
-		this.tab_capteur.getLocFilter().addItemListener(new ItemListener() 
-		{
-			@Override
-			public void itemStateChanged(ItemEvent event) 
-			{
-				if(event.getStateChange()==ItemEvent.SELECTED)
-				{
-					// TODO Filtre les capteurs en fonction de la localisation selectionner dans choix_capteur :s
-				}
-				else
-				{
-					// TODO remettre les capteurs suivis par defaut	( en fonction des filtres actif )
-				}
-			}
-		});
+	    
+	    // TODO Recuperation de la localisation est envoi dans tableau_capteur
+		
+		
+		// TODO Rajout ICI d'un listener active par la reception d un message recu du serveur
+			// On repartis ensuite les infos du message recu dans les differentes methode de ViwWindows
+			// en fonction du type de message recu
+		
+		// InscriptionOK / KO
+			// VisWindowd.InscriptionOK(tabIdCapteurSuccessInscr)
+		
+		// Appartition Nouveau Capteur
+			// VisWindows.newCapteur
+		
+		// Disparition Capteur
+			// VisWindows.supprCapteur
+		
+		// Data Capteur
+			// TODO cree methode qui gere la modif des valeurs des capteurs
 	    
 
 	    
@@ -218,15 +220,23 @@ public class VisWindow extends JFrame
 	}	
 	
 	/**
-	 * Ajout des capteurs selectionnes dans le panel ChoixCapteur
-	 * a la liste des capteurs suivis dans le panel TableauCapteur
+	 * Envoi la demande d'inscription aux capteurs selectionnee dans le panel ChoixCapteur
+	 *
 	 */
-	public void inscription()
+	public void EnvoiInscription()
 	{
 		String[] tabIdCapteurASuivre;
-		String[] tabIdCapteurSuccessInscr = null;
 		tabIdCapteurASuivre = this.choixCapteur.getSelected();
-		// String[] tabIdCapteurSuccessInscr = res.inscription(tabIdCapteurASuivre);
+		res.inscription(tabIdCapteurASuivre);
+	}
+	
+	/**
+	 * Rajoute les capteurs correspondant au identifiants donne en parametre
+	 * dans le panel TableauCapteur
+	 * @param tabIdCapteurSuccessInscr
+	 */
+	public void InscriptionOk(String[] tabIdCapteurSuccessInscr)
+	{
 		Set<Capteur> newCapteur = this.getCapteurFormId(tabIdCapteurSuccessInscr);
 		this.tab_capteur.ajouterCapteur(newCapteur);
 	}
