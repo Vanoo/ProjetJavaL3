@@ -116,7 +116,7 @@ public class Choix_capteur_panel extends JPanel
 	 */
 	public void newCapteur(String IdentifiantCapteur,Localisation locCapteur)
 	{
-		
+		// TODO
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class Choix_capteur_panel extends JPanel
 	 */
 	public void supprCapteur(String IdentifiantCapteur)
 	{
-		
+		// TODO
 	}
 	
 	/**
@@ -136,15 +136,16 @@ public class Choix_capteur_panel extends JPanel
 	 */
 	private void verifierSalle(DefaultMutableTreeNode arbre, Set<Capteur> capteurs)
 	{
+		// TODO
 		System.out.println(arbre);
 		// checker les fils r�cursivement
 		// v�rifier qu'il n'y a pas de capteurs avec les set
 		// si pas de capteur ni de fils, enlever de l'arbre
-		
 	}
 	
 	public String[] getSelected()
 	{
+		// TODO
 		return null;
 	}
 }

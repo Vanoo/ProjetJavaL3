@@ -31,8 +31,7 @@ public class VisWindow extends JFrame implements Observer
 	private ArrayList<String>  capteursEnAttente;
 	
 	public VisWindow(Dimension dim) throws ParseException
-	{		
-		
+	{
 		this.ListCapteurPresent = new ArrayList<Capteur>();
 		
 		this.capteursEnAttente = new ArrayList<String>();
@@ -334,7 +333,11 @@ public class VisWindow extends JFrame implements Observer
 	    	
 	    	System.out.println(cap.toString());
 	    	
-	    	ListCapteurPresent.add(cap);
+	    	
+	    	// TODO erreur NUllPointerException !!!!!
+	    	// ListCapteurPresent.add(new Capteur("id", "type", "2.0", "5.0"));
+	    	// ListCapteurPresent.add(cap);
+	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
 	    }
 	
 	// Disparition Capteur
@@ -343,7 +346,7 @@ public class VisWindow extends JFrame implements Observer
 	    	String [] splittedString = message.split(";");
 	    	
 	    	// supprCapteur(new Capteur(splittedString[1], null, null, null));
-	    	
+	    	choixCapteur.supprCapteur(splittedString[1]);
 	    }
 	
 	// Data Capteur
