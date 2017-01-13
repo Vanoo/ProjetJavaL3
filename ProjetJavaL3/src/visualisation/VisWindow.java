@@ -348,7 +348,7 @@ public class VisWindow extends JFrame implements Observer
 	    if(message.startsWith("ValeurCapteur"))
 	    {
 	    	String [] splittedString = message.split(";");
-	    	
+	    	tab_capteur.changeValue(splittedString[1], Double.parseDouble(splittedString[2]));
 	    }
 	    
 	}
