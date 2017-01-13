@@ -73,4 +73,9 @@ public class Capteur {
 	{
 		this.valeur = val;
 	}
+	
+	public String toString()
+	{
+		return this.id+this.type+this.loc.toString()+this.valeur;
+	}
 }

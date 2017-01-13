@@ -7,9 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,11 +26,17 @@ public class VisWindow extends JFrame implements Observer
 	private Choix_capteur_panel choixCapteur;
 	private Tableau_capteur tab_capteur;
 	private JPanel fenetre;
-	private Set<Capteur> ListCapteurPresent;
-	private Set<String>  capteursEnAttente;
+	
+	private ArrayList<Capteur> ListCapteurPresent;
+	private ArrayList<String>  capteursEnAttente;
 	
 	public VisWindow(Dimension dim) throws ParseException
 	{		
+		
+		this.ListCapteurPresent = new ArrayList<Capteur>();
+		
+		this.capteursEnAttente = new ArrayList<String>();
+		
 		/*============= Initialisation de la fenetre =============*/
 		
 		this.setTitle("Interface Visualisation");
@@ -117,10 +123,6 @@ public class VisWindow extends JFrame implements Observer
 				tab_capteur.supprCapteur(null);
 			}
 		});
-	    
-
-		// TODO cree methode qui gere la modif des valeurs des capteurs
-	    
 
 	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
@@ -232,6 +234,7 @@ public class VisWindow extends JFrame implements Observer
 	 */
 	public void EnvoiInscription()
 	{
+		JOptionPane.showMessageDialog(null, "DemandeInscription");
 		String[] tabIdCapteurASuivre;
 		tabIdCapteurASuivre = this.choixCapteur.getSelected();
 		res.inscription(tabIdCapteurASuivre);
@@ -245,8 +248,12 @@ public class VisWindow extends JFrame implements Observer
 	 */
 	public void InscriptionOk(String[] tabIdCapteurSuccessInscr)
 	{
-		Set<Capteur> newCapteur = this.getCapteurFormId(tabIdCapteurSuccessInscr);
-		this.tab_capteur.ajouterCapteur(newCapteur);
+		JOptionPane.showMessageDialog(null, "InscriptionOK");
+		for(int i=0;i<tabIdCapteurSuccessInscr.length;i++)
+		{
+			// Transformation id -> capteur
+			this.tab_capteur.ajouterCapteur(ListCapteurPresent.get(i));
+		}		
 	}
 	
 	/**
@@ -255,29 +262,17 @@ public class VisWindow extends JFrame implements Observer
 	 */
 	public void desincription()
 	{
+		JOptionPane.showMessageDialog(null, "InscriptionOK");
 		String[] tabIdCapteurAsuppr;
 		tabIdCapteurAsuppr = this.choixCapteur.getSelected();
 		// res.desinscription(tabIdCapteurAsuppr);
-		Set<Capteur> listCapteur = this.getCapteurFormId(tabIdCapteurAsuppr);
-		this.tab_capteur.supprCapteur(listCapteur);
-	}
-	
-	/**
-	 * Ajout d un capteur dans la liste des capteurs presents
-	 * 
-	 */
-	public void newCapteur(Capteur cap)
-	{
-		this.ListCapteurPresent.add(cap);
-	}
-	
-	/**
-	 * Suppresion d un capteur de la liste des capteurs presents
-	 * 
-	 */
-	public void supprCapteur(Capteur cap)
-	{
-		this.ListCapteurPresent.remove(cap);
+
+		for(int i=0;i<tabIdCapteurAsuppr.length;i++)
+		{
+			// Transformation id -> capteur
+			this.tab_capteur.supprCapteur(ListCapteurPresent.get(i));
+		}
+
 	}
 	
 	/**
@@ -286,21 +281,17 @@ public class VisWindow extends JFrame implements Observer
 	 * @param tabIdCapteur tableau d identifiant de capteur
 	 * @return liste de Capteurs
 	 */
-	private Set<Capteur> getCapteurFormId(String[] tabIdCapteur)
+	private ArrayList<Capteur> getCapteurFormId(String[] tabIdCapteur)
 	{
 		return null;
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-	    
+	public void update(Observable o, Object arg) 
+	{	    
 	    String message = res.getRetour();
 	    
-		// TODO Rajout ICI d'un listener active par la reception d un message recu du serveur
-		// On repartis ensuite les infos du message recu dans les differentes methode de ViwWindows
-		// en fonction du type de message recu
-	
+	    JOptionPane.showMessageDialog(null, message);
 	    
 	    // InscriptionOK / KO
 	    if(message.startsWith("InscriptionCapteur"))
@@ -325,32 +316,40 @@ public class VisWindow extends JFrame implements Observer
 	// Appartition Nouveau Capteur
 	    if(message.startsWith("CapteurPresent"))
 	    {
-	    	JOptionPane.showMessageDialog(null, message);
 	    	Capteur cap = null;
 	    	String [] splittedString = message.split(";");
+	    	
+	    	System.out.println("Message : "+message);
+	    	System.out.println("Length : "+splittedString.length);
+	    	System.out.println("splittedString[4] :"+splittedString[4]);
+	    	
 	    	if(splittedString.length == 7)
 	    	{
 	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]);
 	    	}
-	    	if(splittedString.length == 5)
+	    	else
 	    	{
 	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]);
 	    	}
-	    	this.newCapteur(cap);
+	    	
+	    	System.out.println(cap.toString());
+	    	
+	    	ListCapteurPresent.add(cap);
 	    }
 	
 	// Disparition Capteur
 	    if(message.startsWith("CapteurDeco"))
 	    {
 	    	String [] splittedString = message.split(";");
-	    	supprCapteur(new Capteur(splittedString[1], null, null, null));
+	    	
+	    	// supprCapteur(new Capteur(splittedString[1], null, null, null));
+	    	
 	    }
 	
 	// Data Capteur
 	    if(message.startsWith("ValeurCapteur"))
 	    {
 	    	String [] splittedString = message.split(";");
-	    	// tab_capteur.changeValue(idCapteur, value);
 	    	tab_capteur.changeValue(splittedString[1], Double.parseDouble(splittedString[2]));
 	    }
 	    

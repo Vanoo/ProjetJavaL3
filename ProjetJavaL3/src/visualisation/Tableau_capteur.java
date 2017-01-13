@@ -226,9 +226,9 @@ public class Tableau_capteur extends JPanel{
 	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs nouvellement suivis
 	 */
-	public void ajouterCapteur(Set<Capteur> newCapteur)
+	public void ajouterCapteur(Capteur newCapteur)
 	{
-		dataCapteur.addCapteur(new Capteur("Lampe1", "Luminosite","U1","2","S101",""));
+		dataCapteur.addCapteur(newCapteur);
 	}
 	
 	/**
@@ -236,7 +236,7 @@ public class Tableau_capteur extends JPanel{
 	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs qui ne seront plus suivis
 	 */
-	public void supprCapteur(Set<Capteur> capteurAsuppr)
+	public void supprCapteur(Capteur capteur)
 	{
 		dataCapteur.removeCapteur(0);
 	}
