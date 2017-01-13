@@ -98,6 +98,7 @@ public class VisWindow extends JFrame implements Observer
 		});
 	    
 	    
+	    
 	    // Listener sur le bouton d'inscription
 	    this.choixCapteur.getInscriptionButton().addActionListener(new ActionListener() 
 		{
