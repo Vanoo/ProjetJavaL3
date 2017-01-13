@@ -29,9 +29,11 @@ public class Tableau_capteur extends JPanel{
 	 * 
 	 */
 	private Set<Capteur> capteurSuivis;
+	private Set<Capteur> capteurAffichee;
+	private Object[][] capteur;
 	
 	private final String[] entetes = {"Identifiant", "Type", "Localisation", "Valeur"};
-	private Object[][] capteur;
+	
 	
 	private JCheckBox loc_filter;
 	private JCheckBox type_filter;
@@ -153,7 +155,7 @@ public class Tableau_capteur extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				Set<Capteur> capteurAffichee = null;
+				Set<Capteur> capteuraAffichee = null;
 				Iterator<Capteur> iter = capteurSuivis.iterator();
 				Capteur current;
 				
@@ -182,9 +184,12 @@ public class Tableau_capteur extends JPanel{
 
 					if( capteurOk )
 					{
-						capteurAffichee.add(current);
+						capteuraAffichee.add(current);
 					}
-				}				
+				} 
+				
+				capteurAffichee = capteuraAffichee;
+				
 			}
 		});
 		
