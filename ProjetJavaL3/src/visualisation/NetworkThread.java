@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
 public class NetworkThread extends Thread
 {
 	
@@ -71,17 +69,19 @@ public class NetworkThread extends Thread
 	    	
 	    	try
 			{
-	    		
-				w.write(message);
+				w.write(message+message.split(";").length);
 				w.write("\r\n");
 				w.flush();
-				
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
 			}
 	    	
+	    	
+	    	res.setRetour(message);
+	    	
+	    	/*/
 	    	if(message.startsWith("CapteurPresent;"))
 	    	{
 	    		String[] splittedString = message.split(";");
@@ -105,7 +105,7 @@ public class NetworkThread extends Thread
 	    	}
 	    	else if (message.startsWith("InscriptionCapteur"))
 	    	{
-	    		res.setRetourInscription(message);
+	    		
 	    		// res.retourInscriptionCheck = true;
 	    	}
 	    	else if (message.startsWith("")) {
@@ -113,7 +113,8 @@ public class NetworkThread extends Thread
 	    	}
 	    	else {
 	    		System.out.println("Message recu errone : "+message);
-	    	}
+	    	} */
+	    	
 	    }
 		
 
