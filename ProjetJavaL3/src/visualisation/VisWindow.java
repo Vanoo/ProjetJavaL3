@@ -138,8 +138,8 @@ public class VisWindow extends JFrame implements Observer
 	    
 	    
 	    
-	    // ATTENTION ! : penser à faire la méthode update()
-	    // chercher le warning à la fin pour la retrouver
+	    // ATTENTION ! : penser ï¿½ faire la mï¿½thode update()
+	    // chercher le warning ï¿½ la fin pour la retrouver
 	    
 	}
 	
@@ -259,7 +259,7 @@ public class VisWindow extends JFrame implements Observer
 	}
 	
 	/**
-	 * Ajout d un capteur dans la liste des capteurs suivis
+	 * Ajout d un capteur dans la liste des capteurs presents
 	 * 
 	 */
 	public void newCapteur(Capteur cap)
@@ -268,7 +268,7 @@ public class VisWindow extends JFrame implements Observer
 	}
 	
 	/**
-	 * Suppresion d un capteur de la liste des capteurs suivis
+	 * Suppresion d un capteur de la liste des capteurs presents
 	 * 
 	 */
 	public void supprCapteur(Capteur cap)
@@ -292,6 +292,6 @@ public class VisWindow extends JFrame implements Observer
 		// TODO Auto-generated method stub
 
 	    String inutile; // pour faire un warniong pour le retrouver
-	    // ici je peux déjà avoir préformaté le message pour ce que tu veux, ou tu peux le faire toi-même
+	    // ici je peux dï¿½jï¿½ avoir prï¿½formatï¿½ le message pour ce que tu veux, ou tu peux le faire toi-mï¿½me
 	}
 }

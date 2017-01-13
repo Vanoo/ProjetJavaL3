@@ -32,9 +32,6 @@ public class Tableau_capteur extends JPanel{
 	private DataCapteur dataCapteur = new DataCapteur();
 	private JTable table;
 	
-	private final String[] entetes = {"Identifiant", "Type", "Localisation", "Valeur"};
-	
-	
 	private JCheckBox loc_filter;
 	private JCheckBox type_filter;
 	private JCheckBox alarm;
@@ -222,25 +219,13 @@ public class Tableau_capteur extends JPanel{
 	}	
 	
 	/**
-	 * TODO
-	 * @param listCapteur
-	 * @return
-	 */
-	private Object[][] transfSetCapteur(Set<Capteur> listCapteur)
-	{
-		Object[][] donnees = {};
-		return donnees;
-	}
-	
-	/**
 	 * Ajoute de nouveaux capteurs dans le set des capteurs deja suivis
 	 * puis modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs nouvellement suivis
 	 */
 	public void ajouterCapteur(Set<Capteur> newCapteur)
 	{
-		System.out.println("Ajout Capteur dans tableau_capteur panel");
-		this.capteurSuivis.addAll(newCapteur);
+		dataCapteur.addCapteur(new Capteur("Lampe1", "Luminosite","U1","2","S101",""));
 	}
 	
 	/**
@@ -250,8 +235,7 @@ public class Tableau_capteur extends JPanel{
 	 */
 	public void supprCapteur(Set<Capteur> capteurAsuppr)
 	{
-		System.out.println("Suppresion Capteur dans tableau_capteur panel");
-		this.capteurSuivis.removeAll(capteurAsuppr);
+		dataCapteur.removeCapteur(0);
 	}
 	
 }
