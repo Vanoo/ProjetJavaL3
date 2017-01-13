@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.util.Observable;
 import java.util.Observer;
@@ -102,20 +100,7 @@ public class VisWindow extends JFrame implements Observer
 	    // TODO Recuperation de la localisation est envoi dans tableau_capteur
 		
 		
-		// TODO Rajout ICI d'un listener active par la reception d un message recu du serveur
-			// On repartis ensuite les infos du message recu dans les differentes methode de ViwWindows
-			// en fonction du type de message recu
-		
-		// InscriptionOK / KO
-			// VisWindowd.InscriptionOK(tabIdCapteurSuccessInscr)
-		
-		// Appartition Nouveau Capteur
-			// VisWindows.newCapteur
-		
-		// Disparition Capteur
-			// VisWindows.supprCapteur
-		
-		// Data Capteur
+
 			// TODO cree methode qui gere la modif des valeurs des capteurs
 	    
 
@@ -290,8 +275,38 @@ public class VisWindow extends JFrame implements Observer
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-
-	    String inutile; // pour faire un warniong pour le retrouver
-	    // ici je peux déjà avoir préformaté le message pour ce que tu veux, ou tu peux le faire toi-même
+	    
+	    String message = res.getRetour();
+	    
+		// TODO Rajout ICI d'un listener active par la reception d un message recu du serveur
+		// On repartis ensuite les infos du message recu dans les differentes methode de ViwWindows
+		// en fonction du type de message recu
+	
+	    
+	    // InscriptionOK / KO
+		// VisWindowd.InscriptionOK(tabIdCapteurSuccessInscr)
+	    if(message.startsWith("Inscription"))
+	    {
+	    	String temp = "";
+	    	String [] splittedString = message.split(";"); // Test sur l'attribut length d'un tableau Java
+	    	String [] capteurAcceptes = null;
+	    	
+	    	for(int i = 1; i < splittedString.length; i++)
+	    	{
+	    		temp = temp+splittedString[i];
+	    	}
+	    	
+	    	InscriptionOk(capteurAcceptes);
+	    }
+	    
+	
+	// Appartition Nouveau Capteur
+		// VisWindows.newCapteur
+	
+	// Disparition Capteur
+		// VisWindows.supprCapteur
+	
+	// Data Capteur
+	    
 	}
 }

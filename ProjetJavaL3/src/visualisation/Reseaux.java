@@ -10,7 +10,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -34,8 +33,7 @@ public class Reseaux extends java.util.Observable
     
     // L'objectif est de signaler via le boolean que les capteurs ont change
     // private boolean retourInscriptionCheck;
-    private String retourInscription;
-    
+    private String retour;
     
     
     Set<Capteur> capteurs;
@@ -194,13 +192,13 @@ public class Reseaux extends java.util.Observable
 	
 	
 	
-	public String getRetourInscription() {
-		return retourInscription;
+	public String getRetour() {
+		return retour;
 	}
 
-	public void setRetourInscription(String retourInscription) {
+	public void setRetour(String retourInscription) {
 		synchronized (this) {
-			this.retourInscription = retourInscription;
+			this.retour = retourInscription;
 		}
 		setChanged();
 		notifyObservers();
@@ -228,7 +226,7 @@ public class Reseaux extends java.util.Observable
 		out.println(message);
 		
 		
-		String[] capteursRejetes = retourInscription.split(";");
+		String[] capteursRejetes = retour.split(";");
 		
 		if(capteursRejetes[0].compareTo("InscriptionCapteurOK") == 0) return tabIdCapteur;
 		
