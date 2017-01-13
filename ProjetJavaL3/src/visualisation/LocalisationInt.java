@@ -57,4 +57,9 @@ public class LocalisationInt extends Localisation
 	{
 		return commentaire;
 	}
+	
+	public String toString()
+	{
+		return this.batiment+" "+this.etage+" "+this.salle+" "+this.commentaire;
+	}
 }

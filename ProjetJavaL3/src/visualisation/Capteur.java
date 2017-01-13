@@ -19,7 +19,8 @@ public class Capteur {
 	{
 		this.id = id;
 		this.type = type;
-		this.loc = new visualisation.LocalisationExt(Double.parseDouble(latitude), Double.parseDouble(longitude)); 
+		this.loc = new visualisation.LocalisationExt(Double.parseDouble(latitude), Double.parseDouble(longitude));
+		this.valeur = 0.0;
 	}
 	
 	/**
@@ -37,6 +38,7 @@ public class Capteur {
 		this.id = id;
 		this.type = type;
 		this.loc = new visualisation.LocalisationInt(batiment, Integer.parseInt(etage), salle, positionrelative);
+		this.valeur = 0.0;
 	}
 	
 	/**

@@ -1,6 +1,5 @@
 package visualisation;
 
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -17,7 +17,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,8 +28,9 @@ public class Tableau_capteur extends JPanel{
 	 * 
 	 */
 	private Set<Capteur> capteurSuivis;
-	private Set<Capteur> capteurAffichee;
-	private Object[][] capteur;
+	
+	private DataCapteur dataCapteur = new DataCapteur();
+	private JTable table;
 	
 	private final String[] entetes = {"Identifiant", "Type", "Localisation", "Valeur"};
 	
@@ -41,8 +41,6 @@ public class Tableau_capteur extends JPanel{
 	private JFormattedTextField min_alarm;
 	private JFormattedTextField max_alarm;
 	private JComboBox<Object> type_combo;
-	
-	private JTable tabCapteurSuivis;
 
 	private static final long serialVersionUID = 1L;
 
@@ -64,14 +62,11 @@ public class Tableau_capteur extends JPanel{
 		title.add(title_label);
 		
 		/*=============  Tableau Panel =============*/
-		Object[][] donnees = { {"Lampe","Luminosite","S101","3"},
-				{"Lampe2","Luminosite","S102","3"},
-				{"Lampe3","Luminosite","S102","3"},
-				{"Radiateur","Temperature","S103","25"}};
-        this.capteur = donnees;
+
+		JTable table = new JTable(dataCapteur);
+        this.table = table;
 		
-		this.tabCapteurSuivis = new JTable(this.capteur, this.entetes);
-		JScrollPane scrollTab= new JScrollPane(this.tabCapteurSuivis);
+		JScrollPane scrollTab= new JScrollPane(this.table);
 		scrollTab.setPreferredSize(new Dimension(500,250));
 		
 		/*=============  Option Panel =============*/
@@ -158,7 +153,7 @@ public class Tableau_capteur extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				Set<Capteur> capteuraAffichee = null;
+				ArrayList<Capteur> capteuraAffichee = new ArrayList<Capteur>();
 				Iterator<Capteur> iter = capteurSuivis.iterator();
 				Capteur current;
 				
@@ -191,7 +186,6 @@ public class Tableau_capteur extends JPanel{
 					}
 				} 
 				
-				capteurAffichee = capteuraAffichee;
 			}
 		});
 		

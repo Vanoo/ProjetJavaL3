@@ -27,4 +27,9 @@ public class LocalisationExt extends Localisation
 		{
 			return longitude;
 		}
+		
+		public String toString()
+		{
+			return this.latitude+"/"+this.longitude;
+		}
 }
