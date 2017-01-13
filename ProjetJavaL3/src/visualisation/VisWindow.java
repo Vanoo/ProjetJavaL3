@@ -97,11 +97,26 @@ public class VisWindow extends JFrame implements Observer
 		});
 	    
 	    
-	    // TODO Recuperation de la localisation est envoi dans tableau_capteur
-		
-		
+	    // Listener sur le bouton d'inscription
+	    this.choixCapteur.getInscriptionButton().addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				tab_capteur.ajouterCapteur(null);
+			}
+		});
+	    
+	    // Listener sur le bouton de desinscription
+	    this.choixCapteur.getDesinscriptionButton().addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				tab_capteur.supprCapteur(null);
+			}
+		});
+	    
 
-			// TODO cree methode qui gere la modif des valeurs des capteurs
+		// TODO cree methode qui gere la modif des valeurs des capteurs
 	    
 
 	    
