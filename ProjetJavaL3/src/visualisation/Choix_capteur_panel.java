@@ -273,7 +273,7 @@ public class Choix_capteur_panel extends JPanel
 	private boolean verifierSalle(DefaultMutableTreeNode arbre)
 	{
 		// TODO
-		System.out.println(arbre);
+		//  System.out.println(arbre);
 		boolean answer = false;
 		DefaultMutableTreeNode leaf = null;
 		
@@ -303,14 +303,15 @@ public class Choix_capteur_panel extends JPanel
 	{
 		ArrayList<String> idCapteur = new ArrayList<String>();
 		
-		TreePath[] paths = selectionTree.getSelectionPaths();		
+		TreePath[] paths = selectionTree.getSelectionPaths();	
 		String[] splittedString;
 		
-		System.out.println("Avant Boucle nb paths : "+paths.length);
+		// System.out.println("Avant Boucle nb paths : "+paths.length);
 		
 		for(int i=0; i < paths.length; i++)
 		{
-			splittedString = paths[i].toString().split(",");
+			System.out.println("paths["+i+"] "+paths[i].toString());
+			splittedString = paths[i].toString().split(", ");
 			
 			for(int j=0; j < splittedString.length;j++)
 			{
@@ -319,7 +320,7 @@ public class Choix_capteur_panel extends JPanel
 			
 			if( splittedString.length == 3 )
 			{
-				System.out.println("Test : "+splittedString[2].split("]")[0]);
+				// System.out.println("Test : "+splittedString[2].split("]")[0]);
 				idCapteur.add(splittedString[2].split("]")[0]);
 			}
 			else if( splittedString.length == 6 )

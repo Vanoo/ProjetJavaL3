@@ -211,7 +211,7 @@ public class Reseaux extends java.util.Observable
 	 * @param tabIdCapteur tableau des noms des capteurs auxquels il faut s'inscrire
 	 * @return
 	 */
-	public String[] inscription(String[] tabIdCapteur)
+	public void inscription(String[] tabIdCapteur)
 	{
 		// String check = this.retourInscription;
 		String message = "InscriptionCapteur";
@@ -224,9 +224,11 @@ public class Reseaux extends java.util.Observable
 		}
 		
 		// On envoie le message decrivant les capteurs auxquels on souhaite s'inscrire
+		
+		System.out.println("MessageInterface :"+message);
 		out.println(message);
 		
-		
+		/*
 		String[] capteursRejetes = retour.split(";");
 		
 		if(capteursRejetes[0].compareTo("InscriptionCapteurOK") == 0) return tabIdCapteur;
@@ -237,11 +239,25 @@ public class Reseaux extends java.util.Observable
 		}
 		
 		return capteursSuivis.toArray(new String[0]);
+		*/
 	}
 
 	public void desinscription(String[] tabIdCapteur)
 	{
+		// String check = this.retourInscription;
+		String message = "DesinscriptionCapteur";
+		TreeSet<String> capteursSuivis = new TreeSet<String>();
 		
+		for(int i = 0; i < tabIdCapteur.length; i++)
+		{
+			capteursSuivis.add(tabIdCapteur[i]);
+			message = message+";"+tabIdCapteur[i];
+		}
+		
+		// On envoie le message decrivant les capteurs auxquels on souhaite s'inscrire
+		
+		System.out.println("MessageInterface :"+message);
+		out.println(message);
 	}
 	
 }

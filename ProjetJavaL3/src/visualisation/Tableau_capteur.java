@@ -238,7 +238,7 @@ public class Tableau_capteur extends JPanel{
 	 */
 	public void supprCapteur(Capteur capteur)
 	{
-		dataCapteur.removeCapteur(0);
+		dataCapteur.removeCapteur(capteur);
 	}
 	/**
 	 * Modifie la valeur du capteur dans la table avec l identifiant idCapteur

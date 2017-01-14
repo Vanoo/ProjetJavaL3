@@ -115,7 +115,7 @@ public class VisWindow extends JFrame implements Observer
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				tab_capteur.supprCapteur(null);
+				EnvoiDesincription();
 			}
 		});
 
@@ -234,6 +234,7 @@ public class VisWindow extends JFrame implements Observer
 		// System.out.println("Inscription Capteur : "+tabIdCapteurASuivre.toString());
 		
 		res.inscription(tabId);
+		this.capteursEnAttente = arrayListIdCapteurASuivre;
 		this.choixCapteur.getInscriptionButton().setEnabled(false);
 		this.choixCapteur.getDesinscriptionButton().setEnabled(false);
 	}
@@ -243,47 +244,46 @@ public class VisWindow extends JFrame implements Observer
 	 * dans le panel TableauCapteur
 	 * @param tabIdCapteurSuccessInscr
 	 */
-	public void InscriptionOk(List<String> capteursEnAttente2)
+	public void InscriptionOk(List<String> capteursSuccess)
 	{
-		JOptionPane.showMessageDialog(null, "InscriptionOK");
-		
-		for(int i=0;i<capteursEnAttente2.size();i++)
+		System.out.println("Reception Reponse Inscription");	
+		for(int i=0;i<capteursSuccess.size();i++)
 		{
-			// Transformation id -> capteur
-			
-			
-			this.tab_capteur.ajouterCapteur(ListCapteurPresent.get(i));
-		}		
+			this.tab_capteur.ajouterCapteur(getCapteurFromId(capteursSuccess.get(i)));
+		}
+    	this.choixCapteur.getInscriptionButton().setEnabled(true);
+    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
 	}
 	
 	/**
 	 * Suppression des capteurs selectionnes dans le panel ChoixCapteur
 	 * a la liste des capteurs suivis dans le panel TableauCapteur
 	 */
-	public void desincription()
+	public void EnvoiDesincription()
 	{
-		JOptionPane.showMessageDialog(null, "InscriptionOK");
-		
+		System.out.println("Demande Desinscription");
 		ArrayList<String> tabIdCapteurAsuppr;
 		
 		tabIdCapteurAsuppr = this.choixCapteur.getSelected();
 		
-		
-		
 		String[] tabId = new String[tabIdCapteurAsuppr.size()];
 		tabId = tabIdCapteurAsuppr.toArray(tabId);
-
-		// res.desinscription(tabId);s
 		
-		for(int i=0;i<tabId.length;i++)
+		res.desinscription(tabId);
+		this.capteursEnAttente = tabIdCapteurAsuppr;
+		this.choixCapteur.getInscriptionButton().setEnabled(false);
+		this.choixCapteur.getDesinscriptionButton().setEnabled(false);
+	}
+	
+	public void desincriptionOk(List<String> capteursSuccess)
+	{
+		System.out.println("Reception Reponse Desinscription");	
+		for(int i=0;i<capteursSuccess.size();i++)
 		{
-			Capteur cap;
-			
-			// Transformation id -> capteur
-			cap = getCapteurFromId(tabId[i]);
-			
-			this.tab_capteur.supprCapteur(cap);
+			this.tab_capteur.supprCapteur(getCapteurFromId(capteursSuccess.get(i)));
 		}
+    	this.choixCapteur.getInscriptionButton().setEnabled(true);
+    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
 	}
 	
 	/**
@@ -313,27 +313,77 @@ public class VisWindow extends JFrame implements Observer
 	{	    
 	    String message = res.getRetour();
 	    
+	    System.out.println("MessageServeur:"+message);
+	    
 	    // InscriptionOK / KO
 	    if(message.startsWith("InscriptionCapteur"))
 	    {
+	    	for(int i=0; i < capteursEnAttente.size(); i++)
+	    	{
+	    		System.out.println("CapteurEnAttente["+i+"] :"+capteursEnAttente.get(i));
+	    	}
 	    	String [] splittedString = message.split(";"); // Test sur l'attribut length d'un tableau Java
 	    	
 	    	if(splittedString.length != 1)
 	    	{
-	    		for(int i = 0; i < splittedString.length; i++)
+	    		for(int i = 1; i < splittedString.length; i++)
 	    		{
+	    			System.out.println("splittedString["+i+"] :"+splittedString[i]);
 	    			if(capteursEnAttente.contains(splittedString[i]))
 	    			{
+	    				System.out.println("Remove");
 	    				capteursEnAttente.remove(splittedString[i]);
 	    			}
 	    		}
 	    	}
-	    	System.out.println("CapteursSuccess : "+capteursEnAttente.toArray().toString());
+	    	
+			String[] tabId = new String[capteursEnAttente.size()];
+			tabId = capteursEnAttente.toArray(tabId);
+	    	
+	    	System.out.println("TabId "+tabId);
+	    	
+	    	for(int i=0; i < capteursEnAttente.size(); i++)
+	    	{
+	    		System.out.println("CapteurSucess["+i+"] :"+capteursEnAttente.get(i));
+	    	}
+	    	
 	    	InscriptionOk(capteursEnAttente);
-	    	this.choixCapteur.getInscriptionButton().setEnabled(true);
-	    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
 	    }
 	    
+	 // DesinscriptionOK / KO
+	    if(message.startsWith("DesinscriptionCapteur"))
+	    {
+	    	for(int i=0; i < capteursEnAttente.size(); i++)
+	    	{
+	    		System.out.println("CapteurEnAttente["+i+"] :"+capteursEnAttente.get(i));
+	    	}
+	    	String [] splittedString = message.split(";"); // Test sur l'attribut length d'un tableau Java
+	    	
+	    	if(splittedString.length != 1)
+	    	{
+	    		for(int i = 1; i < splittedString.length; i++)
+	    		{
+	    			System.out.println("splittedString["+i+"] :"+splittedString[i]);
+	    			if(capteursEnAttente.contains(splittedString[i]))
+	    			{
+	    				System.out.println("Remove");
+	    				capteursEnAttente.remove(splittedString[i]);
+	    			}
+	    		}
+	    	}
+	    	
+			String[] tabId = new String[capteursEnAttente.size()];
+			tabId = capteursEnAttente.toArray(tabId);
+	    	
+	    	System.out.println("TabId "+tabId);
+	    	
+	    	for(int i=0; i < capteursEnAttente.size(); i++)
+	    	{
+	    		System.out.println("CapteurSucess["+i+"] :"+capteursEnAttente.get(i));
+	    	}
+	    	
+	    	desincriptionOk(capteursEnAttente);
+	    }
 	
 	// Appartition Nouveau Capteur
 	    if(message.startsWith("CapteurPresent"))
@@ -365,15 +415,16 @@ public class VisWindow extends JFrame implements Observer
 	    if(message.startsWith("CapteurDeco"))
 	    {
 	    	String [] splittedString = message.split(";");
-	    	// choixCapteur.supprCapteur(getCapteurFromId(splittedString[1]));
-	    	choixCapteur.modifListCapteur(getCapteurFromId(splittedString[1]), 1);
+	    	Capteur cap = getCapteurFromId(splittedString[1]);
+	    	choixCapteur.modifListCapteur(cap, 1);
+	    	tab_capteur.supprCapteur(cap);
 	    }
 	
 	// Data Capteur
 	    if(message.startsWith("ValeurCapteur"))
 	    {
 	    	String [] splittedString = message.split(";");
-	    	// tab_capteur.changeValue(splittedString[1], Double.parseDouble(splittedString[2]));
+	    	tab_capteur.changeValue(splittedString[1], Double.parseDouble(splittedString[2]));
 	    }
 	    
 	}
