@@ -325,6 +325,7 @@ public class VisWindow extends JFrame implements Observer
 	    	ListCapteurPresent.add(cap);
 	    	System.out.println("AjoutCapteur dans Jtree");
 	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
+	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
 	    }
 	
 	// Disparition Capteur
