@@ -15,6 +15,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import com.sun.org.apache.bcel.internal.generic.LCONST;
+
 public class Choix_capteur_panel extends JPanel
 {
 	/**
@@ -125,31 +127,35 @@ public class Choix_capteur_panel extends JPanel
 	
 	private void insertNode(String IdentifiantCapteur,Localisation locCapteur,DefaultMutableTreeNode node)
 	{
+		LocalisationInt locIntCapteur;
+		DefaultMutableTreeNode nodeChild;
 		
-		for (int i = 0; i < node.getChildCount(); i++)
+		if( locCapteur instanceof LocalisationExt )
 		{
-			
-			System.out.println("Node :"+node.getChildAt(i).toString());
-			
-			if (node.getChildAt(i).isLeaf())
-			{
-				System.out.println("Leaf :"+node.getChildAt(i));
-			}
-				
-			else 
-			{
-				insertNode(IdentifiantCapteur,locCapteur,(DefaultMutableTreeNode)node.getChildAt(i));
-			}
-				
-			/*
-			if( node.getChildAt(i).toString().equals(arg0) )
-			{	
-				
-			}
-			
-
-			*/
+			dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), node, node.getChildCount());
 		}
+		else
+		{
+			locIntCapteur = (LocalisationInt) locCapteur;
+			for (int i = 0; i < node.getChildCount(); i++)
+			{
+				nodeChild = (DefaultMutableTreeNode) node.getChildAt(i);
+				
+				if( nodeChild.toString().equals(locIntCapteur.getBatiment()) ||
+					nodeChild.toString().equals(locIntCapteur.getEtage()) 
+				  )
+				{
+					insertNode(IdentifiantCapteur,locCapteur,nodeChild);
+				}
+				else if( nodeChild.toString().equals(locIntCapteur.getSalle() ) )
+				{
+					dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), nodeChild, nodeChild.getChildCount());
+				}
+				
+			}
+		}
+		
+		
 	}
 	
 	/**

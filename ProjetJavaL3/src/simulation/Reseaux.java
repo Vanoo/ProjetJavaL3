@@ -166,12 +166,13 @@ public class Reseaux {
 	}
 	
 	// Connexion d'un capteur d'interieur
-	public boolean connexionInt(String id, String type, String batiment, int etage, String salle, String pos) {
+	public boolean connexionInt(String id, String type, String batiment, int etage, String salle, String pos) 
+	{
 		String str = "plop";
 		
 		if( id == null || batiment == null || salle == null )
 		{
-			JOptionPane.showMessageDialog(null, "Error : No location selected ");
+			JOptionPane.showMessageDialog(null, "Error : No location selected : "+batiment+etage+salle);
 			return false;
 		}
 		
