@@ -28,6 +28,7 @@ public class Choix_capteur_panel extends JPanel
 	private JButton desinscription_button;
 	
 	private DefaultTreeModel dataTree;
+	private TreeSelectionModel modelSelecTree;
 	private JTree selectionTree;
 	
 	private static final long serialVersionUID = 1L;
@@ -65,16 +66,23 @@ public class Choix_capteur_panel extends JPanel
 		
 	    JTree arbre = new JTree(parseur.parse());
 	    this.selectionTree = arbre;
+	    this.modelSelecTree = arbre.getSelectionModel();
 	    
 	    selectionTree.addTreeSelectionListener(new TreeSelectionListener() 
 	    {
 	        public void valueChanged(TreeSelectionEvent e) 
 	        {
+	        	/*
 	        	e.isAddedPath();
 	        	String path = e.getPath().toString();
 	        	String [] splittedString = path.split(";");
 	        	
+	        	DefaultMutableTreeNode root = (DefaultMutableTreeNode) dataTree.getRoot();
+	        	
+	        	modelSelecTree.addSelectionPath(paths[0]);
+	        	
 	        	System.out.println("Selection :"+path);
+	        	*/
 	        }
 	    });
 	    
@@ -268,21 +276,35 @@ public class Choix_capteur_panel extends JPanel
 		// si pas de capteur ni de fils, enlever de l'arbre
 	}
 	
-	public String[] getSelected()
+	public ArrayList<String> getSelected()
 	{
 		ArrayList<String> idCapteur = new ArrayList<String>();
 		
-		TreeSelectionModel modelTree;
+		TreePath[] paths = selectionTree.getSelectionPaths();		
+		String[] splittedString;
 		
-		modelTree = selectionTree.getSelectionModel();
+		System.out.println("Avant Boucle nb paths : "+paths.length);
 		
-		TreePath[] paths = selectionTree.getSelectionPaths();
-
-		for(int i=0; i< paths.length;i++)
+		for(int i=0; i < paths.length; i++)
 		{
-			System.out.println("Selection "+i+" : "+ paths[i].toString());
-		}
+			splittedString = paths[i].toString().split(",");
+			
+			for(int j=0; j < splittedString.length;j++)
+			{
+				System.out.println("splittedString["+j+"]"+"="+splittedString[j]);
+			}
+			
+			if( splittedString.length == 3 )
+			{
+				System.out.println("Test : "+splittedString[2].split("]")[0]);
+				idCapteur.add(splittedString[2].split("]")[0]);
+			}
+			else if( splittedString.length == 6 )
+			{
+				idCapteur.add(splittedString[5].split("]")[0]);
+			}
+		}		
 		
-		return null;
+		return idCapteur;
 	}
 }

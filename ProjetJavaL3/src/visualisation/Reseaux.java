@@ -238,5 +238,11 @@ public class Reseaux extends java.util.Observable
 		
 		return capteursSuivis.toArray(new String[0]);
 	}
+
+	public void desinscription(String[] tabIdCapteur)
+	{
+		
+	}
+	
 }
 

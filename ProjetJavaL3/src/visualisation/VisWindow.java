@@ -224,13 +224,18 @@ public class VisWindow extends JFrame implements Observer
 	public void EnvoiInscription()
 	{
 		System.out.println("Demande Inscription");
-		String[] tabIdCapteurASuivre;
-		tabIdCapteurASuivre = this.choixCapteur.getSelected();
+		ArrayList<String> arrayListIdCapteurASuivre;
 		
-		System.out.println("Inscription Capteur : "+tabIdCapteurASuivre.toString());
-		// res.inscription(tabIdCapteurASuivre);
-		// this.choixCapteur.getInscriptionButton().setEnabled(false);
-		// this.choixCapteur.getDesinscriptionButton().setEnabled(false);
+		arrayListIdCapteurASuivre = this.choixCapteur.getSelected();
+		
+		String[] tabId = new String[arrayListIdCapteurASuivre.size()];
+		tabId = arrayListIdCapteurASuivre.toArray(tabId);
+		
+		// System.out.println("Inscription Capteur : "+tabIdCapteurASuivre.toString());
+		
+		res.inscription(tabId);
+		this.choixCapteur.getInscriptionButton().setEnabled(false);
+		this.choixCapteur.getDesinscriptionButton().setEnabled(false);
 	}
 	
 	/**
@@ -241,9 +246,12 @@ public class VisWindow extends JFrame implements Observer
 	public void InscriptionOk(List<String> capteursEnAttente2)
 	{
 		JOptionPane.showMessageDialog(null, "InscriptionOK");
+		
 		for(int i=0;i<capteursEnAttente2.size();i++)
 		{
 			// Transformation id -> capteur
+			
+			
 			this.tab_capteur.ajouterCapteur(ListCapteurPresent.get(i));
 		}		
 	}
@@ -255,14 +263,26 @@ public class VisWindow extends JFrame implements Observer
 	public void desincription()
 	{
 		JOptionPane.showMessageDialog(null, "InscriptionOK");
-		String[] tabIdCapteurAsuppr;
+		
+		ArrayList<String> tabIdCapteurAsuppr;
+		
 		tabIdCapteurAsuppr = this.choixCapteur.getSelected();
-		// res.desinscription(tabIdCapteurAsuppr);
+		
+		
+		
+		String[] tabId = new String[tabIdCapteurAsuppr.size()];
+		tabId = tabIdCapteurAsuppr.toArray(tabId);
 
-		for(int i=0;i<tabIdCapteurAsuppr.length;i++)
+		// res.desinscription(tabId);s
+		
+		for(int i=0;i<tabId.length;i++)
 		{
+			Capteur cap;
+			
 			// Transformation id -> capteur
-			this.tab_capteur.supprCapteur(ListCapteurPresent.get(i));
+			cap = getCapteurFromId(tabId[i]);
+			
+			this.tab_capteur.supprCapteur(cap);
 		}
 	}
 	
@@ -308,6 +328,7 @@ public class VisWindow extends JFrame implements Observer
 	    			}
 	    		}
 	    	}
+	    	System.out.println("CapteursSuccess : "+capteursEnAttente.toArray().toString());
 	    	InscriptionOk(capteursEnAttente);
 	    	this.choixCapteur.getInscriptionButton().setEnabled(true);
 	    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
