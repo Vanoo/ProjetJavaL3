@@ -49,7 +49,7 @@ public class InfoCapteur_panel extends JPanel
 	boolean isInterieur;
 	
 	String batiment;
-	int etage;
+	String etage;
 	String salle;
 	JTextField commentaire;
 	
@@ -312,8 +312,7 @@ public class InfoCapteur_panel extends JPanel
 			            		 TreePath temp2 = temp.getParentPath();
 			            		 System.out.println(temp2.getLastPathComponent().toString());
 			            		 
-			            		 String stage = temp2.getLastPathComponent().toString().substring(5);
-                                 etage = Integer.parseInt(stage);
+			            		 etage = temp2.getLastPathComponent().toString();
                                  
 			            		 TreePath temp3 = temp2.getParentPath();
 			            		 batiment = temp3.getLastPathComponent().toString();
