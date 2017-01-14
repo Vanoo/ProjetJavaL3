@@ -22,8 +22,6 @@ import javax.swing.JOptionPane;
  */
 public class Reseaux extends java.util.Observable
 {
-	
-	
 	Socket socket;
 	InetAddress server_address;
 	int port;
@@ -38,10 +36,6 @@ public class Reseaux extends java.util.Observable
     
     
     Set<Capteur> capteurs;
-    
-    
-    
-    
     
 	public Reseaux()
 	{
@@ -138,66 +132,31 @@ public class Reseaux extends java.util.Observable
 	
 	/**
 	 * 
-	 * Etablit la connection entre l'interface de visualisation et le serveur
+	 * Envoi une demande de deconnexion au serveur
 	 * 
-	 * @return true si deconnection reussi, false si probleme rencontree
 	 */
-	public boolean deconnexion() 
+	public void EnvoiDemandeDeconnexion() 
 	{
-		String str = "plop";
-		
 		out.println("DeconnexionVisu");
-		
-		try
-        {
-			str = in.readLine();
-        }
-        catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		
-		// Affichage debug
-		System.out.println(str);
-
-		if(str.compareTo("DeconnexionOK") == 0) 
-		{
-			try
-			{
-				this.socket.close();
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-			
-			this.connected = false;
-			
-			return true;
-		}
-		else
-		{
-			JOptionPane.showMessageDialog(null, "Error : Unallowed Disconnection");
-		}
-		return false;
 	}
-	
 	
 	/**
 	 * Cree un thread qui receptionne les messages en continu
 	 */
-	public void listen() {
+	public void listen() 
+	{
 		new NetworkThread(this).start();
 	}
 	
-	
-	
-	
-	public String getRetour() {
+	// TODO javadoc
+	public String getRetour() 
+	{
 		return retour;
 	}
 
-	public void setRetour(String retourInscription) {
+	// TODO javadoc
+	public void setRetour(String retourInscription) 
+	{
 		synchronized (this) {
 			this.retour = retourInscription;
 		}
@@ -209,7 +168,6 @@ public class Reseaux extends java.util.Observable
 	 * Inscrit l'interface de visualisation a un ensemble de capteurs
 	 * 
 	 * @param tabIdCapteur tableau des noms des capteurs auxquels il faut s'inscrire
-	 * @return
 	 */
 	public void inscription(String[] tabIdCapteur)
 	{
@@ -242,6 +200,11 @@ public class Reseaux extends java.util.Observable
 		*/
 	}
 
+	/**
+	 * Desinscrit l'interface de visualisation a un ensemble de capteurs
+	 * 
+	 * @param tabIdCapteur tableau des noms des capteurs auxquels il faut se desinscrire
+	 */
 	public void desinscription(String[] tabIdCapteur)
 	{
 		// String check = this.retourInscription;
@@ -256,7 +219,7 @@ public class Reseaux extends java.util.Observable
 		
 		// On envoie le message decrivant les capteurs auxquels on souhaite s'inscrire
 		
-		System.out.println("MessageInterface :"+message);
+		System.out.println("MessageEnvoye :"+message);
 		out.println(message);
 	}
 	
