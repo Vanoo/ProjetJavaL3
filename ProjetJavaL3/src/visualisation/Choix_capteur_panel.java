@@ -132,29 +132,29 @@ public class Choix_capteur_panel extends JPanel
 		DefaultMutableTreeNode etage;
 		DefaultMutableTreeNode salle;
 		
-		System.out.println("Localisation Capteur "+locCapteur.toString());
+		// System.out.println("Localisation Capteur "+locCapteur.toString());
 		
 		for (int bat = 0; bat < node.getChildCount(); bat++)
 		{
 			batiment = (DefaultMutableTreeNode) node.getChildAt(bat);
-			System.out.println("Batiment :"+batiment.toString());
+			// System.out.println("Batiment :"+batiment.toString());
 			if( batiment.toString().equals(locCapteur.getBatiment()))
 			{
-				System.out.println("Batiment OK");
+				// System.out.println("Batiment OK");
 				for(int et = 0; et < batiment.getChildCount(); et++  )
 				{
 					etage = (DefaultMutableTreeNode) batiment.getChildAt(et);
-					System.out.println("Etage :"+etage.toString());
+					// System.out.println("Etage :"+etage.toString());
 					if( etage.toString().equals(locCapteur.getEtage()))
 					{
-						System.out.println("etage OK");
+						// System.out.println("etage OK");
 						for(int sal = 0; sal < etage.getChildCount(); sal++)
 						{
 							salle = (DefaultMutableTreeNode) etage.getChildAt(sal);
-							System.out.println("Salle :"+salle.toString());
+							// System.out.println("Salle :"+salle.toString());
 							if( salle.toString().equals(locCapteur.getSalle()) )
 							{
-								System.out.println("Salle OK");
+								// System.out.println("Salle OK");
 								dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), salle, salle.getChildCount());
 								break;
 							}

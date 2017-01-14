@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,12 +28,11 @@ public class VisWindow extends JFrame implements Observer
 	private Tableau_capteur tab_capteur;
 	private JPanel fenetre;
 	
-	private ArrayList<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
-	private ArrayList<String>  capteursEnAttente = new ArrayList<String>();
+	private List<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
+	private List<String>  capteursEnAttente = new ArrayList<String>();
 	
 	public VisWindow(Dimension dim) throws ParseException
-	{
-		
+	{			
 		/*============= Initialisation de la fenetre =============*/
 		
 		this.setTitle("Interface Visualisation");
@@ -55,7 +55,6 @@ public class VisWindow extends JFrame implements Observer
 	    this.connection_panel = new visualisation.Connection_panel();
 	    this.choixCapteur = new Choix_capteur_panel();
 	    this.tab_capteur = new Tableau_capteur();
-	    this.ListCapteurPresent = null;
 	    
 	    /*============= Ajout Listener =============*/
 	    
@@ -163,7 +162,7 @@ public class VisWindow extends JFrame implements Observer
 	 * @return true si connection reussi false sinon
 	 */
 	private boolean connection()
-	{
+	{		
 		String ip;
 		int port;
 		boolean success;
@@ -237,10 +236,10 @@ public class VisWindow extends JFrame implements Observer
 	 * dans le panel TableauCapteur
 	 * @param tabIdCapteurSuccessInscr
 	 */
-	public void InscriptionOk(ArrayList<String> listIdCapteur)
+	public void InscriptionOk(List<String> capteursEnAttente2)
 	{
 		JOptionPane.showMessageDialog(null, "InscriptionOK");
-		for(int i=0;i<listIdCapteur.size();i++)
+		for(int i=0;i<capteursEnAttente2.size();i++)
 		{
 			// Transformation id -> capteur
 			this.tab_capteur.ajouterCapteur(ListCapteurPresent.get(i));
@@ -322,19 +321,9 @@ public class VisWindow extends JFrame implements Observer
 	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]);
 	    	}
 	    	
-	    	
-
-    		
-	    	System.out.println(cap.toString());
-	    	
-	    	JOptionPane.showMessageDialog(null, splittedString.length);
-	    	
-	    	// TODO erreur NUllPointerException !!!!!
-	    	// ListCapteurPresent.add(new Capteur("id", "type", "2.0", "5.0"));
+			System.out.println("AjoutCapteur dans ListCapteurPresent");
 	    	ListCapteurPresent.add(cap);
-	    	
-	    	JOptionPane.showMessageDialog(null, "plop 2");
-	    	
+	    	System.out.println("AjoutCapteur dans Jtree");
 	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
 	    }
 	
