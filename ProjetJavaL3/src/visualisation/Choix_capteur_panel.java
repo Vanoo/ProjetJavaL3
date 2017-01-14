@@ -1,8 +1,10 @@
 package visualisation;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.Hashtable;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -11,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -21,7 +24,8 @@ public class Choix_capteur_panel extends JPanel
 	private JButton inscription_button;
 	private JButton desinscription_button;
 	
-	private JTree capteur_tree;
+	private JTree capteur_tree;	
+	private DefaultTreeModel dataTree;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -54,14 +58,24 @@ public class Choix_capteur_panel extends JPanel
 		arbre.setPath("./config.xml");
 		*/
 		
-		XMLParser parseur = new XMLParser();		
-		JTree arbre = new JTree(parseur.parse());
+		XMLParser parseur = new XMLParser();
+	    
 		
-		Set<Capteur> capteurs = null;
 		
-		verifierSalle(parseur.parse(), capteurs);
+	    JTree arbre = new JTree(parseur.parse());
+	    
+	    DefaultTreeModel modelJtree = (DefaultTreeModel) arbre.getModel();
+	    
+	    this.dataTree = modelJtree;
+	    
+		// JTree arbre = new JTree(parseur.parse());
+		
+		// Set<Capteur> capteurs = null;
+		
+		// verifierSalle(parseur.parse(), capteurs);
 		
 		JScrollPane scroll_arbre = new JScrollPane(arbre);
+		
 		scroll_arbre.setPreferredSize(new Dimension(200,250));
 		
 		capteur_tree.add(scroll_arbre);
@@ -108,6 +122,36 @@ public class Choix_capteur_panel extends JPanel
 		return this.desinscription_button;
 	}
 	
+	
+	private void insertNode(String IdentifiantCapteur,Localisation locCapteur,DefaultMutableTreeNode node)
+	{
+		
+		for (int i = 0; i < node.getChildCount(); i++)
+		{
+			
+			System.out.println("Node :"+node.getChildAt(i).toString());
+			
+			if (node.getChildAt(i).isLeaf())
+			{
+				System.out.println("Leaf :"+node.getChildAt(i));
+			}
+				
+			else 
+			{
+				insertNode(IdentifiantCapteur,locCapteur,(DefaultMutableTreeNode)node.getChildAt(i));
+			}
+				
+			/*
+			if( node.getChildAt(i).toString().equals(arg0) )
+			{	
+				
+			}
+			
+
+			*/
+		}
+	}
+	
 	/**
 	 * Ajout dans le JTree le capteur voulus
 	 * 
@@ -116,7 +160,34 @@ public class Choix_capteur_panel extends JPanel
 	 */
 	public void newCapteur(String IdentifiantCapteur,Localisation locCapteur)
 	{
-		// TODO
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode) dataTree.getRoot();
+		
+		insertNode(IdentifiantCapteur, locCapteur, root);
+		
+		/*
+		if( locCapteur instanceof LocalisationInt)
+		{
+			while( notfound )
+			{
+				if()
+				{
+					
+				}
+			}
+			dataTree.insertNodeInto(new DefaultMutableTreeNode("another_child"), root, root.getChildCount());
+		}
+		else
+		{
+			while( notfound )
+			{
+				if()
+				{
+					
+				}
+			}
+			dataTree.insertNodeInto(new DefaultMutableTreeNode("another_child"), root, root.getChildCount());
+		}
+		*/
 	}
 	
 	/**

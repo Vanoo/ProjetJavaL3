@@ -1,18 +1,28 @@
 <?xml version="1.0"?>
-<faculte>
-	<U1>
+<Universite>
+	<Interieur>
+		<U1>
 		<etage1>
-			<s101></s101>
-			<s102></s102>
+			<s101>
+			</s101>
+			<s102>
+			</s102>
 		</etage1>
 		<etage2>
-			<s202></s202>
+			<s202>
+			</s202>
 		</etage2>
-	</U1>
-	<U4>
-		<etage1>
-			<s103>103</s103>
-			<s104/>
-		</etage1>
-	</U4>
-</faculte>
+		</U1>
+		<U4>
+			<etage1>
+				<s103>
+				LampeDefault
+				</s103>
+				<s104>
+				</s104>
+			</etage1>
+		</U4>
+	</Interieur>
+	<Exterieur>
+	</Exterieur>
+</Universite>
