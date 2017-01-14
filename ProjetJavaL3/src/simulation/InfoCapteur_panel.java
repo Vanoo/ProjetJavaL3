@@ -294,14 +294,19 @@ public class InfoCapteur_panel extends JPanel
 			{
 			     public void mousePressed(MouseEvent e) 
 			     {
+			    	 
 			         int selRow = arbre.getRowForLocation(e.getX(), e.getY());
 			         // TreePath selPath = arbre.getPathForLocation(e.getX(), e.getY());
 			         if(selRow != -1) 
 			         {
 			        	 if(e.getClickCount() == 1) 
 			             {
+			        		 
 			            	 TreePath temp = arbre.getPathForLocation(e.getX(), e.getY());
-			            	 if(temp.getPathCount() == 4)
+			            	 
+			            	 System.out.println(temp.toString());
+			            	 
+			            	 if(temp.getPathCount() == 5)
 			            	 {
 			            		 salle = temp.getLastPathComponent().toString();
 			            		 TreePath temp2 = temp.getParentPath();
@@ -322,6 +327,8 @@ public class InfoCapteur_panel extends JPanel
 			            	 }
 			             }
 			         }
+			         
+			         
 			     }
 			 };
 			 arbre.addMouseListener(ml);
