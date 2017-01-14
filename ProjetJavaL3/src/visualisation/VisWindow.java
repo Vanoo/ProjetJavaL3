@@ -326,13 +326,13 @@ public class VisWindow extends JFrame implements Observer
     		
 	    	System.out.println(cap.toString());
 	    	
-	    	JOptionPane.showMessageDialog(null, splittedString.length);
+	    	JOptionPane.showMessageDialog(null, cap);
 	    	
 	    	// TODO erreur NUllPointerException !!!!!
 	    	// ListCapteurPresent.add(new Capteur("id", "type", "2.0", "5.0"));
-	    	ListCapteurPresent.add(cap);
+	    	boolean plop = ListCapteurPresent.add(cap);
 	    	
-	    	JOptionPane.showMessageDialog(null, "plop 2");
+	    	JOptionPane.showMessageDialog(null, plop);
 	    	
 	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
 	    }
