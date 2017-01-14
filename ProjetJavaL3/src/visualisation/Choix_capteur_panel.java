@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -125,37 +126,43 @@ public class Choix_capteur_panel extends JPanel
 	}
 	
 	
-	private void insertNode(String IdentifiantCapteur,Localisation locCapteur,DefaultMutableTreeNode node)
+	private void insertNode(String IdentifiantCapteur,LocalisationInt locCapteur,DefaultMutableTreeNode node)
 	{
-		LocalisationInt locIntCapteur;
-		DefaultMutableTreeNode nodeChild;
+		DefaultMutableTreeNode batiment;
+		DefaultMutableTreeNode etage;
+		DefaultMutableTreeNode salle;
 		
-		if( locCapteur instanceof LocalisationExt )
+		System.out.println("Localisation Capteur "+locCapteur.toString());
+		
+		for (int bat = 0; bat < node.getChildCount(); bat++)
 		{
-			dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), node, node.getChildCount());
-		}
-		else
-		{
-			locIntCapteur = (LocalisationInt) locCapteur;
-			for (int i = 0; i < node.getChildCount(); i++)
+			batiment = (DefaultMutableTreeNode) node.getChildAt(bat);
+			System.out.println("Batiment :"+batiment.toString());
+			if( batiment.toString().equals(locCapteur.getBatiment()))
 			{
-				nodeChild = (DefaultMutableTreeNode) node.getChildAt(i);
-				
-				if( nodeChild.toString().equals(locIntCapteur.getBatiment()) ||
-					nodeChild.toString().equals(locIntCapteur.getEtage()) 
-				  )
+				System.out.println("Batiment OK");
+				for(int et = 0; et < batiment.getChildCount(); et++  )
 				{
-					insertNode(IdentifiantCapteur,locCapteur,nodeChild);
+					etage = (DefaultMutableTreeNode) batiment.getChildAt(et);
+					System.out.println("Etage :"+etage.toString());
+					if( etage.toString().equals(locCapteur.getEtage()))
+					{
+						System.out.println("etage OK");
+						for(int sal = 0; sal < etage.getChildCount(); sal++)
+						{
+							salle = (DefaultMutableTreeNode) etage.getChildAt(sal);
+							System.out.println("Salle :"+salle.toString());
+							if( salle.toString().equals(locCapteur.getSalle()) )
+							{
+								System.out.println("Salle OK");
+								dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), salle, salle.getChildCount());
+								break;
+							}
+						}
+					}
 				}
-				else if( nodeChild.toString().equals(locIntCapteur.getSalle() ) )
-				{
-					dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), nodeChild, nodeChild.getChildCount());
-				}
-				
 			}
 		}
-		
-		
 	}
 	
 	/**
@@ -167,33 +174,19 @@ public class Choix_capteur_panel extends JPanel
 	public void newCapteur(String IdentifiantCapteur,Localisation locCapteur)
 	{
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode) dataTree.getRoot();
+		DefaultMutableTreeNode nodeChild;
 		
-		insertNode(IdentifiantCapteur, locCapteur, root);
-		
-		/*
-		if( locCapteur instanceof LocalisationInt)
+		if( locCapteur instanceof LocalisationExt )
 		{
-			while( notfound )
-			{
-				if()
-				{
-					
-				}
-			}
-			dataTree.insertNodeInto(new DefaultMutableTreeNode("another_child"), root, root.getChildCount());
+			nodeChild = (DefaultMutableTreeNode) root.getChildAt(1);
+			
+			dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), nodeChild, nodeChild.getChildCount());
 		}
 		else
 		{
-			while( notfound )
-			{
-				if()
-				{
-					
-				}
-			}
-			dataTree.insertNodeInto(new DefaultMutableTreeNode("another_child"), root, root.getChildCount());
+			System.out.println("NewCapteur Interieur : node "+root.getChildAt(0).toString());
+			insertNode(IdentifiantCapteur, (LocalisationInt)locCapteur, (DefaultMutableTreeNode) root.getChildAt(0));
 		}
-		*/
 	}
 	
 	/**

@@ -37,7 +37,7 @@ public class Capteur {
 	{
 		this.id = id;
 		this.type = type;
-		this.loc = new visualisation.LocalisationInt(batiment, Integer.parseInt(etage), salle, positionrelative);
+		this.loc = new visualisation.LocalisationInt(batiment, etage, salle, positionrelative);
 		this.valeur = 0.0;
 	}
 	

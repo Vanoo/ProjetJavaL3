@@ -166,7 +166,7 @@ public class Reseaux {
 	}
 	
 	// Connexion d'un capteur d'interieur
-	public boolean connexionInt(String id, String type, String batiment, int etage, String salle, String pos) 
+	public boolean connexionInt(String id, String type, String batiment, String etage, String salle, String pos) 
 	{
 		String str = "plop";
 		

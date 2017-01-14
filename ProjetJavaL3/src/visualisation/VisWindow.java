@@ -308,6 +308,7 @@ public class VisWindow extends JFrame implements Observer
 	    	Capteur cap = null;
 	    	String [] splittedString = message.split(";");
 	    	
+	    	if(splittedString.length == 7)
 	    	System.out.println("Message : "+message);
 	    	System.out.println("Length : "+splittedString.length);
 	    	System.out.println("splittedString[4] :"+splittedString[4]);

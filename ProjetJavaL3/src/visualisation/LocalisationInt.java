@@ -11,10 +11,10 @@ public class LocalisationInt extends Localisation
 
 	String batiment;
 	String salle;
-	int etage;
+	String etage;
 	String commentaire;
 	
-	public LocalisationInt(String batiment,int etage,String salle,String commentaire)
+	public LocalisationInt(String batiment,String etage,String salle,String commentaire)
 	{
 		this.batiment = batiment;
 		this.salle = salle;
@@ -44,7 +44,7 @@ public class LocalisationInt extends Localisation
 	 * 	@Javadoc
 	 * 	Retourne un String d'un étage.  
 	 */
-	public int getEtage() 
+	public String getEtage() 
 	{
 		return etage;
 	}
