@@ -1,22 +1,19 @@
 package visualisation;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.Hashtable;
+import java.util.Enumeration;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-
-import com.sun.org.apache.bcel.internal.generic.LCONST;
+import javax.swing.tree.TreeNode;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -204,13 +201,33 @@ public class Choix_capteur_panel extends JPanel
 	 * Verifie si une salle contient un capteur et l'affiche en consequence
 	 * 
 	 */
-	private void verifierSalle(DefaultMutableTreeNode arbre, Set<Capteur> capteurs)
+	private boolean verifierSalle(DefaultMutableTreeNode arbre)
 	{
 		// TODO
 		System.out.println(arbre);
-		// checker les fils r�cursivement
-		// v�rifier qu'il n'y a pas de capteurs avec les set
-		// si pas de capteur ni de fils, enlever de l'arbre
+		boolean answer = false;
+		DefaultMutableTreeNode leaf = null;
+		
+		Enumeration<DefaultMutableTreeNode> temp = arbre.children();
+		
+		answer = arbre.getUserObject() instanceof Capteur;
+				
+		while(temp.hasMoreElements() && !answer)
+		{
+			leaf = temp.nextElement();
+			answer = answer && verifierSalle(leaf);
+		}
+		
+		
+		if (!answer)
+		{
+			DefaultMutableTreeNode root = (DefaultMutableTreeNode) arbre.getParent();
+			root.remove(arbre);
+		}
+		
+		// TODO si pas de capteur ni de fils, enlever de l'arbre
+		
+		return answer;
 	}
 	
 	public String[] getSelected()
