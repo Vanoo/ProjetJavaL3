@@ -29,6 +29,7 @@ public class Reseaux extends java.util.Observable
     PrintWriter out;
     boolean noerror;
     boolean connected;
+    NetworkThread thread;
     
     // L'objectif est de signaler via le boolean que les capteurs ont change
     // private boolean retourInscriptionCheck;
@@ -145,7 +146,23 @@ public class Reseaux extends java.util.Observable
 	 */
 	public void listen() 
 	{
-		new NetworkThread(this).start();
+		this.thread = new NetworkThread(this);
+		this.thread.start();
+	}
+	
+	public void stopListen()
+	{
+		JOptionPane.showMessageDialog(null, "TRALALALAL");
+		try 
+		{
+			in.close();
+			out.close();
+			socket.close();
+		} catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	// TODO javadoc

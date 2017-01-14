@@ -411,8 +411,10 @@ public class VisWindow extends JFrame implements Observer
 	// DeconnexionOK / KO
 	    if(message.startsWith("DeconnexionOK"))
 	    {
+	    	JOptionPane.showMessageDialog(null, "DecoOk");
 	    	// envoi sur destruction thread
 	    	// Suppresion Capteurs
+	    	this.res.stopListen();
 			changementBouton();
 			fifty_shade_of_gray(false,fenetre);
 	    }
