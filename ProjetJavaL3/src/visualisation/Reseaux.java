@@ -131,10 +131,8 @@ public class Reseaux extends java.util.Observable
 	        {
 	        	this.connected = true;
 	        	listen();
-	        }
-			
+	        }	
 		}
-		
 		return noerror;
 	}
 	

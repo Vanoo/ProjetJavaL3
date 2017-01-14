@@ -312,21 +312,28 @@ public class VisWindow extends JFrame implements Observer
 	    	System.out.println("Length : "+splittedString.length);
 	    	System.out.println("splittedString[4] :"+splittedString[4]);
 	    	
-	    	if(splittedString.length == 7)
+	    	if(splittedString.length == 7) // Capteur d'interieur
 	    	{
 	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]);
 	    	}
-	    	else
+	    	else // Capteur d'exterieur
 	    	{
 	    		cap = new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]);
 	    	}
 	    	
+	    	
+
+    		
 	    	System.out.println(cap.toString());
 	    	
+	    	JOptionPane.showMessageDialog(null, splittedString.length);
 	    	
 	    	// TODO erreur NUllPointerException !!!!!
 	    	// ListCapteurPresent.add(new Capteur("id", "type", "2.0", "5.0"));
-	    	// ListCapteurPresent.add(cap);
+	    	ListCapteurPresent.add(cap);
+	    	
+	    	JOptionPane.showMessageDialog(null, "plop 2");
+	    	
 	    	choixCapteur.newCapteur(cap.getId(),cap.getLoc());
 	    }
 	

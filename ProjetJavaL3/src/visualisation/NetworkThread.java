@@ -23,8 +23,6 @@ public class NetworkThread extends Thread
 		this.res = res;
 		this.in = res.in;
 		
-		
-		
 		try
 		{
 			File logs = new File("logs.txt");
@@ -57,7 +55,6 @@ public class NetworkThread extends Thread
 		
 		
 	    while(res.connected) {
-	    	
 	    	try
 	    	{
 	    		message = in.readLine();
