@@ -160,7 +160,8 @@ public class Reseaux extends java.util.Observable
 		// Affichage debug
 		System.out.println(str);
 
-		if(str.compareTo("DeconnexionOK") == 0) {
+		if(str.compareTo("DeconnexionOK") == 0) 
+		{
 			try
 			{
 				this.socket.close();

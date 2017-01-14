@@ -1,22 +1,22 @@
 package visualisation;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-
-import com.sun.org.apache.bcel.internal.generic.LCONST;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -27,8 +27,8 @@ public class Choix_capteur_panel extends JPanel
 	private JButton inscription_button;
 	private JButton desinscription_button;
 	
-	private JTree capteur_tree;	
 	private DefaultTreeModel dataTree;
+	private JTree selectionTree;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -62,10 +62,21 @@ public class Choix_capteur_panel extends JPanel
 		*/
 		
 		XMLParser parseur = new XMLParser();
-	    
-		
 		
 	    JTree arbre = new JTree(parseur.parse());
+	    this.selectionTree = arbre;
+	    
+	    selectionTree.addTreeSelectionListener(new TreeSelectionListener() 
+	    {
+	        public void valueChanged(TreeSelectionEvent e) 
+	        {
+	        	e.isAddedPath();
+	        	String path = e.getPath().toString();
+	        	String [] splittedString = path.split(";");
+	        	
+	        	System.out.println("Selection :"+path);
+	        }
+	    });
 	    
 	    DefaultTreeModel modelJtree = (DefaultTreeModel) arbre.getModel();
 	    
@@ -125,78 +136,122 @@ public class Choix_capteur_panel extends JPanel
 		return this.desinscription_button;
 	}
 	
-	
-	private void insertNode(String IdentifiantCapteur,LocalisationInt locCapteur,DefaultMutableTreeNode node)
+	/**
+	 * Modifie l attribut dataTree
+	 * Si ajout la methode rajoute le capteur dans dataTree
+	 * Si suppresion retirer le capteur de dataTree 
+	 * 
+	 * @param cap le capteur a modifie ( ajouter ou supprime )
+	 * @param typeModif si ajout(0) ou suppresion(1) 
+	 * @return boolean indiquant le succes de l operation
+	 */
+	public boolean modifListCapteur(Capteur cap,int typeModif)
 	{
-		DefaultMutableTreeNode batiment;
-		DefaultMutableTreeNode etage;
-		DefaultMutableTreeNode salle;
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode) dataTree.getRoot();
+		DefaultMutableTreeNode nodeChild;
+		DefaultMutableTreeNode capteurNode;
+		String identifiantCapteur = cap.getId();
 		
-		// System.out.println("Localisation Capteur "+locCapteur.toString());
-		
-		for (int bat = 0; bat < node.getChildCount(); bat++)
-		{
-			batiment = (DefaultMutableTreeNode) node.getChildAt(bat);
-			// System.out.println("Batiment :"+batiment.toString());
-			if( batiment.toString().equals(locCapteur.getBatiment()))
+		if( cap.getLoc() instanceof LocalisationExt )
+		{	
+			nodeChild = (DefaultMutableTreeNode) root.getChildAt(1);
+			
+			// 0 -> Ajout     1 -> Suppr
+			if( typeModif == 0 )
 			{
-				// System.out.println("Batiment OK");
-				for(int et = 0; et < batiment.getChildCount(); et++  )
+				dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), nodeChild, nodeChild.getChildCount());
+				return true;
+			}
+			else
+			{				
+				for (int bat = 0; bat < nodeChild.getChildCount(); bat++)
 				{
-					etage = (DefaultMutableTreeNode) batiment.getChildAt(et);
-					// System.out.println("Etage :"+etage.toString());
-					if( etage.toString().equals(locCapteur.getEtage()))
+					capteurNode = (DefaultMutableTreeNode) nodeChild.getChildAt(bat);
+					if( capteurNode.toString().equals(cap.getId()) )
 					{
-						// System.out.println("etage OK");
-						for(int sal = 0; sal < etage.getChildCount(); sal++)
+						dataTree.removeNodeFromParent(capteurNode);
+						return true;
+					}
+				}
+			}
+		}
+		else
+		{			
+			nodeChild =(DefaultMutableTreeNode) root.getChildAt(0);
+			
+			DefaultMutableTreeNode batiment;
+			DefaultMutableTreeNode etage;
+			DefaultMutableTreeNode salle;
+			
+			LocalisationInt locCapteurInt = (LocalisationInt) cap.getLoc();
+			
+			// System.out.println("Localisation Capteur "+locCapteur.toString());
+			
+			// System.out.println("Tentative Modif Capteur Interieur");
+			// System.out.println("Capteur :"+cap.toString());
+			
+			for (int bat = 0; bat < nodeChild.getChildCount(); bat++)
+			{
+				batiment = (DefaultMutableTreeNode) nodeChild.getChildAt(bat);
+				// System.out.println("Batiment :"+batiment.toString());
+				
+				// System.out.println("Recherche dans batiment : "+batiment.toString());
+				
+				if( batiment.toString().equals(locCapteurInt.getBatiment()))
+				{
+					// System.out.println("Batiment OK");
+					for(int et = 0; et < batiment.getChildCount(); et++  )
+					{
+						etage = (DefaultMutableTreeNode) batiment.getChildAt(et);
+						// System.out.println("Etage :"+etage.toString());
+						
+						// System.out.println("Recherche dans etage : "+etage.toString());
+						
+						if( etage.toString().equals(locCapteurInt.getEtage()))
 						{
-							salle = (DefaultMutableTreeNode) etage.getChildAt(sal);
-							// System.out.println("Salle :"+salle.toString());
-							if( salle.toString().equals(locCapteur.getSalle()) )
+							// System.out.println("etage OK");
+							for(int sal = 0; sal < etage.getChildCount(); sal++)
 							{
-								// System.out.println("Salle OK");
-								dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), salle, salle.getChildCount());
-								break;
+								salle = (DefaultMutableTreeNode) etage.getChildAt(sal);
+								// System.out.println("Salle :"+salle.toString());
+								
+								// System.out.println("Recherche dans salle : "+salle.toString());
+								
+								if( salle.toString().equals(locCapteurInt.getSalle()) )
+								{
+									// System.out.println("Salle OK");
+									if( typeModif == 0 )
+									{
+										// System.out.println("Ajout Capteur");
+										dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), salle, salle.getChildCount());
+										return true;
+									}
+									else
+									{
+										for (int capt = 0; capt < salle.getChildCount(); capt++)
+										{
+											// System.out.println("Tour : ");
+											
+											capteurNode = (DefaultMutableTreeNode) salle.getChildAt(capt);
+											
+											// System.out.println("Verification "+capt+" : "+capteurNode.toString());
+											
+											if( capteurNode.toString().equals(identifiantCapteur) )
+											{
+												// System.out.println("Suppresion Capteur");
+												dataTree.removeNodeFromParent(capteurNode);
+												return true;
+											}
+										}
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Ajout dans le JTree le capteur voulus
-	 * 
-	 * @param IdentifiantCapteur
-	 * @param locCapteur localisation du capteur a ajouter
-	 */
-	public void newCapteur(String IdentifiantCapteur,Localisation locCapteur)
-	{
-		DefaultMutableTreeNode root = (DefaultMutableTreeNode) dataTree.getRoot();
-		DefaultMutableTreeNode nodeChild;
-		
-		if( locCapteur instanceof LocalisationExt )
-		{
-			nodeChild = (DefaultMutableTreeNode) root.getChildAt(1);
-			
-			dataTree.insertNodeInto(new DefaultMutableTreeNode(IdentifiantCapteur), nodeChild, nodeChild.getChildCount());
-		}
-		else
-		{
-			System.out.println("NewCapteur Interieur : node "+root.getChildAt(0).toString());
-			insertNode(IdentifiantCapteur, (LocalisationInt)locCapteur, (DefaultMutableTreeNode) root.getChildAt(0));
-		}
-	}
-	
-	/**
-	 * Supprime du JTree le capteur voulus
-	 * 
-	 * @param IdentifiantCapteur
-	 */
-	public void supprCapteur(String IdentifiantCapteur)
-	{
-		// TODO
+		return false;
 	}
 	
 	/**
@@ -215,7 +270,19 @@ public class Choix_capteur_panel extends JPanel
 	
 	public String[] getSelected()
 	{
-		// TODO
+		ArrayList<String> idCapteur = new ArrayList<String>();
+		
+		TreeSelectionModel modelTree;
+		
+		modelTree = selectionTree.getSelectionModel();
+		
+		TreePath[] paths = selectionTree.getSelectionPaths();
+
+		for(int i=0; i< paths.length;i++)
+		{
+			System.out.println("Selection "+i+" : "+ paths[i].toString());
+		}
+		
 		return null;
 	}
 }
