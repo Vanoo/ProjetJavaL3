@@ -16,12 +16,14 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.DefaultXYDataset;
 
-public class Graphe extends JFrame {
+public class Graphe extends JFrame
+{
 	private static final long serialVersionUID = 1L;
 	private BufferedReader in;
 
 	//* Main de test
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Graphe plop = new Graphe("capteur.txt");
 		plop.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -32,7 +34,8 @@ public class Graphe extends JFrame {
 	 * 
 	 * @param filePath le chemin du fichier de donnees
 	 */
-	public Graphe (String filePath) {
+	public Graphe (String filePath)
+	{
 		super();
 		String[] splittedString = null;
 		try
@@ -64,6 +67,7 @@ public class Graphe extends JFrame {
 		
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.getContentPane().add(chartPanel);
 		this.pack();
 		this.setVisible(true);
@@ -75,20 +79,25 @@ public class Graphe extends JFrame {
 	 * @param filePath le chemin du fichier a lire
 	 * @return dataset
 	 */
-	private DefaultXYDataset createDatasetFromFile(String filePath) {
+	private DefaultXYDataset createDatasetFromFile(String filePath)
+	{
 		String read = "";
 		String [] splittedString;
 		DefaultXYDataset dataset = new DefaultXYDataset();
 		int lineCount = 0;
 		ArrayList<Double> plop_1 = new ArrayList<Double>();
 		ArrayList<Double> plop_2 = new ArrayList<Double>();
-		try {
-			for (lineCount = 0; (read = this.in.readLine()) != null; lineCount++) {
+		try
+		{
+			for (lineCount = 0; (read = this.in.readLine()) != null; lineCount++)
+			{
 				splittedString = read.split(":");
 				plop_1.add(Double.parseDouble(splittedString[0]));
 				plop_2.add(Double.parseDouble(splittedString[1]));
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 		
