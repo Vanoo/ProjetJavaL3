@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -27,6 +29,8 @@ public class VisWindow extends JFrame implements Observer
 	private visualisation.Reseaux res;
 	private Choix_capteur_panel choixCapteur;
 	private Tableau_capteur tab_capteur;
+	private JPanel graphePanel;
+	
 	private JPanel fenetre;
 	
 	private ArrayList<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
@@ -56,6 +60,26 @@ public class VisWindow extends JFrame implements Observer
 	    this.connection_panel = new visualisation.Connection_panel();
 	    this.choixCapteur = new Choix_capteur_panel();
 	    this.tab_capteur = new Tableau_capteur();
+	    
+		/* Graphe Panel */
+		JPanel graphe_panel = new JPanel();
+		graphe_panel.setPreferredSize(new Dimension(500,50));
+		graphe_panel.setBackground(Color.lightGray);
+		graphe_panel.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
+		
+		JPanel title = new JPanel();
+		title.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+		title.setBackground(Color.gray);
+		title.setPreferredSize(new Dimension(500,15));
+		JLabel title_label = new JLabel("###################### Graphe ######################");
+		title.add(title_label);
+		
+		JButton graphe_button = new JButton("Visualisation Data Graphe");
+		
+		graphe_panel.add(title);
+		graphe_panel.add(graphe_button);
+		
+		this.graphePanel = graphe_panel;
 	    
 	    /*============= Ajout Listener =============*/
 	    
@@ -119,10 +143,21 @@ public class VisWindow extends JFrame implements Observer
 			
 		});
 	    
+	    graphe_button.addActionListener(new ActionListener() 
+	    {
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				// TODO Auto-generated method stub
+				GrapheFrame truc = new GrapheFrame();
+			}
+		});
+	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    fenetreVisualisation.add(this.connection_panel);
 	    fenetreVisualisation.add(this.choixCapteur);
 	    fenetreVisualisation.add(this.tab_capteur);
+	    fenetreVisualisation.add(graphe_panel);
 	    
 	    this.add(fenetreVisualisation);
 	    this.fenetre = fenetreVisualisation;
@@ -186,22 +221,25 @@ public class VisWindow extends JFrame implements Observer
 		panel.setEnabled(bool);
 		Component tab_component[] = panel.getComponents();
 		
-		for(int i = 0; i < tab_component.length; i++) 
-	    {
-	        if(tab_component[i] instanceof JPanel ) 
-	        {
-	        	if(! tab_component[i].equals(connection_panel))
-	        	{
-	        		fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
-	        	}
-	        	else
-	        	{
-	        		fifty_shade_of_gray(!bool,(JPanel) tab_component[i]);
-	        	}
-	        }
-        	tab_component[i].setEnabled(bool);        	
-	    }
-		connection_panel.getBouton().setEnabled(true);
+		if( ! panel.equals(graphePanel) )
+		{
+			for(int i = 0; i < tab_component.length; i++) 
+		    {
+		        if(tab_component[i] instanceof JPanel ) 
+		        {
+		        	if(! tab_component[i].equals(connection_panel) )
+		        	{
+		        		fifty_shade_of_gray(bool,(JPanel) tab_component[i]);
+		        	}
+		        	else
+		        	{
+		        		fifty_shade_of_gray(!bool,(JPanel) tab_component[i]);
+		        	}
+		        }
+	        	tab_component[i].setEnabled(bool);        	
+		    }
+			connection_panel.getBouton().setEnabled(true);
+		}	
 	}	
 	
 	

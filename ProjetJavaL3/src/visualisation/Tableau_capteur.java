@@ -55,7 +55,7 @@ public class Tableau_capteur extends JPanel{
 
 	public Tableau_capteur() 
 	{
-		Dimension dim = new Dimension(500,350);
+		Dimension dim = new Dimension(500,360);
 		
 		this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		
@@ -168,10 +168,8 @@ public class Tableau_capteur extends JPanel{
 					Random r = new Random();
 					minAlarm = (-100) + (100 - (-100)) * r.nextDouble();
 					maxAlarm = (-100) + (100 - (-100)) * r.nextDouble();
-				}
-				else
-				{
 					
+					System.out.println("Min :"+minAlarm+" / Max :"+maxAlarm);
 				}
 			}
 		});
@@ -189,13 +187,13 @@ public class Tableau_capteur extends JPanel{
 		/* Filtre Panel */
 		
 		JPanel filtre_panel = new JPanel();
-		filtre_panel.setPreferredSize(new Dimension(500,40));
+		filtre_panel.setPreferredSize(new Dimension(500,60));
 		filtre_panel.setBackground(Color.lightGray);
 		filtre_panel.setLayout(new FlowLayout(FlowLayout.CENTER,15,0));
 		
 		// Title
 		JPanel title_filtre = new JPanel();
-		title_filtre.setPreferredSize(new Dimension(500,15));
+		title_filtre.setPreferredSize(new Dimension(500,30));
 		title_filtre.setBackground(Color.lightGray);
 		title_filtre.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		
@@ -226,7 +224,6 @@ public class Tableau_capteur extends JPanel{
 		filtre_panel.add(type_combo);
 		filtre_panel.add(type_checkbox);
 		filtre_panel.add(loc_combo);
-		
 			
 		/*=============  Ajout Panel =============*/
 		
