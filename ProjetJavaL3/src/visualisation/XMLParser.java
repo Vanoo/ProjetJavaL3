@@ -64,7 +64,6 @@ public class XMLParser {
       fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       fenetre.setVisible(true);
       */
-      
       return root;
       
    }
