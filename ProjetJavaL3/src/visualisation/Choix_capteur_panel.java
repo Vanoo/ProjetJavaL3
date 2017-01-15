@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
-import java.util.Enumeration;
 import java.util.Iterator;
 
 import javax.swing.JButton;
@@ -24,7 +23,6 @@ public class Choix_capteur_panel extends JPanel
 	/**
 	 * 
 	 */
-	
 	private JButton inscription_button;
 	private JButton desinscription_button;
 	
