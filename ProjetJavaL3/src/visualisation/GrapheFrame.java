@@ -55,7 +55,7 @@ public class GrapheFrame extends JFrame
 		
 		
 		String [] capteursAvailable = readingRepertory();
-		JComboBox<String> selectCapteur = new JComboBox<>(capteursAvailable);
+		final JComboBox<String> selectCapteur = new JComboBox<>(capteursAvailable);
 		
 		JButton bouton = new JButton("Montrer");
 		bouton.addActionListener(new ActionListener()
