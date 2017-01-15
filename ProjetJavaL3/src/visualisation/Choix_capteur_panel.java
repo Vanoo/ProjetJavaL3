@@ -328,4 +328,17 @@ public class Choix_capteur_panel extends JPanel
 		
 		return idCapteur;
 	}
+	
+	public String getPathSelected()
+	{
+		TreePath[] paths = selectionTree.getSelectionPaths();
+		if( paths.length > 1)
+		{
+			return "Erreur";
+		}
+		else
+		{
+			return paths[0].toString();
+		}
+	}
 }

@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,9 +28,10 @@ public class Tableau_capteur extends JPanel{
 	/**
 	 * 
 	 */
-	private Set<Capteur> capteurSuivis;
+	private ArrayList<Capteur> capteurSuivis = new ArrayList<Capteur>();
 	
 	private DataCapteur dataCapteur = new DataCapteur();
+	
 	private JTable table;
 	
 	private JCheckBox loc_filter;
@@ -37,6 +40,8 @@ public class Tableau_capteur extends JPanel{
 	private JFormattedTextField min_alarm;
 	private JFormattedTextField max_alarm;
 	private JComboBox<Object> type_combo;
+	
+	private JButton filter_button;
 
 	private static final long serialVersionUID = 1L;
 
@@ -146,48 +151,8 @@ public class Tableau_capteur extends JPanel{
 		title_filtre.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		
 		JButton filter_bouton = new JButton("Filtre");
-		filter_bouton.addActionListener(new ActionListener() 
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0) 
-			{				
-				/*
-				ArrayList<Capteur> capteuraAffichee = new ArrayList<Capteur>();
-				Iterator<Capteur> iter = capteurSuivis.iterator();
-				Capteur current;
-				
-				String typeSelected = (String) type_combo.getSelectedItem();
-				// TODO recuperation localisation selectionee
-				// Localisation locSelected = .....
-				String locSelected = "S101";
-				
-				while( iter.hasNext() )
-				{
-					current = iter.next();
-					String currentType = current.getType();
-					// TODO recuperation localisation du capteur
-					// Localisation currentLoc = .....
-					String currentLoc = "S101";
-					boolean capteurOk = true;
-					
-					if( type_filter.isSelected() && ! currentType.equals(typeSelected))
-					{
-						capteurOk = false;
-					}
-					if( type_filter.isSelected() && ! currentLoc.equals(locSelected))
-					{
-						capteurOk = false;
-					}
-
-					if( capteurOk )
-					{
-						capteuraAffichee.add(current);
-					}
-				} 
-				*/
-			}
-			
-		});
+		
+		this.filter_button = filter_bouton;
 		
 		title_filtre.add(filter_bouton);
 		
@@ -201,6 +166,7 @@ public class Tableau_capteur extends JPanel{
 		this.type_combo = type_combo;
 		
 		JCheckBox type_checkbox = new JCheckBox("Type");
+		this.type_filter = type_checkbox;
 
 		// LOCALISATION
 		JCheckBox loc_combo = new JCheckBox("Localisation");
@@ -222,22 +188,24 @@ public class Tableau_capteur extends JPanel{
 	}	
 	
 	/**
-	 * Ajoute de nouveaux capteurs dans le set des capteurs deja suivis
+	 * Ajoute de nouveaux capteurs dans la list des capteurs deja suivis
 	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs nouvellement suivis
 	 */
 	public void ajouterCapteur(Capteur newCapteur)
 	{
+		capteurSuivis.add(newCapteur);
 		dataCapteur.addCapteur(newCapteur);
 	}
 	
 	/**
-	 * Supprime des capteurs du set des capteurs suivis
+	 * Supprime des capteurs de la list des capteurs suivis
 	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs qui ne seront plus suivis
 	 */
 	public void supprCapteur(Capteur capteur)
 	{
+		capteurSuivis.remove(capteur);
 		dataCapteur.removeCapteur(capteur);
 	}
 	/**
@@ -249,5 +217,44 @@ public class Tableau_capteur extends JPanel{
 	public void changeValue(String idCapteur,double value)
 	{
 		dataCapteur.changeValue(idCapteur, value);
+	}
+	
+	public JButton getFilterButton()
+	{
+		return this.filter_button;
+	}
+	
+	public void filter(String localisation)
+	{
+		this.dataCapteur.removeAll();
+		String type = type_combo.getSelectedItem().toString();
+		
+		System.out.println("Type :"+type);
+		System.out.println("Localisation :"+localisation);
+		
+		if( this.loc_filter.isSelected() && localisation.equals("Erreur"))
+		{
+			JOptionPane.showMessageDialog(null, 
+					"Erreur : Veuillez selectionne une seule localisation dans l'arbre");
+		}
+		else
+		{
+			Iterator<Capteur> iter = capteurSuivis.iterator();
+			System.out.println("ELSE");
+			while(iter.hasNext())
+			{
+				Capteur current = iter.next();
+				System.out.println("Capteur :"+current.toString());
+
+				if( type_filter.isSelected() && ! current.getType().equals(type) )
+				{
+					System.out.println("Typefilter.isSelected");
+					continue;
+				}
+				
+				System.out.println("Capteur Conforme Ajout");
+				this.dataCapteur.addCapteur(current);
+			}			
+		}
 	}
 }
