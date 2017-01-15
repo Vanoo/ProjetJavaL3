@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -105,6 +106,16 @@ public class VisWindow extends JFrame implements Observer
 			{
 				EnvoiDesincription();
 			}
+		});
+	    
+	    this.tab_capteur.getFilterButton().addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{	
+				tab_capteur.filter(choixCapteur.getPathSelected());
+			}
+			
 		});
 
 	    /*============= Ajout des JPanel dans la fenetre =============*/
@@ -420,7 +431,8 @@ public class VisWindow extends JFrame implements Observer
 	    }
 	    else
 	    {
-	    	JOptionPane.showMessageDialog(null, "DeconnexionImpossible");
+	    	System.out.println(message);
+	    	System.out.println("DeconnexionImpossible");
 	    }
 	    
 	}

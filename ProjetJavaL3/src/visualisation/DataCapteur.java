@@ -33,9 +33,14 @@ public class DataCapteur extends AbstractTableModel
     public void removeCapteur(Capteur cap) 
     {
     	capteurs.remove(cap);
-    
         // fireTableRowsDeleted(rowIndex, rowIndex);
         fireTableDataChanged();
+    }
+    
+    public void removeAll()
+    {
+    	capteurs.clear();
+    	fireTableDataChanged();
     }
     
     public int getRowCount() 
@@ -84,7 +89,6 @@ public class DataCapteur extends AbstractTableModel
     			break;
     		}
     	}
-    	
     	fireTableDataChanged();
     }
 }
