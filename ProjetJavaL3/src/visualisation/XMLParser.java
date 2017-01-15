@@ -1,5 +1,4 @@
 package visualisation;
-import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,21 +20,21 @@ public class XMLParser {
    {
 	   
 	   DefaultMutableTreeNode root = null;
-      // On r�cup�re une instance de factory qui se chargera de nous fournir un parseur
+      // On recupere une instance de factory qui se chargera de nous fournir un parseur
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setIgnoringElementContentWhitespace(true);
       try 
       {
-         // Cr�ation de notre parseur via une factory
+         // Creation de notre parseur via une factory
          DocumentBuilder builder = factory.newDocumentBuilder();
          File fileXML = new File("./config.xml");
 
-         // parsing de notre fichier via un objet File et r�cup�ration d'un objet Document
+         // parsing de notre fichier via un objet File et recuperation d'un objet Document
          Document xml = builder.parse(fileXML);
          
-         // Via notre objet Document, nous pouvons r�cup�rer un objet Element
-         // Ce dernier repr�sente un �l�ment XML mais, avec la m�thode ci-dessous,
-         // cet �l�ment sera la racine du document
+         // Via notre objet Document, nous pouvons recuperer un objet Element
+         // Ce dernier represente un element XML mais, avec la methode ci-dessous,
+         // cet element sera la racine du document
          Element racine = xml.getDocumentElement();
          System.out.println(racine.getNodeName());
          
@@ -67,10 +66,11 @@ public class XMLParser {
       */
       
       return root;
-   }   
+      
+   }
    
    /**
-    * M�thode qui va g�rer le contenu d'un noeud
+    * Methode qui va gerer le contenu d'un noeud
     * @param n
     * @param tab
     * @return
@@ -80,11 +80,11 @@ public class XMLParser {
       if(n instanceof Element)
       {
     	  
-    	// On r�cup�re la liste des attributs
+    	// On recupere la liste des attributs
           NamedNodeMap att = n.getAttributes();
           int nbAtt = att.getLength();
          
-		// On contr�le la liste des attributs pr�sents
+		// On contrele la liste des attributs presents
 		if(att != null && nbAtt > 0)
 		{
 			// On parcours tous les noeuds
@@ -92,7 +92,7 @@ public class XMLParser {
 			do
 			{
 				Node noeud = att.item(j);
-				//On r�cup�re le nom de l'attribut et sa valeur
+				//On recupere le nom de l'attribut et sa valeur
 				DefaultMutableTreeNode attribut = new DefaultMutableTreeNode (noeud.getNodeName() + "=" + noeud.getNodeValue());
 				treeNode.add(attribut);
 				j++;
@@ -120,7 +120,7 @@ public class XMLParser {
                   DefaultMutableTreeNode value = new DefaultMutableTreeNode(n2.getTextContent());
                   noeud.add(value);
                }    
-               //appel r�cursif � la m�thode pour le traitement du noeud et de ses enfants 
+               //appel recursif a la methode pour le traitement du noeud et de ses enfants 
                createJTree(n2, noeud);
                treeNode.add(noeud);
             }            
