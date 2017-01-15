@@ -149,7 +149,7 @@ public class VisWindow extends JFrame implements Observer
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				// TODO Auto-generated method stub
-				GrapheFrame truc = new GrapheFrame();
+				new GrapheFrame();
 			}
 		});
 	    
