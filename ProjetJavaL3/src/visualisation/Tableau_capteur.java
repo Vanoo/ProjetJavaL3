@@ -1,16 +1,14 @@
 package visualisation;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,9 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
-
-import com.sun.org.apache.bcel.internal.generic.LCONST;
 
 public class Tableau_capteur extends JPanel{
 
@@ -38,9 +35,14 @@ public class Tableau_capteur extends JPanel{
 	
 	private JCheckBox loc_filter;
 	private JCheckBox type_filter;
+	
 	private JCheckBox alarm;
 	private JFormattedTextField min_alarm;
 	private JFormattedTextField max_alarm;
+	
+	private double minAlarm;
+	private double maxAlarm;
+	
 	private JComboBox<Object> type_combo;
 	
 	private JButton filter_button;
@@ -66,9 +68,45 @@ public class Tableau_capteur extends JPanel{
 		
 		/*=============  Tableau Panel =============*/
 
-		JTable table = new JTable(dataCapteur);
-        this.table = table;
+		JTable table = new JTable(dataCapteur)
+		{
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+				
+				//  Alternate row color
+				
+				int modelRow = convertRowIndexToModel(row);
+				
+				double val = (double) getModel().getValueAt(modelRow, 3);
+				
+				if( alarm.isSelected() )
+				{
+					double min = minAlarm;
+					double max = maxAlarm;
+					
+					if( val < min || val > max )
+					{
+						c.setBackground(Color.red);
+					}
+					else
+					{
+						c.setBackground(Color.white);
+					}
+				}
+				else
+				{
+					c.setBackground(Color.white);
+				}
+
+				return c;
+			}
+		};
 		
+		table.setAutoCreateRowSorter(true);
+		
+        this.table = table;
+        
 		JScrollPane scrollTab= new JScrollPane(this.table);
 		scrollTab.setPreferredSize(new Dimension(500,250));
 		
@@ -108,7 +146,6 @@ public class Tableau_capteur extends JPanel{
 		// CheckBox
 		
 		JCheckBox alert_checkbox = new JCheckBox();
-		
 		alert_checkbox.addItemListener(new ItemListener() 
 		{
 			
@@ -117,11 +154,7 @@ public class Tableau_capteur extends JPanel{
 			{
 				if(event.getStateChange()==ItemEvent.SELECTED)
 				{
-					// TODO setAlarm sur le tableau
-				}
-				else
-				{
-					// TODO retire l'alarm sur le tableau
+					setMinMax();
 				}
 			}
 		});
@@ -186,6 +219,11 @@ public class Tableau_capteur extends JPanel{
 		this.add(filtre_panel);
 	}	
 	
+	private void setMinMax()
+	{
+		this.minAlarm = 0;
+		this.maxAlarm = 50;
+	}
 	
 	public void reset()
 	{
@@ -224,6 +262,7 @@ public class Tableau_capteur extends JPanel{
 		capteurSuivis.remove(capteur);
 		dataCapteur.removeCapteur(capteur);
 	}
+	
 	/**
 	 * Modifie la valeur du capteur dans la table avec l identifiant idCapteur
 	 * 

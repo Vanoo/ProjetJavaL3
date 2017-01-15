@@ -13,9 +13,11 @@ public class DataCapteur extends AbstractTableModel
     
     private final String[] headers = {"Identifiant", "Type", "Localisation", "Valeur"};
 
-    public DataCapteur() 
+    public DataCapteur()
     {
         super();
+        addCapteur(new Capteur("Radiateur", "Temperature", "0.0", "0.0"));
+        addCapteur(new Capteur("Radiateur", "Temperature", "0.0", "0.0"));
     }
 
     public void addCapteur(Capteur capteur) 
