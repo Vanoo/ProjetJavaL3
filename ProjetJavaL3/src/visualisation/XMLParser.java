@@ -16,6 +16,10 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 
+	/**
+	 * Parse the document config.xml into a JTree for the application
+	 * @return the JTree
+	 */
    public DefaultMutableTreeNode parse () 
    {
 	   
