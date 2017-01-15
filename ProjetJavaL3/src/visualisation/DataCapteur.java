@@ -1,6 +1,5 @@
 package visualisation;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -8,6 +7,8 @@ import javax.swing.table.AbstractTableModel;
 
 public class DataCapteur extends AbstractTableModel 
 {
+	private static final long serialVersionUID = 1L;
+	
 	// TODO Initialisation d'un set capteur ou list
     private final ArrayList<Capteur> capteurs = new ArrayList<Capteur>();
     
