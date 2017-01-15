@@ -23,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.text.MaskFormatter;
 
+import com.sun.org.apache.bcel.internal.generic.LCONST;
+
 public class Tableau_capteur extends JPanel{
 
 	/**
@@ -243,6 +245,10 @@ public class Tableau_capteur extends JPanel{
 		this.dataCapteur.removeAll();
 		String type = type_combo.getSelectedItem().toString();
 		
+		String[] newLocalisation = localisation.split("]");
+		localisation = newLocalisation[0];
+		
+		System.out.println("############## Start FILTER ##############");
 		System.out.println("Type :"+type);
 		System.out.println("Localisation :"+localisation);
 		
@@ -254,7 +260,7 @@ public class Tableau_capteur extends JPanel{
 		else
 		{
 			Iterator<Capteur> iter = capteurSuivis.iterator();
-			System.out.println("ELSE");
+			boolean conforme = true;
 			while(iter.hasNext())
 			{
 				Capteur current = iter.next();
@@ -262,13 +268,60 @@ public class Tableau_capteur extends JPanel{
 
 				if( type_filter.isSelected() && ! current.getType().equals(type) )
 				{
-					System.out.println("Typefilter.isSelected");
+					System.out.println("Type non conforme");
 					continue;
+				}
+				
+				if( loc_filter.isSelected() )
+				{
+					String [] splittedLoc = localisation.split(", ");
+					
+					if( splittedLoc.length > 1 )
+					{
+						if( current.getLoc() instanceof LocalisationExt )
+						{
+							if( ! splittedLoc[1].equals("Exterieur") )
+							{
+								System.out.println("Loc non conforme : need INTERIEUR not EXTERIEUR");
+								continue;
+							}
+						}
+						else
+						{
+							if( splittedLoc[1].equals("Exterieur") )
+							{
+								System.out.println("Loc non conforme : need EXTERIEUR not INTERIEUR");
+								continue;
+							}
+							
+							LocalisationInt locCaptInt = (LocalisationInt) current.getLoc();
+							String locCapt = locCaptInt.toString();
+							String[] splittedLocCapteur = locCapt.split(" ");
+							
+							conforme = true;
+							for(int i=2;i<splittedLoc.length && conforme;i++)
+							{
+								System.out.println("splittedLoc["+i+"] :"+splittedLoc[i]);
+								System.out.println("splittedLocCapteur["+(i-2)+"] :"+splittedLocCapteur[i-2]);
+								if( ! splittedLoc[i].equals(splittedLocCapteur[i-2]) )
+								{
+									System.out.println("Loc non conforme Bat/Etage/sal");
+									conforme = false;
+								}
+							}
+							
+							if( ! conforme )
+							{
+								continue;
+							}	
+						}
+					}
 				}
 				
 				System.out.println("Capteur Conforme Ajout");
 				this.dataCapteur.addCapteur(current);
 			}			
 		}
+		System.out.println("############## END FILTER ##############");
 	}
 }
