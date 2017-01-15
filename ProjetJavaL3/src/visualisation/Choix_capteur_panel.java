@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.util.ArrayList;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -127,6 +128,16 @@ public class Choix_capteur_panel extends JPanel
 		this.add(title);
 		this.add(capteur_tree);
 		this.add(bouton_panel);
+	}
+	
+	
+	public void reset(ArrayList<Capteur> listCapteur)
+	{
+		Iterator<Capteur> iter = listCapteur.iterator();
+		while(iter.hasNext())
+		{
+			modifListCapteur(iter.next(), 1);
+		}
 	}
 	
 	/**

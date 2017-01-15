@@ -29,7 +29,7 @@ public class VisWindow extends JFrame implements Observer
 	private Tableau_capteur tab_capteur;
 	private JPanel fenetre;
 	
-	private List<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
+	private ArrayList<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
 	private List<String>  capteursEnAttente = new ArrayList<String>();
 	
 	public VisWindow(Dimension dim) throws ParseException
@@ -95,7 +95,6 @@ public class VisWindow extends JFrame implements Observer
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// EnvoiInscription();
 				EnvoiInscDesc(true);
 			}
 		});
@@ -105,11 +104,21 @@ public class VisWindow extends JFrame implements Observer
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// EnvoiDesincription();
 				EnvoiInscDesc(false);
 			}
 		});
 
+	    // Listener sur le bouton de filtrage
+	    this.tab_capteur.getFilterButton().addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{	
+				tab_capteur.filter(choixCapteur.getPathSelected());
+			}
+			
+		});
+	    
 	    /*============= Ajout des JPanel dans la fenetre =============*/
 	    fenetreVisualisation.add(this.connection_panel);
 	    fenetreVisualisation.add(this.choixCapteur);
@@ -125,7 +134,6 @@ public class VisWindow extends JFrame implements Observer
 	    /*============= Initialisation Reseau =============*/
 	    this.res = new visualisation.Reseaux();
 	    res.addObserver(this);
-	    
 	}
 	
 	/**
@@ -417,7 +425,11 @@ public class VisWindow extends JFrame implements Observer
 	    {
 	    	// envoi sur destruction thread
 	    	// Suppresion Capteurs
+	    	// this.choixCapteur
+	    	this.choixCapteur.reset(ListCapteurPresent);
+	    	this.tab_capteur.reset();
 	    	this.res.stopListen();
+		    this.res.deleteObservers();
 			changementBouton();
 			fifty_shade_of_gray(false,fenetre);
 	    }

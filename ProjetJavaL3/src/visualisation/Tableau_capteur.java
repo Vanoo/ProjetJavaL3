@@ -116,13 +116,10 @@ public class Tableau_capteur extends JPanel{
 				if(event.getStateChange()==ItemEvent.SELECTED)
 				{
 					// TODO setAlarm sur le tableau
-					
-					
 				}
 				else
 				{
 					// TODO retire l'alarm sur le tableau
-					
 				}
 			}
 		});
@@ -187,6 +184,13 @@ public class Tableau_capteur extends JPanel{
 		this.add(filtre_panel);
 	}	
 	
+	
+	public void reset()
+	{
+		this.dataCapteur.removeAll();
+		this.capteurSuivis.clear();
+	}
+	
 	/**
 	 * Verifie si cap se trouve dans l arrayList des capteurs suivis
 	 * @param cap le capteurs a qui on veut verifier la presence dans la liste
@@ -235,7 +239,7 @@ public class Tableau_capteur extends JPanel{
 	}
 	
 	public void filter(String localisation)
-	{
+	{		
 		this.dataCapteur.removeAll();
 		String type = type_combo.getSelectedItem().toString();
 		
