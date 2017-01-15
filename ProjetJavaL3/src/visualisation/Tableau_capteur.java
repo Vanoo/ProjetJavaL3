@@ -188,6 +188,16 @@ public class Tableau_capteur extends JPanel{
 	}	
 	
 	/**
+	 * Verifie si cap se trouve dans l arrayList des capteurs suivis
+	 * @param cap le capteurs a qui on veut verifier la presence dans la liste
+	 * @return true si contient cap, sinon false
+	 */
+	public boolean isSuivi(Capteur cap)
+	{
+		return capteurSuivis.contains(cap);
+	}
+	
+	/**
 	 * Ajoute de nouveaux capteurs dans la list des capteurs deja suivis
 	 * modifie la JTable affichant les capteurs suivis
 	 * @param newCapteur set des capteurs nouvellement suivis

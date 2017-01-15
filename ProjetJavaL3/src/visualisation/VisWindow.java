@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -94,7 +95,8 @@ public class VisWindow extends JFrame implements Observer
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				EnvoiInscription();
+				// EnvoiInscription();
+				EnvoiInscDesc(true);
 			}
 		});
 	    
@@ -103,7 +105,8 @@ public class VisWindow extends JFrame implements Observer
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				EnvoiDesincription();
+				// EnvoiDesincription();
+				EnvoiInscDesc(false);
 			}
 		});
 
@@ -176,7 +179,7 @@ public class VisWindow extends JFrame implements Observer
 		Component tab_component[] = panel.getComponents();
 		
 		for(int i = 0; i < tab_component.length; i++) 
-	    {	        
+	    {
 	        if(tab_component[i] instanceof JPanel ) 
 	        {
 	        	if(! tab_component[i].equals(connection_panel))
@@ -193,73 +196,71 @@ public class VisWindow extends JFrame implements Observer
 		connection_panel.getBouton().setEnabled(true);
 	}	
 	
-	/**
-	 * Envoi la demande d'inscription aux capteurs selectionnee dans le panel ChoixCapteur
-	 *
-	 */
-	public void EnvoiInscription()
+	
+	public void EnvoiInscDesc(boolean Insc)
 	{
-		// System.out.println("Demande Inscription");
-		ArrayList<String> arrayListIdCapteurASuivre;
+		ArrayList<String> listIdCapteurSelected = new ArrayList<String>();
+		ArrayList<String> listIdCapteurToSend = new ArrayList<String>();
+		String currentIdCapteur;
 		
-		arrayListIdCapteurASuivre = this.choixCapteur.getSelected();
+		listIdCapteurSelected = this.choixCapteur.getSelected();
 		
-		String[] tabId = new String[arrayListIdCapteurASuivre.size()];
-		tabId = arrayListIdCapteurASuivre.toArray(tabId);
+		System.out.println("EnvoiInscDesc listIdCapteurSelected :"+listIdCapteurSelected.toString());
 		
-		// System.out.println("Inscription Capteur : "+tabIdCapteurASuivre.toString());
+		Iterator<String> iter = listIdCapteurSelected.iterator();
 		
-		res.inscription(tabId);
-		this.capteursEnAttente = arrayListIdCapteurASuivre;
-		this.choixCapteur.getInscriptionButton().setEnabled(false);
-		this.choixCapteur.getDesinscriptionButton().setEnabled(false);
+		while(iter.hasNext())
+		{
+			currentIdCapteur = iter.next();
+			if( (Insc && ! tab_capteur.isSuivi(getCapteurFromId( currentIdCapteur ) ) )
+					|| (! Insc && tab_capteur.isSuivi(getCapteurFromId(currentIdCapteur))) )
+			{
+				listIdCapteurToSend.add(currentIdCapteur);
+			}
+		}
+		
+		String[] tabId = new String[listIdCapteurToSend.size()];
+		tabId = listIdCapteurToSend.toArray(tabId);
+		
+		System.out.println("EnvoiInscDesc listIdCapteurToSend :"+listIdCapteurToSend.toString());
+		
+		if( tabId.length > 0 )
+		{
+			if( Insc )
+			{
+				res.inscription(tabId);
+			}
+			else
+			{
+				res.desinscription(tabId);
+			}
+			this.capteursEnAttente = listIdCapteurToSend;
+			// this.choixCapteur.getInscriptionButton().setEnabled(false);
+			// this.choixCapteur.getDesinscriptionButton().setEnabled(false);
+		}
 	}
 	
-	/**
-	 * Rajoute les capteurs correspondant au identifiants donne en parametre
-	 * dans le panel TableauCapteur
-	 * @param tabIdCapteurSuccessInscr
-	 */
-	public void InscriptionOk(List<String> capteursSuccess)
+	
+	public void InscDescOk(boolean Insc,List<String> capteursSuccess)
 	{
-		// System.out.println("Reception Reponse Inscription");	
+		System.out.println("InscDescOk capteursSuccess :"+capteursSuccess.toString());
+		
 		for(int i=0;i<capteursSuccess.size();i++)
 		{
-			this.tab_capteur.ajouterCapteur(getCapteurFromId(capteursSuccess.get(i)));
+			if( Insc )
+			{
+				this.tab_capteur.ajouterCapteur(getCapteurFromId(capteursSuccess.get(i)));
+			}
+			else
+			{
+				this.tab_capteur.supprCapteur(getCapteurFromId(capteursSuccess.get(i)));
+			}
+			
 		}
-    	this.choixCapteur.getInscriptionButton().setEnabled(true);
-    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
-	}
-	
-	/**
-	 * Suppression des capteurs selectionnes dans le panel ChoixCapteur
-	 * a la liste des capteurs suivis dans le panel TableauCapteur
-	 */
-	public void EnvoiDesincription()
-	{
-		// System.out.println("Demande Desinscription");
-		ArrayList<String> tabIdCapteurAsuppr;
-		
-		tabIdCapteurAsuppr = this.choixCapteur.getSelected();
-		
-		String[] tabId = new String[tabIdCapteurAsuppr.size()];
-		tabId = tabIdCapteurAsuppr.toArray(tabId);
-		
-		res.desinscription(tabId);
-		this.capteursEnAttente = tabIdCapteurAsuppr;
-		this.choixCapteur.getInscriptionButton().setEnabled(false);
-		this.choixCapteur.getDesinscriptionButton().setEnabled(false);
-	}
-	
-	public void desincriptionOk(List<String> capteursSuccess)
-	{
-		// System.out.println("Reception Reponse Desinscription");	
-		for(int i=0;i<capteursSuccess.size();i++)
-		{
-			this.tab_capteur.supprCapteur(getCapteurFromId(capteursSuccess.get(i)));
-		}
-    	this.choixCapteur.getInscriptionButton().setEnabled(true);
-    	this.choixCapteur.getDesinscriptionButton().setEnabled(true);
+		this.capteursEnAttente.clear();
+		System.out.println("InscDescOk capteursEnAttente :"+capteursEnAttente.toString());
+		// this.choixCapteur.getInscriptionButton().setEnabled(true);
+		// this.choixCapteur.getDesinscriptionButton().setEnabled(true);
 	}
 	
 	/**
@@ -272,7 +273,7 @@ public class VisWindow extends JFrame implements Observer
 	{
 		Capteur capCurrent = null;
 		boolean found = false;
-		for(int i=0;! found;i++ )
+		for(int i=0;! found && i < ListCapteurPresent.size();i++ )
 		{
 			capCurrent = ListCapteurPresent.get(i);
 			if( capCurrent.getId().equals(idCapteur) )
@@ -283,6 +284,8 @@ public class VisWindow extends JFrame implements Observer
 		
 		return capCurrent;
 	}
+	
+	// TODO AJOUT CLEAN JTREE ET JTABLE A LA DECONNEXION
 	
 	@Override
 	public void update(Observable o, Object arg) 
@@ -325,7 +328,7 @@ public class VisWindow extends JFrame implements Observer
 	    		// System.out.println("CapteurSucess["+i+"] :"+capteursEnAttente.get(i));
 	    	}
 	    	*/
-	    	InscriptionOk(capteursEnAttente);
+			InscDescOk(true,capteursEnAttente);
 	    }
 	    
 	 // DesinscriptionOK / KO
@@ -364,7 +367,7 @@ public class VisWindow extends JFrame implements Observer
 	    	}
 	    	*/
 	    	
-	    	desincriptionOk(capteursEnAttente);
+			InscDescOk(false,capteursEnAttente);
 	    }
 	
 	// Appartition Nouveau Capteur
@@ -397,6 +400,7 @@ public class VisWindow extends JFrame implements Observer
 	    {
 	    	String [] splittedString = message.split(";");
 	    	Capteur cap = getCapteurFromId(splittedString[1]);
+	    	ListCapteurPresent.remove(cap);
 	    	choixCapteur.modifListCapteur(cap, 1);
 	    	tab_capteur.supprCapteur(cap);
 	    }
@@ -416,9 +420,9 @@ public class VisWindow extends JFrame implements Observer
 	    	this.res.stopListen();
 			changementBouton();
 			fifty_shade_of_gray(false,fenetre);
-			JOptionPane.showMessageDialog(null, "Successfully disconnected");
 	    }
-	    else
+	    
+	    if(message.startsWith("DeconnexionKO"))
 	    {
 	    	JOptionPane.showMessageDialog(null, "Deconnexion Impossible");
 	    }

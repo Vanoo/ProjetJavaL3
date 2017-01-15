@@ -16,11 +16,6 @@ public class DataCapteur extends AbstractTableModel
     public DataCapteur() 
     {
         super();
-
-        capteurs.add(new Capteur("Lampe1", "Luminosite","U1","2","S101",""));
-        capteurs.add(new Capteur("Lampe2", "Luminosite","U1","2","S101",""));
-	    capteurs.add(new Capteur("Lampe3", "Luminosite","U1","2","S102",""));
-	    capteurs.add( new Capteur("Lampe4", "Luminosite","U1","2","S103",""));
     }
 
     public void addCapteur(Capteur capteur) 
