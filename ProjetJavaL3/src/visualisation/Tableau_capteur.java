@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
@@ -34,8 +33,6 @@ public class Tableau_capteur extends JPanel{
 	private DataCapteur dataCapteur = new DataCapteur();
 	
 	private JTable table;
-	
-	private CellRenderer renderer;
 	
 	private JCheckBox loc_filter;
 	private JCheckBox type_filter;
