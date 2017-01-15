@@ -22,7 +22,8 @@ public class Graphe extends JFrame {
 
 	//* Main de test
 	public static void main(String[] args) {
-		new Graphe("capteur.txt");
+		Graphe plop = new Graphe("capteur.txt");
+		plop.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	//*/
 	
