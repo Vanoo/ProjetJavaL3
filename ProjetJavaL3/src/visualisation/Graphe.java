@@ -20,24 +20,9 @@ public class Graphe extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private BufferedReader in;
 
-	/* Main de test
+	//* Main de test
 	public static void main(String[] args) {
-		JFrame fenetre = new JFrame();
-
-		JFreeChart plot = ChartFactory.createXYLineChart(
-				"plot",
-				"time",
-				"values",
-				createDatasetFromFile("capteur.txt"),
-				PlotOrientation.VERTICAL,
-				true, true, false);
-
-		ChartPanel chartPanel2 = new ChartPanel(plot);
-		chartPanel2.setPreferredSize();
-		fenetre.getContentPane().add(chartPanel2);
-		fenetre.pack(); // Rafraichit le ContentPane
-		fenetre.setVisible(true);
-
+		new Graphe("capteur.txt");
 	}
 	//*/
 	
