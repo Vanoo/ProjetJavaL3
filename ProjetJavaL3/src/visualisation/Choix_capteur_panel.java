@@ -20,9 +20,6 @@ import javax.swing.tree.TreePath;
 
 public class Choix_capteur_panel extends JPanel
 {
-	/**
-	 * 
-	 */
 	private JButton inscription_button;
 	private JButton desinscription_button;
 	
@@ -125,7 +122,10 @@ public class Choix_capteur_panel extends JPanel
 		this.add(bouton_panel);
 	}
 	
-	
+	/**
+	 * Reset this class' listCapteur by suppressing each Capteur
+	 * @param listCapteur
+	 */
 	public void reset(ArrayList<Capteur> listCapteur)
 	{
 		Iterator<Capteur> iter = listCapteur.iterator();
@@ -136,7 +136,7 @@ public class Choix_capteur_panel extends JPanel
 	}
 	
 	/**
-	 * Retourne le bouton d inscription
+	 * Return inscription button
 	 * @return JButton
 	 */
 	public JButton getInscriptionButton()
@@ -272,7 +272,7 @@ public class Choix_capteur_panel extends JPanel
 	}
 	
 	/**
-	 * Enleve les feuilles de l'abre donnee en parametre
+	 * Remove the leaves of the given tree
 	 * @param arbre a nettoyer
 	 */
 	private void cleanTree(DefaultMutableTreeNode root)
@@ -296,8 +296,8 @@ public class Choix_capteur_panel extends JPanel
 	}
 	
 	/**
-	 * Recupere les capteurs selectionne dans le JTree
-	 * et renvoi leur identifiants dans un Arraylist
+	 * Retrieve the Capteur inside the JTree and return
+	 * their id as an Arraylist
 	 * @return Array d identifiants de capteurs
 	 */
 	public ArrayList<String> getSelected()
@@ -325,6 +325,10 @@ public class Choix_capteur_panel extends JPanel
 		return idCapteur;
 	}
 	
+	/**
+	 * Return the path  of the selected element in this class
+	 * @return String
+	 */
 	public String getPathSelected()
 	{
 		TreePath[] paths = selectionTree.getSelectionPaths();

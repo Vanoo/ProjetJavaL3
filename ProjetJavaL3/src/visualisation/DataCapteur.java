@@ -1,6 +1,5 @@
 package visualisation;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -8,6 +7,8 @@ import javax.swing.table.AbstractTableModel;
 
 public class DataCapteur extends AbstractTableModel 
 {
+	private static final long serialVersionUID = 1L;
+	
 	// TODO Initialisation d'un set capteur ou list
     private final ArrayList<Capteur> capteurs = new ArrayList<Capteur>();
     
@@ -20,6 +21,11 @@ public class DataCapteur extends AbstractTableModel
         addCapteur(new Capteur("Radiateur", "Temperature", "0.0", "0.0"));
     }
 
+    /**
+     * Add a Capteur to this class
+     * 
+     * @param capteur
+     */
     public void addCapteur(Capteur capteur) 
     {
     	capteurs.add(capteur);
@@ -27,6 +33,11 @@ public class DataCapteur extends AbstractTableModel
         fireTableRowsInserted(capteurs.size() -1, capteurs.size() -1);
     }
 
+    /**
+     * Remove a Capteur, notify the correspondant tables
+     * 
+     * @param cap the Capteur to be removed
+     */
     public void removeCapteur(Capteur cap) 
     {
     	capteurs.remove(cap);
@@ -34,17 +45,26 @@ public class DataCapteur extends AbstractTableModel
         fireTableDataChanged();
     }
     
+    /**
+     * Remove all Capteur from this class
+     */
     public void removeAll()
     {
     	capteurs.clear();
     	fireTableDataChanged();
     }
     
+    /**
+     * Return how many Capteur are stored
+     */
     public int getRowCount() 
     {
         return capteurs.size();
     }
 
+    /**
+     * 
+     */
     public int getColumnCount() 
     {
         return headers.length;
@@ -55,6 +75,9 @@ public class DataCapteur extends AbstractTableModel
         return headers[columnIndex];
     }
 
+    /**
+     * 
+     */
     public Object getValueAt(int rowIndex, int columnIndex) 
     {
         switch(columnIndex)
@@ -72,6 +95,12 @@ public class DataCapteur extends AbstractTableModel
         }
     }
     
+    /**
+     * Change the value of a Capteur
+     * 
+     * @param idCapteur the Capteur of whom value will be change
+     * @param valeur the new value
+     */
     public void changeValue(String idCapteur,double valeur) 
     {
     	Iterator<Capteur> iter = capteurs.iterator();
