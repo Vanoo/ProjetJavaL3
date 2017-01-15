@@ -150,9 +150,9 @@ public class Reseaux extends java.util.Observable
 		this.thread.start();
 	}
 	
+	// TODO javadoc
 	public void stopListen()
 	{
-		JOptionPane.showMessageDialog(null, "TRALALALAL");
 		try 
 		{
 			in.close();
@@ -160,7 +160,6 @@ public class Reseaux extends java.util.Observable
 			socket.close();
 		} catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

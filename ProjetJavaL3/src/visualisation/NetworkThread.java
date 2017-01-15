@@ -78,6 +78,11 @@ public class NetworkThread extends Thread
 	    	
 	    	res.setRetour(message);
 	    	
+	    	if(message.startsWith("DeconnexionOK"))
+	    	{
+	    		res.connected = false;
+	    	}
+	    	
 	    	/*/
 	    	if(message.startsWith("CapteurPresent;"))
 	    	{
@@ -113,6 +118,8 @@ public class NetworkThread extends Thread
 	    	} */
 	    	
 	    }
+	    
+	    System.out.println("NetworkThread Terminated");
 		
 
 	}
