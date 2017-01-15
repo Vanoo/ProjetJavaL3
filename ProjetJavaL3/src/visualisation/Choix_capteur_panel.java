@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,8 +18,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-import javax.swing.tree.TreeNode;
 
 public class Choix_capteur_panel extends JPanel
 {
@@ -32,7 +29,6 @@ public class Choix_capteur_panel extends JPanel
 	private JButton desinscription_button;
 	
 	private DefaultTreeModel dataTree;
-	private TreeSelectionModel modelSelecTree;
 	private JTree selectionTree;
 	
 	private static final long serialVersionUID = 1L;
@@ -69,8 +65,7 @@ public class Choix_capteur_panel extends JPanel
 		XMLParser parseur = new XMLParser();
 		
 	    JTree arbre = new JTree(parseur.parse());
-	    this.selectionTree = arbre;
-	    this.modelSelecTree = arbre.getSelectionModel();
+	    this.selectionTree = arbre;	    
 	    
 	    selectionTree.addTreeSelectionListener(new TreeSelectionListener() 
 	    {
@@ -91,6 +86,8 @@ public class Choix_capteur_panel extends JPanel
 	    });
 	    
 	    DefaultTreeModel modelJtree = (DefaultTreeModel) arbre.getModel();
+	    
+	    cleanTree((DefaultMutableTreeNode) modelJtree.getRoot());
 	    
 	    this.dataTree = modelJtree;
 	    
@@ -277,37 +274,27 @@ public class Choix_capteur_panel extends JPanel
 	}
 	
 	/**
-	 * 
-	 * Verifie si une salle contient un capteur et l'affiche en consequence
-	 * 
+	 * Enleve les feuilles de l'abre donnee en parametre
+	 * @param arbre a nettoyer
 	 */
-	private boolean verifierSalle(DefaultMutableTreeNode arbre)
+	private void cleanTree(DefaultMutableTreeNode root)
 	{
-		// TODO FINIR
-		//  System.out.println(arbre);
-		boolean answer = false;
-		DefaultMutableTreeNode leaf = null;
+		DefaultMutableTreeNode nodeChild;
 		
-		Enumeration<DefaultMutableTreeNode> temp = arbre.children();
-		
-		answer = arbre.getUserObject() instanceof Capteur;
-				
-		while(temp.hasMoreElements() && !answer)
+		for (int bat = 0; bat < root.getChildCount(); bat++)
 		{
-			leaf = temp.nextElement();
-			answer = answer && verifierSalle(leaf);
+			nodeChild = (DefaultMutableTreeNode) root.getChildAt(bat);
+			
+			if( nodeChild.isLeaf() )
+			{
+				root.removeAllChildren();
+				break;
+			}
+			else
+			{
+				cleanTree(nodeChild);
+			}
 		}
-		
-		
-		if (!answer)
-		{
-			DefaultMutableTreeNode root = (DefaultMutableTreeNode) arbre.getParent();
-			root.remove(arbre);
-		}
-		
-		// TODO si pas de capteur ni de fils, enlever de l'arbre
-		
-		return answer;
 	}
 	
 	/**

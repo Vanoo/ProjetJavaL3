@@ -8,9 +8,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class CellRend extends DefaultTableCellRenderer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
+			int row, int column) 
+	{
 		
 		// Mettre une couleur (ou autre) en fonction de la case
 		setBackground(new Color(row*(255/10), column*(255/10), 128));

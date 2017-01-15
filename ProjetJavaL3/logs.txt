@@ -3,10 +3,4 @@ CapteurPresent;Camera2;ConsoEclairage;0.0;0.05
 CapteurPresent;Radiateur;Temperature;U1;etage1;s101;noComment7
 CapteurPresent;Radiateur2;Temperature;U1;etage1;s102;noComment7
 CapteurPresent;Radiateur3;Temperature;U1;etage2;s202;noComment7
-InscriptionCapteurOK1
-DesinscriptionCapteurOK1
-InscriptionCapteurOK1
-InscriptionCapteurOK1
-DesinscriptionCapteurOK1
-InscriptionCapteurOK1
 DeconnexionOK1
