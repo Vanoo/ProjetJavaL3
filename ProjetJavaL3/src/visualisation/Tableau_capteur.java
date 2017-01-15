@@ -102,16 +102,7 @@ public class Tableau_capteur extends JPanel{
 				return c;
 			}
 		};
-		
-		/*
-		JTable table = new JTable(dataCapteur);
-		
-		CellRenderer rend = new CellRenderer();
-		this.renderer = rend;
-		
-		table.setDefaultRenderer(String.class, this.renderer);
-		*/
-		
+				
 		table.setAutoCreateRowSorter(true);
 		
         this.table = table;
@@ -135,6 +126,7 @@ public class Tableau_capteur extends JPanel{
 		title_alert.add(new JLabel("Alerte"));
 		
 		// MIN MAX
+		/*
 		MaskFormatter int_formatter = null;
 		try 
 		{
@@ -148,6 +140,12 @@ public class Tableau_capteur extends JPanel{
 		
 		JFormattedTextField alert_min_texField = new JFormattedTextField(int_formatter);
 		JFormattedTextField alert_max_texField = new JFormattedTextField(int_formatter);
+		
+		alert_min_texField.setPreferredSize(new Dimension(40, 20));
+		alert_max_texField.setPreferredSize(new Dimension(40, 20));
+		*/
+		DoubleTextField alert_min_texField = new DoubleTextField();
+		DoubleTextField alert_max_texField = new DoubleTextField();
 		
 		alert_min_texField.setPreferredSize(new Dimension(40, 20));
 		alert_max_texField.setPreferredSize(new Dimension(40, 20));
