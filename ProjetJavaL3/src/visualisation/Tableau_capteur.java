@@ -9,6 +9,7 @@ import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
@@ -33,6 +35,8 @@ public class Tableau_capteur extends JPanel{
 	
 	private JTable table;
 	
+	private CellRenderer renderer;
+	
 	private JCheckBox loc_filter;
 	private JCheckBox type_filter;
 	
@@ -40,8 +44,8 @@ public class Tableau_capteur extends JPanel{
 	private JFormattedTextField min_alarm;
 	private JFormattedTextField max_alarm;
 	
-	private double minAlarm;
-	private double maxAlarm;
+	private double minAlarm = 0;
+	private double maxAlarm = 50;
 	
 	private JComboBox<Object> type_combo;
 	
@@ -67,25 +71,24 @@ public class Tableau_capteur extends JPanel{
 		title.add(title_label);
 		
 		/*=============  Tableau Panel =============*/
-
 		JTable table = new JTable(dataCapteur)
 		{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
 			{
 				Component c = super.prepareRenderer(renderer, row, column);
-				
-				//  Alternate row color
 				
 				int modelRow = convertRowIndexToModel(row);
 				
 				double val = (double) getModel().getValueAt(modelRow, 3);
 				
 				if( alarm.isSelected() )
-				{
-					double min = minAlarm;
-					double max = maxAlarm;
-					
-					if( val < min || val > max )
+				{					
+					if( val < minAlarm || val > maxAlarm )
 					{
 						c.setBackground(Color.red);
 					}
@@ -102,6 +105,15 @@ public class Tableau_capteur extends JPanel{
 				return c;
 			}
 		};
+		
+		/*
+		JTable table = new JTable(dataCapteur);
+		
+		CellRenderer rend = new CellRenderer();
+		this.renderer = rend;
+		
+		table.setDefaultRenderer(String.class, this.renderer);
+		*/
 		
 		table.setAutoCreateRowSorter(true);
 		
@@ -148,13 +160,18 @@ public class Tableau_capteur extends JPanel{
 		JCheckBox alert_checkbox = new JCheckBox();
 		alert_checkbox.addItemListener(new ItemListener() 
 		{
-			
 			@Override
 			public void itemStateChanged(ItemEvent event) 
-			{
+			{	
 				if(event.getStateChange()==ItemEvent.SELECTED)
 				{
-					setMinMax();
+					Random r = new Random();
+					minAlarm = (-100) + (100 - (-100)) * r.nextDouble();
+					maxAlarm = (-100) + (100 - (-100)) * r.nextDouble();
+				}
+				else
+				{
+					
 				}
 			}
 		});
@@ -218,12 +235,6 @@ public class Tableau_capteur extends JPanel{
 		this.add(alert_panel);
 		this.add(filtre_panel);
 	}	
-	
-	private void setMinMax()
-	{
-		this.minAlarm = 0;
-		this.maxAlarm = 50;
-	}
 	
 	public void reset()
 	{
