@@ -19,18 +19,41 @@ import visualisation.DoubleTextField;
 public class Donnee_panel extends JPanel 
 {
 	/**
-	 * 
+	 *  Variable nécessaire au bon fonctionnement de la classe sous eclipse.
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 *  Variable Dimension pour les dimensions de la fenêtre.
+	 */
 	static Dimension dim = new Dimension(500,150);
 	
+	/**
+	 *  Variable DoubleTextField.
+	 */
 	private DoubleTextField freq_field;
+	/**
+	 *  Variable DoubleTextField numéro 2.
+	 */
 	private DoubleTextField val_field;
+	/**
+	 *  Variable JCheckBox
+	 */
 	private JCheckBox random;
+	/**
+	 *  Variable double
+	 */
 	double min;
+	/**
+	 *  Variable double numéro 2.
+	 */
 	double max;
 	
+	/**
+	 * @param min
+	 * @param max
+	 * @throws ParseException
+	 */
 	public Donnee_panel(double min,double max) throws ParseException
 	{
 		super();
@@ -83,12 +106,20 @@ public class Donnee_panel extends JPanel
 		this.add(valeur_panel);
 	}
 	
+	/**
+	 * @param min
+	 * @param max
+	 */
 	public void changementIntervalle(double min,double max)
 	{
 		this.min=min;
 		this.max=max;
 	}
 	
+	/**
+	 * Récupère le delais
+	 * @return int
+	 */
 	public int getDelay()
 	{
 		// System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
@@ -96,6 +127,9 @@ public class Donnee_panel extends JPanel
 		return pat;
 	}
 	
+	/**
+	 * @return double
+	 */
 	public double getValeur()
 	{
 		double pat = 0;

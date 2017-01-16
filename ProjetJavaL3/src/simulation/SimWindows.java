@@ -19,19 +19,46 @@ import javax.swing.Timer;
  */
 public class SimWindows extends JFrame
 {
+	/**
+	 *  Variable nécessaire au bon fonctionnement de la classe sous eclipse.
+	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 *  Variable Dimension
+	 */
 	static Dimension dim = new Dimension(500,560);
 	
+	/**
+	 *  Variable JPanel fenetre
+	 */
 	JPanel fenetre;
 	
+	/**
+	 *  Variable Reseau Res
+	 */
 	Reseaux res;
+	/**
+	 *  Variable Connection_panel
+	 */
 	Connection_panel connection_panel;
+	/**
+	 *  Variable InfoCapteur_panel
+	 */
 	InfoCapteur_panel infoCapteur_panel;
+	/**
+	 *  Variable Donnee_panel
+	 */
 	Donnee_panel donnee_panel;
 	
+	/**
+	 *  Variable Timer pour l'envoi de données
+	 */
 	Timer envoiData;
 	
+	/**
+	 * @throws ParseException
+	 */
 	public SimWindows() throws ParseException
 	{		
 		/*============= Initialisation de la fenetre =============*/
@@ -71,16 +98,20 @@ public class SimWindows extends JFrame
 	    fifty_shade_of_gray(true,this.fenetre);
 	}
 	
+	/**
+	 *  Envoie des données
+	 */
 	public void sendData()
 	{	
 		this.envoiData.setDelay(this.donnee_panel.getDelay());
 		this.res.sendData(this.donnee_panel.getValeur());
 	}
 
+	/**
+	 *  Commence le flux de données 
+	 */
 	public void lancementEnvoi()
 	{
-		//this.envoiData = new EnvoiData(1,4.4,"envoi",res);
-		//envoiData.start();
 		int delay = this.donnee_panel.getDelay(); // millisecond
 		System.out.println("Delay : "+delay);
 		ActionListener taskPerformer = new ActionListener() 
@@ -96,12 +127,18 @@ public class SimWindows extends JFrame
 		fifty_shade_of_gray(false,this.fenetre);
 	}
 	
+	/**
+	 * Arrête le flux de données
+	 */
 	public void arretEnvoi()
 	{
 		this.envoiData.stop();
 		fifty_shade_of_gray(true,this.fenetre);
 	}
 	
+	/**
+	 *  Récupération min, max pour donnee_panel
+	 */
 	public void changementPanel()
 	{
 		double min = this.infoCapteur_panel.getInfoMin();
@@ -109,6 +146,9 @@ public class SimWindows extends JFrame
 		this.donnee_panel.changementIntervalle(min,max);
 	}
 	
+	/**
+	 * Bouton Connection 
+	 */
 	public void boutonConnection()
 	{
 		this.connection_panel.getConnection_button().addActionListener(new ActionListener() 
@@ -151,6 +191,10 @@ public class SimWindows extends JFrame
 		});
 	}
 	
+	/**
+	 * Changement du bouton Connexion en Deconnexion et vice-versa.
+	 * @param typeBouton
+	 */
 	public void changementBouton(int typeBouton)
 	{
 		if( typeBouton == 1 )
@@ -165,6 +209,9 @@ public class SimWindows extends JFrame
 		}
 	}
 	
+	/**
+	 * @return int 
+	 */
 	public int typeBouton()
 	{
 		String label = this.connection_panel.getConnection_button().getText();
@@ -178,6 +225,9 @@ public class SimWindows extends JFrame
 		}
 	}
 	
+	/**
+	 * @return boolean
+	 */
 	public boolean connection()
 	{
 		boolean success = false;
@@ -218,6 +268,9 @@ public class SimWindows extends JFrame
 		return success;
 	}
 	
+	/**
+	 * @return boolean
+	 */
 	public boolean deconnection()
 	{
 		boolean success = false;
@@ -226,6 +279,11 @@ public class SimWindows extends JFrame
 		return success;
 	}
 	
+	/**
+	 * 
+	 * @param bool
+	 * @param panel
+	 */
 	public void fifty_shade_of_gray(boolean bool,JPanel panel)
 	{
 		panel.setEnabled(bool);

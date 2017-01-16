@@ -21,38 +21,80 @@ import visualisation.DoubleTextField;
 
 /**
  * @Javadoc
- * Classe qui gère le panel "capteur" où les informations concernant le capteur sont entrées. 
- * 
+ * Classe qui gère le panel "capteur" où les informations concernant le capteur sont entrées.  
+ *
  */
 public class InfoCapteur_panel extends JPanel
 {
 	/**
-	 * 
+	 *  Variable nécessaire au bon fonctionnement de la classe sous eclipse.
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 *  Variable Dimension
+	 */
 	static Dimension dim = new Dimension(500,400);
+	/**
+	 *  Variable JTextField
+	 */
 	JTextField identifiant;
+	/**
+	 *  Variable JComboBox
+	 */
 	JComboBox<Object> type;
 	
+	/**
+	 *  Variable DoubleTextField numéro 1
+	 */
 	DoubleTextField min;
+	/**
+	 *  Variable DoubleTextField numéro 2
+	 */
 	DoubleTextField max;
 	
+	/**
+	 *  Variable DoubleTextField numéro 3
+	 */
 	DoubleTextField latitude;
-	DoubleTextField longitude;
+	/**
+	 *  Variable DoubleTextField numéro 4
+	 */
+	DoubleTextField longitude; 
 	
+	/**
+	 *  Variable JPanel numéro 1
+	 */
 	JPanel localisationBouton;
+	/**
+	 *  Variable JPanel numéro 2
+	 */
 	JPanel localisationChoix;
 	
+	/**
+	 * Variable boolean
+	 */
 	boolean isInterieur;
 	
+	/**
+	 *  Variable String numéro 1
+	 */
 	String batiment;
+	/**
+	 *  Variable String numéro 2
+	 */
 	String etage;
+	/**
+	 *  Variable Sring numéro 3
+	 */
 	String salle;
+	/**
+	 *  Variable JTextField
+	 */
 	JTextField commentaire;
 	
 	/**
-	 * @param args
+	 *  Constructeur de la classe InfoCapteur_panel
 	 */
 	public InfoCapteur_panel()
 	{
@@ -83,6 +125,9 @@ public class InfoCapteur_panel extends JPanel
 		exterieur();
 	}
 	
+	/**
+	 *  Initialisation de l'id du panel 
+	 */
 	public void Init_id_panel()
 	{
 		JPanel id = new JPanel();
@@ -104,6 +149,9 @@ public class InfoCapteur_panel extends JPanel
 		this.identifiant = id_text_field;
 	}
 	
+	/**
+	 *  Initialisation du type du panel 
+	 */
 	public void Init_type_panel()
 	{
 		JPanel typ = new JPanel();
@@ -124,6 +172,9 @@ public class InfoCapteur_panel extends JPanel
 		this.type = type_combo;
 	}
 	
+	/**
+	 *  Initialisation de l'intervalle du panel 
+	 */
 	public void Init_intervalle_panel()
 	{
 		JPanel inter = new JPanel();
@@ -159,6 +210,9 @@ public class InfoCapteur_panel extends JPanel
 		// this.intervalle = inter;
 	}
 	
+	/**
+	 *  Initialisation de la localisation du panel 
+	 */
 	public void Init_localisation_panel()
 	{
 		
@@ -334,6 +388,9 @@ public class InfoCapteur_panel extends JPanel
 			repaint();
 		}
 		
+		/**
+		 * @return Localisation
+		 */
 		public Localisation getInfoLocalisation()
 		{
 			this.localisationChoix.getComponents();
@@ -350,31 +407,49 @@ public class InfoCapteur_panel extends JPanel
 			return loc;
 		}
 		
+		/**
+		 * @return valeur de la latitude
+		 */
 		private double getLatitude()
 		{
 			return this.latitude.getValeur();
 		}
 		
+		/**
+		 * @return valeur de la longitude
+		 */
 		private double getLongitude()
 		{
 			return this.longitude.getValeur();
 		}
 		
+		/**
+		 * @return valeur Max
+		 */
 		public double getInfoMax()
 		{
 			return this.max.getValeur();
 		}
 		
+		/**
+		 * @return valeur min
+		 */
 		public double getInfoMin()
 		{
 			return this.min.getValeur();
 		}
 		
+		/**
+		 * @return String ID
+		 */
 		public String getInfoId()
 		{
 			return this.identifiant.getText();
 		}
 		
+		/**
+		 * @return String Type
+		 */
 		public String getInfoType()
 		{
 			return this.type.getSelectedItem().toString();

@@ -16,7 +16,10 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
  */
 public class IPTextFieldVerifier extends InputVerifier 
 {
-   public boolean verify(JComponent input) 
+/* (non-Javadoc)
+ * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
+ */
+public boolean verify(JComponent input) 
    {
       if (input instanceof JFormattedTextField) 
       {

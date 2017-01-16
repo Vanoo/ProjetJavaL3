@@ -11,11 +11,30 @@ import simulation.Localisation;
 public class LocalisationInt extends Localisation
 {
 
+	/**
+	 *  Variable String batiment
+	 */
 	String batiment;
+	/**
+	 *  Variable String salle
+	 */
 	String salle;
+	/**
+	 *  Variable String etage
+	 */
 	String etage;
+	/**
+	 *  Variable String commentaire
+	 */
 	String commentaire;
 	
+	/**
+	 * Constructeur
+	 * @param batiment
+	 * @param etage
+	 * @param salle
+	 * @param commentaire
+	 */
 	public LocalisationInt(String batiment,String etage,String salle,String commentaire)
 	{
 		this.batiment = batiment;

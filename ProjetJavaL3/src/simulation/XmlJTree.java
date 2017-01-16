@@ -22,7 +22,13 @@ import org.xml.sax.SAXException;
 public class XmlJTree extends JTree
 {
 
+	/**
+	 *  Variable nécessaire au bon fonctionnement de la classe sous eclipse
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 *  Variable DefaultTreeModel dtModel
+	 */
 	DefaultTreeModel dtModel=null;
 
     /**
@@ -35,6 +41,9 @@ public class XmlJTree extends JTree
         setPath(filePath);
     }
 
+    /**
+     * @param filePath
+     */
     public void setPath(String filePath)
     {
         Node root = null;

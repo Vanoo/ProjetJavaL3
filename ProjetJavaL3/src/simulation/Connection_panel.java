@@ -15,17 +15,32 @@ import javax.swing.text.MaskFormatter;
 
 /** 
 *	@Javadoc
-*	Classe qui gère le "panel" de connection.
+*	Classe qui gère le "panel" de connexion.
 *
 */
 public class Connection_panel extends JPanel
 {
+	/**
+	 *  Variable nécessaire au bon fonctionnement de la classe sous eclipse.
+	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 *  Variable JTextField
+	 */
 	private JFormattedTextField ip_textField;
+	/**
+	 * Variable JTextField 2
+	 */
 	private JFormattedTextField port_textField;
+	/**
+	 *  Variable JButton
+	 */
 	private JButton connection_button;
 	
+	/**
+	 * @throws ParseException
+	 */
 	public Connection_panel() throws ParseException
 	{
 		/*=============  OptionPanelConnexion =============*/
@@ -80,9 +95,10 @@ public class Connection_panel extends JPanel
 		this.add(ip_port_bouton);
 	}
 
+
 	/**
-	 * 
-	 * @return la valeur du ip_textfield, si egale a 0 renvoi une valeur par defaut
+	 * Renvoie l'IP demandée
+	 * @return String
 	 */
 	public String getIp()
 	{

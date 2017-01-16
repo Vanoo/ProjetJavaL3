@@ -18,6 +18,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+/**
+ * 
+ * 
+ *
+ */
 public class Choix_capteur_panel extends JPanel
 {
 	private JButton inscription_button;

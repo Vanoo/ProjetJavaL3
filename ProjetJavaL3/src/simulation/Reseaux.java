@@ -29,12 +29,20 @@ public class Reseaux {
     boolean noerror;    
     
 	// Création d'une classe reseaux, connection au serveur, et ouverture des entrees/sorties
+	/**
+	 *  
+	 */
 	public Reseaux()
 	{
 		this.noerror = true;
 	}
 	
 	
+	/**
+	 * @param adress
+	 * @param port
+	 * @return boolean
+	 */
 	public boolean connection (String adress, int port) 
 	{
 		// Avoir l'adresse grace a l'ip fournie 
@@ -84,10 +92,11 @@ public class Reseaux {
 		return noerror;
 	}
 	
-	
-	
-	
-	// Pour deconnecter un capteur
+	/**
+	 * Gestion de déconnexion d'un capteur
+	 * @param id
+	 * @return boolean
+	 */
 	public boolean deconnexion(String id) 
 	{
 		String str = "plop";
@@ -126,10 +135,17 @@ public class Reseaux {
 		return false;
 	}
 	
-	
-	// Connexion d'un capteur d'exterieur
+
+	/**
+	 * Connexion d'un capteur d'exterieur
+	 * @param id
+	 * @param type
+	 * @param latitutde
+	 * @param longitude
+	 * @return boolean
+	 */
 	public boolean connexionExt(String id, String type, double latitutde, double longitude) 
-	{		
+	{
 		String str = "plop";
 		
 		// Verification de parametre
@@ -165,7 +181,17 @@ public class Reseaux {
         return (true);
 	}
 	
-	// Connexion d'un capteur d'interieur
+
+	/**
+	 * Connexion d'un capteur d'interieur
+	 * @param id
+	 * @param type
+	 * @param batiment
+	 * @param etage
+	 * @param salle
+	 * @param pos
+	 * @return boolean
+	 */
 	public boolean connexionInt(String id, String type, String batiment, String etage, String salle, String pos) 
 	{
 		String str = "plop";
@@ -202,7 +228,11 @@ public class Reseaux {
 	}
 	
 	
-	// Envoi de la donnee d'un capteur
+
+	/**
+	 * Envoi les données
+	 * @param data
+	 */
 	public void sendData (double data) 
 	{
 			out.println("ValeurCapteur;"+data);
