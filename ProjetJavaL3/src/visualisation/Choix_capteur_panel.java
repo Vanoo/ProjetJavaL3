@@ -12,15 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+
 /**
  * 
- * 
+ * Panel comportant touts les elements necessaires a l affichage des capteurs present
+ * Comporte un JTree et deux boutons Inscription et Desinscription
  *
  */
 public class Choix_capteur_panel extends JPanel
@@ -35,12 +35,15 @@ public class Choix_capteur_panel extends JPanel
 	
 	private static final long serialVersionUID = 1L;
 
-	public Choix_capteur_panel() 
+	/**
+	 *  Constructeur de la classe
+	 *  Cree les differents elements et les positionnes dans le panel
+	 *  lis le fichier de conf et le "transforme" en JTree
+	 */
+	public Choix_capteur_panel()
 	{
 		Dimension dim = new Dimension(500,275);
-		
 		this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-		
 		this.setPreferredSize(dim);
 		this.setBackground(Color.lightGray);
 		
@@ -58,51 +61,31 @@ public class Choix_capteur_panel extends JPanel
 		capteur_tree.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
 		capteur_tree.setBackground(Color.lightGray);
 		
-		
-		/* Deprecated
-		final XmlJTree arbre = new XmlJTree(null);
-		arbre.setPath("./config.xml");
-		*/
-		
 		XMLParser parseur = new XMLParser();
-		
 	    JTree arbre = new JTree(parseur.parse());
-	    this.selectionTree = arbre;	    
+	    this.selectionTree = arbre;
 	    
+	    /* TODO Selection autre qu un capteur provoque la selection de tous les noeuds fils
 	    selectionTree.addTreeSelectionListener(new TreeSelectionListener() 
 	    {
 	        public void valueChanged(TreeSelectionEvent e) 
-	        {
-	        	/*
+			{
 	        	e.isAddedPath();
 	        	String path = e.getPath().toString();
 	        	String [] splittedString = path.split(";");
 	        	
 	        	DefaultMutableTreeNode root = (DefaultMutableTreeNode) dataTree.getRoot();
-	        	
 	        	modelSelecTree.addSelectionPath(paths[0]);
-	        	
 	        	System.out.println("Selection :"+path);
-	        	*/
 	        }
 	    });
+	    */
 	    
 	    DefaultTreeModel modelJtree = (DefaultTreeModel) arbre.getModel();
-	    
 	    cleanTree((DefaultMutableTreeNode) modelJtree.getRoot());
-	    
 	    this.dataTree = modelJtree;
-	    
-		// JTree arbre = new JTree(parseur.parse());
-		
-		// Set<Capteur> capteurs = null;
-		
-		// verifierSalle(parseur.parse(), capteurs);
-		
 		JScrollPane scroll_arbre = new JScrollPane(arbre);
-		
 		scroll_arbre.setPreferredSize(new Dimension(200,250));
-		
 		capteur_tree.add(scroll_arbre);
 		
 		/*=============  Bouton =============*/
@@ -123,7 +106,6 @@ public class Choix_capteur_panel extends JPanel
 		bouton_panel.add(this.desinscription_button);
 		
 		/*=============  Ajout Panel =============*/
-		
 		this.add(title);
 		this.add(capteur_tree);
 		this.add(bouton_panel);
@@ -160,7 +142,13 @@ public class Choix_capteur_panel extends JPanel
 		return this.desinscription_button;
 	}
 	
-	
+	/**
+	 * Recupere un objet capteur a partir de son identifiant fourni en entree et
+	 * de l attribut listCapteurExt
+	 * 
+	 * @param idCapteur
+	 * @return
+	 */
 	private Capteur getCapteurFromId(String idCapteur)
 	{
 		Capteur capCurrent = null;
@@ -402,7 +390,8 @@ public class Choix_capteur_panel extends JPanel
 	}
 	
 	/**
-	 * Return the path  of the selected element in this class
+	 * Return the path of the selected element in the JTree
+	 * or "Erreur" if multiple element selected
 	 * @return String
 	 */
 	public String getPathSelected()

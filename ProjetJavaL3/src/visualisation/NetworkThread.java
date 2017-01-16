@@ -7,6 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * 
+ *
+ */
 public class NetworkThread extends Thread
 {
 	private Reseaux res;
@@ -40,7 +45,6 @@ public class NetworkThread extends Thread
 		}
 	}
 	
-
 	/**
 	 * Methode lancee a l'execution du thread
 	 * /!\ boucle infinie
@@ -50,7 +54,8 @@ public class NetworkThread extends Thread
 		
 		String message = "plop";		
 		
-	    while(res.connected) {
+	    while(res.connected) 
+	    {
 	    	try
 	    	{
 	    		message = in.readLine();
@@ -76,42 +81,7 @@ public class NetworkThread extends Thread
 	    	if(message.startsWith("DeconnexionOK"))
 	    	{
 	    		res.connected = false;
-	    	}
-	    	
-	    	/*/
-	    	if(message.startsWith("CapteurPresent;"))
-	    	{
-	    		String[] splittedString = message.split(";");
-	    		if(splittedString.length == 5)
-	    		{
-	    			//ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4]));
-	    			
-	    			System.out.println("Capteur ajoute : "+splittedString[1]);
-	    			// popup
-	    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
-	    		}
-	    		else if (splittedString.length == 7)
-	    		{
-	    			//ajouterCapteur(new Capteur(splittedString[1], splittedString[2], splittedString[3], splittedString[4], splittedString[5], splittedString[6]));
-	    			System.out.println("Capteur ajoute : "+splittedString[1]);
-	    			// popup
-	    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
-	    		}
-	    		else
-	    			System.out.println("Message erron�");
-	    	}
-	    	else if (message.startsWith("InscriptionCapteur"))
-	    	{
-	    		
-	    		// res.retourInscriptionCheck = true;
-	    	}
-	    	else if (message.startsWith("")) {
-	    		
-	    	}
-	    	else {
-	    		System.out.println("Message recu errone : "+message);
-	    	} */
-	    	
+	    	}	    	
 	    }
 	    
 	    System.out.println("NetworkThread Terminated");

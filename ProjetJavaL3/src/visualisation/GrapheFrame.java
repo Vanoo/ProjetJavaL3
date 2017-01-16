@@ -14,13 +14,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
+/**
+ * 
+ * JFrame affichant une JComboBox contenant les fichiers disponibles
+ * et un bouton pour lancer un Graphe
+ *
+ */
 public class GrapheFrame extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	
 	private String currentCapteur;
 
+	/**
+	 * 
+	 * Constructeur construit les elements et les positionnes dans la JFrame
+	 * 
+	 */
 	public GrapheFrame()
 	{
 	    Dimension dim = new Dimension(400,150);
@@ -34,7 +44,6 @@ public class GrapheFrame extends JFrame
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	    
 	    JPanel fenetre = new JPanel();
-//	    fenetre.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 	    fenetre.setLayout(new GridLayout(4, 1));
 	    fenetre.setPreferredSize(dim);
 	    fenetre.setMinimumSize(dim);
@@ -52,7 +61,6 @@ public class GrapheFrame extends JFrame
 		
 		this.add(fenetre);
 		pack();
-		
 		
 		String [] capteursAvailable = readingRepertory();
 		final JComboBox<String> selectCapteur = new JComboBox<>(capteursAvailable);
@@ -81,13 +89,12 @@ public class GrapheFrame extends JFrame
 		fenetre.add(p1);
 		fenetre.add(p2);
 		fenetre.add(p3);
-		
-		
-		
-		
 	}
 	
-	
+	/**
+	 * Open Repertory charts and get all child
+	 * @return liste des fichiers disponibles
+	 */
 	public String[] readingRepertory()
 	{
 		String[] listefichiers = null;

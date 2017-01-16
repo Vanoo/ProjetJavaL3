@@ -16,18 +16,15 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.DefaultXYDataset;
 
+/**
+ * 
+ * JFrame affiche un graphique en fonction du fichier donner dans le constructeur
+ *
+ */
 public class Graphe extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private BufferedReader in;
-
-	//* Main de test
-	public static void main(String[] args)
-	{
-		Graphe plop = new Graphe("capteur.txt");
-		plop.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	}
-	//*/
 	
 	/**
 	 * Constructeur : affiche une graphique representant les donnees stockees sur un fichier

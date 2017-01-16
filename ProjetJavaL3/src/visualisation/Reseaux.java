@@ -14,10 +14,14 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
+
 /**
  * 
- * @Javadoc
- * Classe reseau qui s'occupe de la communication avec le serveur.
+ * Class gerant la partie reseau
+ * 
+ * ouvre un socket et initie les communications avec le serveurs
+ * une fois connecte lance un Thread qui s'occupe de la reception des messages
+ * seul reseau envoi des messages au serveurs
  *
  */
 public class Reseaux extends java.util.Observable
@@ -27,21 +31,20 @@ public class Reseaux extends java.util.Observable
 	int port;
     BufferedReader in;
     PrintWriter out;
-    boolean noerror;
+    private boolean noerror;
     boolean connected;
-    NetworkThread thread;
+    private NetworkThread thread;
     
-    // L'objectif est de signaler via le boolean que les capteurs ont change
-    // private boolean retourInscriptionCheck;
     private String retour;
+    private Set<Capteur> capteurs;
     
-    
-    Set<Capteur> capteurs;
-    
+    /**
+     * Constructor
+     * set noerror to true
+     */
 	public Reseaux()
 	{
 		this.noerror = true;
-		// retourInscriptionCheck = false;
 	}
 	
 	/**
@@ -201,19 +204,6 @@ public class Reseaux extends java.util.Observable
 		
 		System.out.println("MessageInterface :"+message);
 		out.println(message);
-		
-		/*
-		String[] capteursRejetes = retour.split(";");
-		
-		if(capteursRejetes[0].compareTo("InscriptionCapteurOK") == 0) return tabIdCapteur;
-		
-		for(int i = 1; i < capteursRejetes.length; i++)
-		{
-			capteursSuivis.remove(capteursRejetes[i]);
-		}
-		
-		return capteursSuivis.toArray(new String[0]);
-		*/
 	}
 
 	/**

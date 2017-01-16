@@ -14,9 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
 /** 
-*	@Javadoc
-*	Classe qui gère le "panel" de connection.
-*
+* 
+* Panel comportant touts les elements necessaires a la connexion au serveur distant
+* Comporte deux DoubleTextField et un bouton
+* 
 */
 public class Connection_panel extends JPanel
 {
@@ -26,6 +27,13 @@ public class Connection_panel extends JPanel
 	private JFormattedTextField port_textField;
 	private JButton connection_button;
 	
+	/**
+	 * 
+	 *  Constructeur de la classe
+	 *  Cree les differents elements et les positionnes dans le panel
+	 *  
+	 *  @throws ParseException
+	 */
 	public Connection_panel() throws ParseException
 	{
 		/*=============  OptionPanelConnexion =============*/
@@ -81,7 +89,7 @@ public class Connection_panel extends JPanel
 	}
 
 	/**
-	 * 
+	 * Getter recupere la valeur saisi dans ip_textfield
 	 * @return la valeur du ip_textfield, si egale a 0 renvoi une valeur par defaut
 	 */
 	public String getIp()
@@ -95,7 +103,7 @@ public class Connection_panel extends JPanel
 	}
 
 	/**
-	 * 
+	 * Getter recupere la valeur saisi dans port_textfield
 	 * @return la valeur du port_textField, si egale a 0 renvoi une valeur par defaut
 	 */
 	public int getPort()
@@ -109,7 +117,7 @@ public class Connection_panel extends JPanel
 	}
 	
 	/**
-	 * 
+	 * Getter sur l attribut connection_bouton
 	 * @return connection_button
 	 */
 	public JButton getBouton()

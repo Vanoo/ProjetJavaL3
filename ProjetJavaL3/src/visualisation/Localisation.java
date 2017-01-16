@@ -1,10 +1,9 @@
 package visualisation;
 
 /**
- *	@Javadoc
- *	Classe abstraite qui sert à implémenter les classes localisations exterieur et interieur
+ * 
+ *	Classe abstraite qui sert à implementer les classes localisations exterieur et interieur
  *
  */
-
 public abstract class Localisation {
 }

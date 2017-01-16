@@ -5,11 +5,15 @@ import java.util.Iterator;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * 
+ * AbstractTableModel contenant des capteurs
+ * 
+ */
 public class DataCapteur extends AbstractTableModel 
 {
 	private static final long serialVersionUID = 1L;
 	
-	// TODO Initialisation d'un set capteur ou list
     private final ArrayList<Capteur> capteurs = new ArrayList<Capteur>();
     
     private final String[] headers = {"Identifiant", "Type", "Localisation", "Valeur"};
@@ -17,36 +21,35 @@ public class DataCapteur extends AbstractTableModel
     public DataCapteur()
     {
         super();
-        addCapteur(new Capteur("Radiateur", "Temperature", "0.0", "0.0"));
-        addCapteur(new Capteur("Radiateur", "Temperature", "0.0", "0.0"));
     }
 
     /**
-     * Add a Capteur to this class
-     * 
+     * Add a Capteur to attributes capteurs
+     * and call fireTableDataChange
+     *  
      * @param capteur
      */
     public void addCapteur(Capteur capteur) 
     {
     	capteurs.add(capteur);
-
-        fireTableRowsInserted(capteurs.size() -1, capteurs.size() -1);
+    	fireTableDataChanged();
     }
 
     /**
-     * Remove a Capteur, notify the correspondant tables
+     * Remove a Capteur to attributes capteurs
+     * and call fireTableDataChange
      * 
      * @param cap the Capteur to be removed
      */
     public void removeCapteur(Capteur cap) 
     {
     	capteurs.remove(cap);
-        // fireTableRowsDeleted(rowIndex, rowIndex);
         fireTableDataChanged();
     }
     
     /**
-     * Remove all Capteur from this class
+     * Remove all Capteur from attributes capteurs
+     * and call fireTableDataChange
      */
     public void removeAll()
     {
@@ -55,7 +58,8 @@ public class DataCapteur extends AbstractTableModel
     }
     
     /**
-     * Return how many Capteur are stored
+     * Return number of capteur in attributes capteurs
+     * @return numberRow
      */
     public int getRowCount() 
     {
@@ -63,20 +67,28 @@ public class DataCapteur extends AbstractTableModel
     }
 
     /**
-     * 
+     * Return size of attributes headers
+     * @return numberColumn
      */
     public int getColumnCount() 
     {
         return headers.length;
     }
 
+    /**
+     * Return ColumnName for columnIndex
+     * 
+     * @return ColumnName
+     */
     public String getColumnName(int columnIndex) 
     {
         return headers[columnIndex];
     }
 
     /**
-     * 
+     * Return object at rowIndex/columnIndex
+     *  
+     * @return Object
      */
     public Object getValueAt(int rowIndex, int columnIndex) 
     {
@@ -91,14 +103,15 @@ public class DataCapteur extends AbstractTableModel
             case 3:
             	return capteurs.get(rowIndex).getValeur();
             default:
-                return null; //Must never happens
+                return null; // Erreur
         }
     }
     
     /**
-     * Change the value of a Capteur
+     * Change the value of a Capteur in attributes capteurs
+     * and fireTableDataChanged
      * 
-     * @param idCapteur the Capteur of whom value will be change
+     * @param idCapteur the Capteur id of whom value will be change
      * @param valeur the new value
      */
     public void changeValue(String idCapteur,double valeur) 
