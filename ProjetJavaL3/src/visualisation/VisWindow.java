@@ -1,4 +1,3 @@
-
 package visualisation;
 
 import java.awt.Color;
@@ -343,12 +342,12 @@ public class VisWindow extends JFrame implements Observer
 				found = true;
 			}
 		}
-		
 		return capCurrent;
 	}
 	
-	// TODO AJOUT CLEAN JTREE ET JTABLE A LA DECONNEXION
-	
+	/**
+	 * 
+	 */
 	@Override
 	public void update(Observable o, Object arg) 
 	{	    
