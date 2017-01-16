@@ -3,8 +3,13 @@ package visualisation;
 import java.awt.Dimension;
 import java.text.ParseException;
 
-public class Visualisation {
-
+/**
+ * 
+ * Class Main
+ *
+ */
+public class Visualisation 
+{
 	/**
 	 * @param args
 	 * @throws ParseException 

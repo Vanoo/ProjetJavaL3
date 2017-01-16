@@ -19,6 +19,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Interface  
+ * @author r00t
+ *
+ */
 public class VisWindow extends JFrame implements Observer
 {
 	private static final long serialVersionUID = 1L;
@@ -30,9 +36,7 @@ public class VisWindow extends JFrame implements Observer
 	private Choix_capteur_panel choixCapteur;
 	private Tableau_capteur tab_capteur;
 	private JPanel graphePanel;
-	
 	private JPanel fenetre;
-	
 	private ArrayList<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
 	private List<String>  capteursEnAttente = new ArrayList<String>();
 	
