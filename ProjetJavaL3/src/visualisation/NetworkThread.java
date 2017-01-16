@@ -16,7 +16,7 @@ public class NetworkThread extends Thread
 	/**
 	 * Constructeur
 	 * 
-	 * @param res Reseaux qui cree le thread
+	 * @parametres Reseaux qui cree le thread
 	 */
     public NetworkThread(Reseaux res) 
     {
