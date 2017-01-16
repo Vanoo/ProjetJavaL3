@@ -3,11 +3,13 @@ package simulation;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -19,7 +21,7 @@ public class SimWindows extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	
-	static Dimension dim = new Dimension(500,600);
+	static Dimension dim = new Dimension(500,560);
 	
 	JPanel fenetre;
 	
@@ -35,7 +37,7 @@ public class SimWindows extends JFrame
 		/*============= Initialisation de la fenetre =============*/
 		this.setTitle("Simulation Capteur");
 	    this.setLocationRelativeTo(null);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
 	    // this.setMinimumSize(new Dimension());
 	    this.setVisible(true);
 	    this.setResizable(false);
@@ -48,6 +50,7 @@ public class SimWindows extends JFrame
 	    fenetre.setPreferredSize(dim);
 	    fenetre.setMinimumSize(dim);
 	    fenetre.setMaximumSize(dim);
+	    fenetre.setLayout(new FlowLayout(0,0,0));
 
 	    this.connection_panel = new Connection_panel();
 	    this.infoCapteur_panel = new InfoCapteur_panel();
@@ -101,8 +104,8 @@ public class SimWindows extends JFrame
 	
 	public void changementPanel()
 	{
-		int min = this.infoCapteur_panel.getInfoMin();
-		int max = this.infoCapteur_panel.getInfoMax();
+		double min = this.infoCapteur_panel.getInfoMin();
+		double max = this.infoCapteur_panel.getInfoMax();
 		this.donnee_panel.changementIntervalle(min,max);
 	}
 	
@@ -153,18 +156,18 @@ public class SimWindows extends JFrame
 		if( typeBouton == 1 )
 		{
 			// CHangment en deco
-			this.connection_panel.connection_button.setText("Deconnection");
+			this.connection_panel.getConnection_button().setText("Deconnection");
 		}
 		else
 		{
 			// Changement en connection
-			this.connection_panel.connection_button.setText("Connection");
+			this.connection_panel.getConnection_button().setText("Connection");
 		}
 	}
 	
 	public int typeBouton()
 	{
-		String label = this.connection_panel.connection_button.getText();
+		String label = this.connection_panel.getConnection_button().getText();
 		if( label.equals("Connection") )
 		{
 			return 1;
@@ -192,25 +195,26 @@ public class SimWindows extends JFrame
 			return false;
 		}
 		
-		System.out.printf("Plop 1\n");
-		System.out.printf("Plop 2\n");
 		Localisation loc = this.infoCapteur_panel.getInfoLocalisation();
-		System.out.printf("Plop 3\n");
 		String id = this.infoCapteur_panel.getInfoId();
 		String type = this.infoCapteur_panel.getInfoType();
-		System.out.printf("Plop 4\n");
+		
 		if(  loc instanceof LocalisationInt )
-		{
-			System.out.printf("Plop 5\n");
+		{			
 			success = this.res.connexionInt(id,type,
 					((LocalisationInt) loc).getBatiment(),((LocalisationInt) loc).getEtage(),((LocalisationInt) loc).getSalle(),((LocalisationInt) loc).getCommentaire());
 		}
 		else
 		{
-			System.out.printf("Plop 6\n");
+			double lat = ((LocalisationExt) loc).getLatitude();
+			double longitude = ((LocalisationExt) loc).getLongitude();
+			if( lat < -90 || lat > 90 || longitude < -180 || longitude > 180 )
+			{
+				JOptionPane.showMessageDialog(null, "Coordonée GPS erronnee");
+				return false;
+			}
 			success = this.res.connexionExt(id, type,((LocalisationExt) loc).getLatitude(), ((LocalisationExt) loc).getLongitude());
 		}
-		System.out.printf("fin interne");
 		return success;
 	}
 	
@@ -240,7 +244,7 @@ public class SimWindows extends JFrame
 	        }
 	        if(tab_component[i] == connection_panel) 
 	        {
-	        	connection_panel.connection_button.setEnabled(true);
+	        	connection_panel.getConnection_button().setEnabled(true);
 	        }
 	    }
 	}	

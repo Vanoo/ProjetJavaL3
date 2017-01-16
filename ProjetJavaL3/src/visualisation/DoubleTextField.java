@@ -24,6 +24,11 @@ public class DoubleTextField extends JTextField
 	
 	public double getValeur()
 	{	
+		if( getText().length() == 0 )
+		{
+			return 0;
+		}
+		
 	    return Double.parseDouble(getText());
 	}
 

@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.MaskFormatter;
 
+import visualisation.DoubleTextField;
+
 /**
  * @Javadoc
  * Classe qui gère les données à envoyer lors qu'on est connecté.
@@ -25,14 +27,9 @@ public class Donnee_panel extends JPanel
 
 	static Dimension dim = new Dimension(500,150);
 	
-	JLabel titre;
-	JLabel freq_lab;
-	JFormattedTextField freq_field;
-	JButton freq_button;
-	JLabel val_lab;
-	JButton val_button;
-	JFormattedTextField val_field;
-	JCheckBox random;
+	private DoubleTextField freq_field;
+	private DoubleTextField val_field;
+	private JCheckBox random;
 	double min;
 	double max;
 	
@@ -52,20 +49,19 @@ public class Donnee_panel extends JPanel
 	    MaskFormatter frequence_formatter = new MaskFormatter("########");
 		frequence_formatter.setPlaceholderCharacter('0');
 		
-		// this.freq_slider = new JSlider(1,1000,1000);
-		this.freq_field = new JFormattedTextField(frequence_formatter);
+		String patternFrequence = "[0-9]{0,7}+";
+		
+		this.freq_field = new DoubleTextField(6,patternFrequence);
 		this.freq_field.setMaximumSize(new Dimension(120,20));
-		this.freq_field.setValue("00001000");
-		// this.freq_lab = new JLabel();
+		this.freq_field.setText("1000");
 	    
 	    MaskFormatter value_formatter = new MaskFormatter("###.##");
 		value_formatter.setPlaceholderCharacter('0');
 	    
-		this.val_lab = new JLabel();
-		this.val_field = new JFormattedTextField(value_formatter);
+		String patternValeur = "[-+]?[0-9]{0,3}+(\\.[0-9]{0,3}+)?";
+		this.val_field = new DoubleTextField(6,patternValeur);
 		this.val_field.setMaximumSize(new Dimension(100,20));
 		this.val_field.setText("001.00");
-		this.val_field.setValue("001.00");
 		
 		JPanel frequence_panel = new JPanel();
 		frequence_panel.setBackground(Color.LIGHT_GRAY);
@@ -89,7 +85,7 @@ public class Donnee_panel extends JPanel
 		this.add(valeur_panel);
 	}
 	
-	public void changementIntervalle(int min,int max)
+	public void changementIntervalle(double min,double max)
 	{
 		this.min=min;
 		this.max=max;
@@ -97,8 +93,8 @@ public class Donnee_panel extends JPanel
 	
 	public int getDelay()
 	{
-		System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
-		int pat = Integer.parseInt((this.freq_field.getValue().toString()));
+		// System.out.println("this.freq_field.getValue().toString() : "+ this.freq_field.getValue().toString());
+		int pat = (int) this.freq_field.getValeur();
 		return pat;
 	}
 	
@@ -107,11 +103,11 @@ public class Donnee_panel extends JPanel
 		double pat = 0;
 		if(this.random.isSelected()) 
 		{
-			pat = min + (Math.random() * (max - min));
+			pat = min + (Math.random() * (max - (min)));
 		}
 		else
 		{
-			pat = Double.parseDouble((this.val_field.getValue().toString()));
+			pat = this.val_field.getValeur();
 		}
 		
 		if( pat > max )
@@ -122,7 +118,7 @@ public class Donnee_panel extends JPanel
 		{
 			pat = min;
 		}
-		System.out.println("Recup value");
+		// System.out.println("Recup value");
 		return pat;
 	}
 }

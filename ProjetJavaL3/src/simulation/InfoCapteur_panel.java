@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import javax.swing.tree.TreePath;
 
+import visualisation.DoubleTextField;
+
 
 /**
  * @Javadoc
@@ -37,11 +39,11 @@ public class InfoCapteur_panel extends JPanel
 	JTextField identifiant;
 	JComboBox<Object> type;
 	
-	JFormattedTextField min;
-	JFormattedTextField max;
+	DoubleTextField min;
+	DoubleTextField max;
 	
-	JFormattedTextField latitude;
-	JFormattedTextField longitude;
+	DoubleTextField latitude;
+	DoubleTextField longitude;
 	
 	JPanel localisationBouton;
 	JPanel localisationChoix;
@@ -135,26 +137,15 @@ public class InfoCapteur_panel extends JPanel
 		inter.setMaximumSize(new Dimension(200,50));
 		inter.setPreferredSize(new Dimension(200,50));
 		
-		JPanel min_max_panel = new JPanel();
+		JPanel min_max_panel = new JPanel();		
 		
-		MaskFormatter int_formatter = null;
-		try 
-		{
-			int_formatter = new MaskFormatter("#####");
-		} 
-		catch (ParseException e) 
-		{
-			e.printStackTrace();
-		}
-		int_formatter.setPlaceholderCharacter('0');
+		String patternValeur = "[-+]?[0-9]{0,3}+(\\.[0-9]{0,3}+)?";
 		
-		JFormattedTextField min_texField = new JFormattedTextField(int_formatter);;
-		min_texField.setValue("00000");
-		// min_texField.setPreferredSize(new Dimension(60, 20));
+		DoubleTextField min_texField = new DoubleTextField(6,patternValeur);
+		min_texField.setText("0");
 		
-		JFormattedTextField max_texField = new JFormattedTextField(int_formatter);;
-		// max_texField.setPreferredSize(new Dimension(60, 20));
-		max_texField.setValue("00100");
+		DoubleTextField max_texField = new DoubleTextField(6,patternValeur);
+		max_texField.setText("100");
 		
 		min_max_panel.add(new JLabel("Min :"));
 		min_max_panel.add(min_texField);
@@ -236,23 +227,14 @@ public class InfoCapteur_panel extends JPanel
 			lat_long_panel.setLayout(new FlowLayout());
 			lat_long_panel.setBackground(Color.lightGray);
 			
-			MaskFormatter gps_formatter = null;
-			try 
-			{
-				gps_formatter = new MaskFormatter("###.######");
-			} 
-			catch (ParseException e) 
-			{
-				e.printStackTrace();
-			}
-			gps_formatter.setPlaceholderCharacter('0');
+			String patternLat = "[-+]?[0-9]{0,2}+(\\.[0-9]{0,7}+)?";
+			String patternLong = "[-+]?[0-9]{0,3}+(\\.[0-9]{0,7}+)?";
 			
-			JFormattedTextField latitude = new JFormattedTextField(gps_formatter);
-			latitude.setValue("000.000000");
-			// latitude.setPreferredSize(new Dimension(83,20));
-			JFormattedTextField longitude = new JFormattedTextField(gps_formatter);
-			// longitude.setPreferredSize(new Dimension(83,20));
-			longitude.setValue("000.000000");
+			DoubleTextField latitude = new DoubleTextField(9,patternLat);
+			latitude.setText("43.5603781");
+
+			DoubleTextField  longitude = new DoubleTextField(9,patternLong);
+			longitude.setText("1.4688585");
 			
 			ext_panel.add(gps_label);
 			
@@ -282,12 +264,17 @@ public class InfoCapteur_panel extends JPanel
 			final XmlJTree arbre = new XmlJTree(null);
 			// arbre.setSize(new Dimension(100,200));
 			JPanel int_panel = new JPanel();
-			int_panel.setBackground(Color.LIGHT_GRAY);
-			// int_panel.setLayout(new GridLayout(8,1));
-			JScrollPane scroll_arbre = new JScrollPane(arbre);
-			scroll_arbre.setPreferredSize(new Dimension(500,140));
 			
-			int_panel.add(scroll_arbre);
+			JPanel arbre_panel = new JPanel();
+			arbre_panel.setPreferredSize(new Dimension(500,140));
+			arbre_panel.setBackground(Color.LIGHT_GRAY);
+			arbre_panel.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+			
+			int_panel.setBackground(Color.LIGHT_GRAY);
+			JScrollPane scroll_arbre = new JScrollPane(arbre);
+			scroll_arbre.setPreferredSize(new Dimension(280,140));
+			
+			arbre_panel.add(scroll_arbre);
 			arbre.setPath("./config.xml");
 
 			MouseAdapter ml = new MouseAdapter()
@@ -336,6 +323,9 @@ public class InfoCapteur_panel extends JPanel
 			JTextField commentaire = new JTextField(20);
 			commentaire.setText("noComment");
 			commentaire.setPreferredSize(new Dimension(80,20));
+			
+			
+			int_panel.add(arbre_panel);
 			int_panel.add(new JLabel("Info complementaire :"));
 			int_panel.add(commentaire);
 			
@@ -366,22 +356,22 @@ public class InfoCapteur_panel extends JPanel
 		
 		private double getLatitude()
 		{
-			return Double.parseDouble(this.latitude.getValue().toString());
+			return this.latitude.getValeur();
 		}
 		
 		private double getLongitude()
 		{
-			return Double.parseDouble(this.longitude.getValue().toString());
+			return this.longitude.getValeur();
 		}
 		
-		public int getInfoMax()
+		public double getInfoMax()
 		{
-			return Integer.parseInt(this.max.getValue().toString());
+			return this.max.getValeur();
 		}
 		
-		public int getInfoMin()
+		public double getInfoMin()
 		{
-			return Integer.parseInt(this.min.getValue().toString());
+			return this.min.getValeur();
 		}
 		
 		public String getInfoId()
