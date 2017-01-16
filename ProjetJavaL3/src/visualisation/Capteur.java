@@ -2,7 +2,9 @@ package visualisation;
 
 /**
  * 
- * Classe capteur
+ * Class Capteur
+ * Un capteur possède un identifiant(String),
+ * un type (String),une localisation(Localisation) et une valeur(double)
  *
  */
 public class Capteur 
@@ -14,6 +16,7 @@ public class Capteur
 	
 	/**
 	 * Constructeur pour un capteur d'exterieur
+	 * par defaut valeur vaut 0.0
 	 * 
 	 * @param id identifiant du capteur
 	 * @param type type de mesure du capteur
@@ -30,6 +33,7 @@ public class Capteur
 	
 	/**
 	 * Constructeur pour un capteur d'interieur
+	 * par defaut valeur vaut 0.0
 	 * 
 	 * @param id identifiant du capteur
 	 * @param type type de mesure du capteur
@@ -47,7 +51,7 @@ public class Capteur
 	}
 	
 	/**
-	 * 
+	 * Getter sur l attribut id du capteur 
 	 * @return identifiant du capteur
 	 */
 	public String getId () 
@@ -56,7 +60,7 @@ public class Capteur
 	}
 	
 	/**
-	 * 
+	 * Getter sur l attribut type du capteur
 	 * @return type du capteur
 	 */
 	public String getType()
@@ -64,21 +68,37 @@ public class Capteur
 		return this.type;
 	}
 	
+	/**
+	 * Getter sur l attribut loc du capteur
+	 * @return Localisation du capteur
+	 */
 	public visualisation.Localisation getLoc()
 	{
 		return this.loc;
 	}
 	
+	/**
+	 * Getter sur l attribut valeur du capteur
+	 * @return Valeur du capteur
+	 */
 	public double getValeur()
 	{
 		return this.valeur;
 	}
 	
+	/**
+	 * Setter sur l attribut valeur du capteur
+	 * @param la nouvelle valeur du capteur
+	 */
 	public void setValeur(double val)
 	{
 		this.valeur = val;
 	}
 	
+	/**
+	 * Retourne un String qui represente l objet capteur,
+	 * le string contient les attributs du capteurs
+	 */
 	public String toString()
 	{
 		return this.id+this.type+this.loc.toString()+this.valeur;
