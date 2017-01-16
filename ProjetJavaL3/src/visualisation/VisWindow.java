@@ -478,7 +478,6 @@ public class VisWindow extends JFrame implements Observer
 	    	this.choixCapteur.reset(ListCapteurPresent);
 	    	this.tab_capteur.reset();
 	    	this.res.stopListen();
-		    this.res.deleteObservers();
 			changementBouton();
 			fifty_shade_of_gray(false,fenetre);
 	    }

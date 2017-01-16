@@ -36,7 +36,6 @@ public class Reseaux extends java.util.Observable
     private NetworkThread thread;
     
     private String retour;
-    private Set<Capteur> capteurs;
     
     /**
      * Constructor
@@ -158,7 +157,6 @@ public class Reseaux extends java.util.Observable
 	{
 		try 
 		{
-			in.close();
 			out.close();
 			socket.close();
 		} catch (IOException e) 

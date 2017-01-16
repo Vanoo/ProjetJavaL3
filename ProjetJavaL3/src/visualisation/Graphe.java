@@ -56,11 +56,11 @@ public class Graphe extends JFrame
 		
 		JFreeChart chart = ChartFactory.createXYLineChart(
 				splittedString[0],
-				"Time",
+				"Time (en ms)",
 				splittedString[1],
 				createDatasetFromFile(filePath),
 				PlotOrientation.VERTICAL,
-				true, true, false);
+				false, true, false);
 		
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
