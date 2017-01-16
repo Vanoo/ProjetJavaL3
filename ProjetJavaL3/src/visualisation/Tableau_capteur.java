@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -38,8 +40,8 @@ public class Tableau_capteur extends JPanel{
 	private JCheckBox type_filter;
 	
 	private JCheckBox alarm;
-	private JFormattedTextField min_alarm;
-	private JFormattedTextField max_alarm;
+	private DoubleTextField min_alarm;
+	private DoubleTextField max_alarm;
 	
 	private double minAlarm = 0;
 	private double maxAlarm = 50;
@@ -126,45 +128,37 @@ public class Tableau_capteur extends JPanel{
 		title_alert.add(new JLabel("Alerte"));
 		
 		// MIN MAX
-		/*
-		MaskFormatter int_formatter = null;
-		try 
-		{
-			int_formatter = new MaskFormatter("####");
-		} 
-		catch (ParseException e) 
-		{
-			e.printStackTrace();
-		}
-		int_formatter.setPlaceholderCharacter('0');
+		String patternCapteur = "[-+]?[0-9]{0,3}+(\\.[0-9]{0,3}+)?";
 		
-		JFormattedTextField alert_min_texField = new JFormattedTextField(int_formatter);
-		JFormattedTextField alert_max_texField = new JFormattedTextField(int_formatter);
+		DoubleTextField alert_min_texField = new DoubleTextField(6,patternCapteur);
+		DoubleTextField alert_max_texField = new DoubleTextField(6,patternCapteur);
 		
-		alert_min_texField.setPreferredSize(new Dimension(40, 20));
-		alert_max_texField.setPreferredSize(new Dimension(40, 20));
-		*/
-		DoubleTextField alert_min_texField = new DoubleTextField();
-		DoubleTextField alert_max_texField = new DoubleTextField();
-		
-		alert_min_texField.setPreferredSize(new Dimension(40, 20));
-		alert_max_texField.setPreferredSize(new Dimension(40, 20));
+		this.max_alarm = alert_max_texField;
+		this.min_alarm = alert_min_texField;
 		
 		// CheckBox
 		
-		JCheckBox alert_checkbox = new JCheckBox();
+		final JCheckBox alert_checkbox = new JCheckBox();
 		alert_checkbox.addItemListener(new ItemListener() 
 		{
 			@Override
 			public void itemStateChanged(ItemEvent event) 
-			{	
+			{					
 				if(event.getStateChange()==ItemEvent.SELECTED)
 				{
-					Random r = new Random();
-					minAlarm = (-100) + (100 - (-100)) * r.nextDouble();
-					maxAlarm = (-100) + (100 - (-100)) * r.nextDouble();
+					double min = min_alarm.getValeur();
+					double max = max_alarm.getValeur();
 					
-					System.out.println("Min :"+minAlarm+" / Max :"+maxAlarm);
+					if( min > max )
+					{
+						JOptionPane.showMessageDialog(null, "Intervalle Incorrect");
+						alert_checkbox.invalidate();
+					}
+					else
+					{
+						minAlarm = min;
+						maxAlarm = max;
+					}
 				}
 			}
 		});
