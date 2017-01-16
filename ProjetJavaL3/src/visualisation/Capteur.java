@@ -1,7 +1,12 @@
 package visualisation;
 
-public class Capteur {
-	
+/**
+ * 
+ * Classe capteur
+ *
+ */
+public class Capteur 
+{	
 	private String id;
 	private String type;
 	private visualisation.Localisation loc;
