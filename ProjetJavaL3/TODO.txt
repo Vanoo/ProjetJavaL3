@@ -1,0 +1,7 @@
+modifier les diagrammes de classe
+différencier les XML
+selectionner des sallles/batiment/balescouilles entières
+empêcher la selection multiple dans capteur
+modifier affichage IP et port par défaut
+GROS : ENREGISTREMENT VALEUR RECUES DES CAPTEURS
+dans les graphes : afficher la date au lieu du temps
