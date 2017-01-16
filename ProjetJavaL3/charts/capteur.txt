@@ -10,3 +10,4 @@ Thermometre;Temperature;81;75
 8:9
 9:10
 10:10
+14:-5
