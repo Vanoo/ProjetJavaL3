@@ -19,6 +19,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Interface de visualisation
+ *
+ */
 public class VisWindow extends JFrame implements Observer
 {
 	private static final long serialVersionUID = 1L;
@@ -30,11 +35,10 @@ public class VisWindow extends JFrame implements Observer
 	private Choix_capteur_panel choixCapteur;
 	private Tableau_capteur tab_capteur;
 	private JPanel graphePanel;
-	
 	private JPanel fenetre;
-	
 	private ArrayList<Capteur> ListCapteurPresent = new ArrayList<Capteur>();
 	private List<String>  capteursEnAttente = new ArrayList<String>();
+	
 	
 	public VisWindow(Dimension dim) throws ParseException
 	{			
@@ -102,8 +106,7 @@ public class VisWindow extends JFrame implements Observer
 					}
 					else
 					{
-						// TODO changer affichage
-						System.out.println(" VisWindows : connection error ");
+						System.out.println(" Connection error");
 					}
 				}
 				// on est connectee on envoi une demande de dexonnection
@@ -122,6 +125,7 @@ public class VisWindow extends JFrame implements Observer
 				EnvoiInscDesc(true);
 			}
 		});
+
 	    
 	    // Listener sur le bouton de desinscription
 	    this.choixCapteur.getDesinscriptionButton().addActionListener(new ActionListener() 
@@ -156,7 +160,6 @@ public class VisWindow extends JFrame implements Observer
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				// TODO Auto-generated method stub
 				new GrapheFrame();
 			}
 		});
@@ -180,7 +183,7 @@ public class VisWindow extends JFrame implements Observer
 	}
 	
 	/**
-	 * 
+	 * Return text of connection bouton
 	 * @return texte du bouton de connection
 	 */
 	private String typeBoutonConnection()
@@ -189,9 +192,8 @@ public class VisWindow extends JFrame implements Observer
 	}
 	
 	/**
-	 * appel la methode changeButton de connection_panel
+	 * Appel la methode changeButton de connection_panel
 	 * qui modifie le texte du button de connection
-	 * 
 	 */
 	private void changementBouton()
 	{
@@ -251,7 +253,13 @@ public class VisWindow extends JFrame implements Observer
 	}	
 	
 	
-	public void EnvoiInscDesc(boolean Insc)
+	/**
+	 * Envoie une demande d'inscription ou de desinscription en fonction du boolean Insc
+	 * si true -> Inscription
+	 * Si false -> Desinscription
+	 * @param Insc
+	 */
+	private void EnvoiInscDesc(boolean Insc)
 	{
 		ArrayList<String> listIdCapteurSelected = new ArrayList<String>();
 		ArrayList<String> listIdCapteurToSend = new ArrayList<String>();
@@ -259,7 +267,7 @@ public class VisWindow extends JFrame implements Observer
 		
 		listIdCapteurSelected = this.choixCapteur.getSelected();
 		
-		System.out.println("EnvoiInscDesc listIdCapteurSelected :"+listIdCapteurSelected.toString());
+		// System.out.println("EnvoiInscDesc listIdCapteurSelected :"+listIdCapteurSelected.toString());
 		
 		Iterator<String> iter = listIdCapteurSelected.iterator();
 		
@@ -276,7 +284,7 @@ public class VisWindow extends JFrame implements Observer
 		String[] tabId = new String[listIdCapteurToSend.size()];
 		tabId = listIdCapteurToSend.toArray(tabId);
 		
-		System.out.println("EnvoiInscDesc listIdCapteurToSend :"+listIdCapteurToSend.toString());
+		// System.out.println("EnvoiInscDesc listIdCapteurToSend :"+listIdCapteurToSend.toString());
 		
 		if( tabId.length > 0 )
 		{
@@ -289,16 +297,17 @@ public class VisWindow extends JFrame implements Observer
 				res.desinscription(tabId);
 			}
 			this.capteursEnAttente = listIdCapteurToSend;
-			// this.choixCapteur.getInscriptionButton().setEnabled(false);
-			// this.choixCapteur.getDesinscriptionButton().setEnabled(false);
 		}
 	}
 	
-	
-	public void InscDescOk(boolean Insc,List<String> capteursSuccess)
+	/**
+	 * Lance a la reception d une confirmation Inscription / Desinscription
+	 * @param Insc type confirmation
+	 * @param capteursSuccess capteur pour qui l inscription/desinscription est confirmee
+	 */
+	private void InscDescOk(boolean Insc,List<String> capteursSuccess)
 	{
-		System.out.println("InscDescOk capteursSuccess :"+capteursSuccess.toString());
-		
+		// System.out.println("InscDescOk capteursSuccess :"+capteursSuccess.toString());
 		for(int i=0;i<capteursSuccess.size();i++)
 		{
 			if( Insc )
@@ -312,9 +321,7 @@ public class VisWindow extends JFrame implements Observer
 			
 		}
 		this.capteursEnAttente.clear();
-		System.out.println("InscDescOk capteursEnAttente :"+capteursEnAttente.toString());
-		// this.choixCapteur.getInscriptionButton().setEnabled(true);
-		// this.choixCapteur.getDesinscriptionButton().setEnabled(true);
+		// System.out.println("InscDescOk capteursEnAttente :"+capteursEnAttente.toString());
 	}
 	
 	/**
@@ -335,12 +342,12 @@ public class VisWindow extends JFrame implements Observer
 				found = true;
 			}
 		}
-		
 		return capCurrent;
 	}
 	
-	// TODO AJOUT CLEAN JTREE ET JTABLE A LA DECONNEXION
-	
+	/**
+	 * 
+	 */
 	@Override
 	public void update(Observable o, Object arg) 
 	{	    
