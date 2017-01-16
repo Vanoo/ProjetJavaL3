@@ -138,7 +138,15 @@ public class VisWindow extends JFrame implements Observer
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{	
-				tab_capteur.filter(choixCapteur.getPathSelected());
+				String path = choixCapteur.getPathSelected();
+				if( path == null )
+				{
+					tab_capteur.filter(path);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Choose Correct location");
+				}
 			}
 			
 		});

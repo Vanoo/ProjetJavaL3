@@ -19,33 +19,34 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-public class Tableau_capteur extends JPanel{
-
-	/**
-	 * 
-	 */
+/**
+ * 
+ * Panel comportant touts les elements necessaires a l affichage des capteurs suivis dans une Jtable
+ * et d effectuer un filtrage en fonction du type et de la localisation des capteurs
+ * 
+ * Permet aussi de mettre une alarm quand un capteur possede une valeur
+ *  qui ne se trouve pas entre un minimum et un maximum choisi
+ *
+ */
+public class Tableau_capteur extends JPanel
+{
 	private ArrayList<Capteur> capteurSuivis = new ArrayList<Capteur>();
-	
 	private DataCapteur dataCapteur = new DataCapteur();
-	
 	private JTable table;
-	
 	private JCheckBox loc_filter;
 	private JCheckBox type_filter;
-	
 	private JCheckBox alarm;
 	private DoubleTextField min_alarm;
 	private DoubleTextField max_alarm;
-	
 	private double minAlarm = 0;
 	private double maxAlarm = 50;
-	
 	private JComboBox<Object> type_combo;
-	
 	private JButton filter_button;
-
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructor init all component
+	 */
 	public Tableau_capteur() 
 	{
 		Dimension dim = new Dimension(500,360);
@@ -66,11 +67,13 @@ public class Tableau_capteur extends JPanel{
 		/*=============  Tableau Panel =============*/
 		JTable table = new JTable(dataCapteur)
 		{
+			private static final long serialVersionUID = 1L;
+			
 			/**
 			 * 
+			 * Altere le rendu d'une cellule en fonction d'une alarme
+			 * 
 			 */
-			private static final long serialVersionUID = 1L;
-
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
 			{
 				Component c = super.prepareRenderer(renderer, row, column);
@@ -100,9 +103,7 @@ public class Tableau_capteur extends JPanel{
 		};
 				
 		table.setAutoCreateRowSorter(true);
-		
         this.table = table;
-        
 		JScrollPane scrollTab= new JScrollPane(this.table);
 		scrollTab.setPreferredSize(new Dimension(500,250));
 		
@@ -216,6 +217,11 @@ public class Tableau_capteur extends JPanel{
 		this.add(filtre_panel);
 	}	
 	
+	/**
+	 * 
+	 * Reset capteurSuivis and dataCapteur
+	 * 
+	 */
 	public void reset()
 	{
 		this.dataCapteur.removeAll();
@@ -265,11 +271,21 @@ public class Tableau_capteur extends JPanel{
 		dataCapteur.changeValue(idCapteur, value);
 	}
 	
+	/**
+	 * 
+	 * Getter on attribute filter_button
+	 * 
+	 * @return JButton
+	 */
 	public JButton getFilterButton()
 	{
 		return this.filter_button;
 	}
 	
+	/**
+	 * Filter dataCapteur depending on filter option
+	 * @param localisation for locFilter option
+	 */
 	public void filter(String localisation)
 	{		
 		this.dataCapteur.removeAll();
