@@ -397,7 +397,8 @@ public class Choix_capteur_panel extends JPanel
 	public String getPathSelected()
 	{
 		TreePath[] paths = selectionTree.getSelectionPaths();
-		if( paths.length > 1)
+		
+		if(  paths == null || paths.length > 1)
 		{
 			return "Erreur";
 		}
