@@ -10,7 +10,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Set;
 import java.util.TreeSet;
 
 import javax.swing.JOptionPane;
@@ -152,7 +151,11 @@ public class Reseaux extends java.util.Observable
 		this.thread.start();
 	}
 	
-	// TODO javadoc
+	/**
+	 * 
+	 * Close all related ressources
+	 * 
+	 */
 	public void stopListen()
 	{
 		try 
@@ -165,16 +168,27 @@ public class Reseaux extends java.util.Observable
 		}
 	}
 	
-	// TODO javadoc
+	/**
+	 * Getter of attribute retour
+	 * Correspond au message recu du serveur
+	 * @return
+	 */
 	public String getRetour() 
 	{
 		return retour;
 	}
 
-	// TODO javadoc
+	/**
+	 * 
+	 * Modifie la valeur de retour et
+	 * Permet aux observers d etre prevenu de la modification de l attribut retour
+	 * 
+	 * @param retourInscription
+	 */
 	public void setRetour(String retourInscription) 
 	{
-		synchronized (this) {
+		synchronized (this) 
+		{
 			this.retour = retourInscription;
 		}
 		setChanged();
