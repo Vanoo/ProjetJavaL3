@@ -26,6 +26,8 @@ public class Choix_capteur_panel extends JPanel
 	private DefaultTreeModel dataTree;
 	private JTree selectionTree;
 	
+	private ArrayList<Capteur> listCapteurExt = new ArrayList<Capteur>();
+	
 	private static final long serialVersionUID = 1L;
 
 	public Choix_capteur_panel() 
@@ -153,6 +155,23 @@ public class Choix_capteur_panel extends JPanel
 		return this.desinscription_button;
 	}
 	
+	
+	private Capteur getCapteurFromId(String idCapteur)
+	{
+		Capteur capCurrent = null;
+		boolean found = false;
+		for(int i=0;! found && i <listCapteurExt.size();i++ )
+		{
+			capCurrent = listCapteurExt.get(i);
+			if( capCurrent.getId().equals(idCapteur) )
+			{
+				found = true;
+			}
+		}
+		
+		return capCurrent;
+	}
+	
 	/**
 	 * Modifie l attribut dataTree
 	 * Si ajout la methode rajoute le capteur dans dataTree
@@ -176,6 +195,47 @@ public class Choix_capteur_panel extends JPanel
 			// 0 -> Ajout     1 -> Suppr
 			if( typeModif == 0 )
 			{
+				listCapteurExt.add(cap);
+
+				for(int index=0;index < nodeChild.getChildCount();index++)
+				{					
+					Capteur capCurrent = getCapteurFromId(nodeChild.getChildAt(index).toString());
+					
+					double latCurrent = ((LocalisationExt)capCurrent.getLoc()).getLatitude();
+					double longCurrent = ((LocalisationExt)capCurrent.getLoc()).getLongitude();
+					
+					double latNew = ((LocalisationExt)cap.getLoc()).getLatitude();
+					double longNew = ((LocalisationExt)cap.getLoc()).getLongitude();
+					
+					System.out.println("CapCurrent : "+capCurrent.getId());
+					System.out.println("Coord Current : "+latCurrent+" / "+longCurrent);
+					
+					if( latNew <= latCurrent )
+					{						
+						System.out.println("Latitude : "+latNew+" <= "+latCurrent);
+						if( longNew <= longCurrent )
+						{
+							System.out.println("Longitude : "+longNew+" <= "+longCurrent);
+							System.out.println("Insertion index : "+index);
+							dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), nodeChild, index);
+							return true;
+						}
+						
+						if( index+1 < nodeChild.getChildCount() )
+						{
+							Capteur capNext = getCapteurFromId(nodeChild.getChildAt(index+1).toString());
+							if( latNew < ((LocalisationExt)capNext.getLoc()).getLatitude() )
+							{
+								System.out.println("Insertion index : "+(index+1));
+								dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), nodeChild, index+1);
+								return true;
+							}
+						}
+						
+					}
+				}
+				
+				System.out.println("Insertion Fin");
 				dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), nodeChild, nodeChild.getChildCount());
 				return true;
 			}
@@ -186,6 +246,7 @@ public class Choix_capteur_panel extends JPanel
 					capteurNode = (DefaultMutableTreeNode) nodeChild.getChildAt(bat);
 					if( capteurNode.toString().equals(cap.getId()) )
 					{
+						listCapteurExt.remove(capteurNode.toString());
 						dataTree.removeNodeFromParent(capteurNode);
 						return true;
 					}
@@ -239,6 +300,16 @@ public class Choix_capteur_panel extends JPanel
 									// System.out.println("Salle OK");
 									if( typeModif == 0 )
 									{
+										// Ajout dans l'ordre alphabetique
+										for(int indexCap = 0; indexCap < salle.getChildCount(); indexCap++)
+										{		
+											if( ((DefaultMutableTreeNode) salle.getChildAt(indexCap)).toString().compareTo(cap.getId()) >= 0)
+											{
+												dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), salle, indexCap);
+												return true;
+											}
+										}
+										
 										// System.out.println("Ajout Capteur");
 										dataTree.insertNodeInto(new DefaultMutableTreeNode(identifiantCapteur), salle, salle.getChildCount());
 										return true;

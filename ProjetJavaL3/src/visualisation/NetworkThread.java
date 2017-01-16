@@ -9,7 +9,6 @@ import java.io.IOException;
 
 public class NetworkThread extends Thread
 {
-	
 	private Reseaux res;
 	private BufferedReader in;
 	private BufferedWriter w;
@@ -19,7 +18,8 @@ public class NetworkThread extends Thread
 	 * 
 	 * @param res Reseaux qui cree le thread
 	 */
-    public NetworkThread(Reseaux res) {
+    public NetworkThread(Reseaux res) 
+    {
 		this.res = res;
 		this.in = res.in;
 		
@@ -27,7 +27,6 @@ public class NetworkThread extends Thread
 		{
 			File logs = new File("logs.txt");
 			logs.createNewFile();
-			
 			
 			w = new BufferedWriter(new FileWriter(logs));
 		}
@@ -49,10 +48,7 @@ public class NetworkThread extends Thread
 	public void run()
 	{
 		
-		String message = "plop";
-		
-		
-		
+		String message = "plop";		
 		
 	    while(res.connected) {
 	    	try
@@ -74,8 +70,7 @@ public class NetworkThread extends Thread
 			{
 				e.printStackTrace();
 			}
-	    	
-	    	
+
 	    	res.setRetour(message);
 	    	
 	    	if(message.startsWith("DeconnexionOK"))
@@ -103,7 +98,7 @@ public class NetworkThread extends Thread
 	    			JOptionPane.showMessageDialog(null, "Capteur ajoute : "+splittedString[1]);
 	    		}
 	    		else
-	    			System.out.println("Message erroné");
+	    			System.out.println("Message erronï¿½");
 	    	}
 	    	else if (message.startsWith("InscriptionCapteur"))
 	    	{

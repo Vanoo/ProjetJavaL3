@@ -424,7 +424,6 @@ public class VisWindow extends JFrame implements Observer
 	    	
 	    	// System.out.println("Message : "+message);
 	    	// System.out.println("Length : "+splittedString.length);
-	    	// System.out.println("splittedString[4] :"+splittedString[4]);
 	    	
 	    	if(splittedString.length == 7) // Capteur d'interieur
 	    	{
